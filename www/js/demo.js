@@ -210,7 +210,26 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		    'Done'                  // buttonName
 		);*/
 		
-		 init_DB(test);
+		 //init_DB();
+		 
+		 async.series([
+		               function(callback){
+		                   // do some stuff ...
+		            	   init_DB(callback);
+		            	   
+		                   //callback(null, 'one');
+		               }/*,
+		               function(callback){
+		                   // do some more stuff ...
+		                   callback(null, 'two');
+		               }*/
+		               , function(callback){test(callback,'test');}
+		           ],
+		           // optional callback
+		           function(err, results){
+		               // results is now equal to ['one', 'two']
+			 console.log(results)
+		           });
 		 
 		// if MC_UseOk
 	});//cordovaReady

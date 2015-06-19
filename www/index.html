@@ -19,8 +19,17 @@
     <!-- Required to use $swipe, $drag and Translate services -->
     <script src="dist/js/mobile-angular-ui.gestures.min.js"></script>
     
+    <script src="dist/js/async.js"></script>
+    <script>
+      var _async = this.async;
+      this.require = function () { return _async; };
+      //this.exports = {};
+    </script>
+    
     <script src="js/moment-with-locales.js"></script>
     <script src="js/chart.min.js"></script>
+
+  	
 
     <script src="cordova.js"></script>
     
