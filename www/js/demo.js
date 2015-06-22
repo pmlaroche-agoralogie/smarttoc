@@ -443,12 +443,15 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 							data[row['submitdate'].substr(0,10)] = row[question.key];
 						}
 					});;
+					var strokeColor = "#FFFFFF";
+					if (period == '1-month')
+						strokeColor = "#157EFB";
 					new Chart(el.getContext("2d")).Bar({
 						labels: labels,
 						datasets: [
 							{
 								fillColor: "#157EFB",
-								strokeColor: "#ffffff",
+								strokeColor: strokeColor,
 								barStrokeWidth: 1,
 								barShowStroke : false,
 								barValueSpacing : 1,
@@ -460,11 +463,11 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 					});
 				}
 			});
-			$scope.charts = response.data;
+			
+			//$scope.charts = response.data;
 		});
-		$scope.emailMe = function(clickEvent){
-		console.log($scope);
 		
+		$scope.emailMe = function(clickEvent){
 		var questionList = "";
 		$( "input:checked").each(function( index ) {
 			  console.log( index + ": " + $( this ).attr('id') );
@@ -482,11 +485,8 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 			var fileTransfer = new FileTransfer();
 			var fileURL = cordova.file.dataDirectory+"montest.pdf";
 			//test android seulement :
-			var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf";
-			//var uri = encodeURI("http://srvgandi1.caribara.com/test.pdf");
-			//var uri = encodeURI("http://wiw.io/ICM/pdf.php?sid=236551&curs=2015-01-01&period=months");
-			//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551"; //modif php pour repondre qqchose par defaut si pas de param
-			var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList;
+			var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
+			var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
 			fileTransfer.download(
 				    uri,
 				    fileURL,
