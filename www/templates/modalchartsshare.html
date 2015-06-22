@@ -16,7 +16,7 @@
 			<li class="item item-divider">Choisissez les questions à inclure</li>
           	<li class="item item-checkbox" ng-repeat="question in questions" type="item-text-wrap">
 				<label class="checkbox" style="display:inline-block;margin:0;">
-					<input type="checkbox" style="display:inline-block;position:relative;">
+					<input id="{{question.key}}" type="checkbox" style="display:inline-block;position:relative;">
 				</label>
 				{{question.label}}
 			</li>

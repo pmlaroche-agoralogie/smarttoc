@@ -341,7 +341,7 @@ $location.path('/scroll');
 });*/
 
 //CHARTS
-app.controller('ChartsCtrl', function($scope, Questions, Charts) {
+app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 
 	//current date
 	var MyDate = new Date();
@@ -424,7 +424,6 @@ app.controller('ChartsCtrl', function($scope, Questions, Charts) {
 		q.push(q.shift()); // first and second at the end (demo)
 		q.push(q.shift());
 		$scope.questions = q;
-		
 		/*Chart.defaults.global = {
 		responsive: false,
 	    maintainAspectRatio: true
@@ -464,7 +463,20 @@ app.controller('ChartsCtrl', function($scope, Questions, Charts) {
 			$scope.charts = response.data;
 		});
 		$scope.emailMe = function(clickEvent){
-			
+		console.log($scope);
+		
+		var questionList = "";
+		$( "input:checked").each(function( index ) {
+			  console.log( index + ": " + $( this ).attr('id') );
+			 // console.log($("input:checked"));
+			  var str = $( this ).attr('id');
+			  var res = str.split("X");
+			  console.log(res);
+			  var res2 = res[2];
+			  console.log(res2);
+			  questionList += res[2]+",";
+			});
+		console.log(questionList);
 			if(isMobile)
 			{
 			var fileTransfer = new FileTransfer();
@@ -473,7 +485,8 @@ app.controller('ChartsCtrl', function($scope, Questions, Charts) {
 			var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf";
 			//var uri = encodeURI("http://srvgandi1.caribara.com/test.pdf");
 			//var uri = encodeURI("http://wiw.io/ICM/pdf.php?sid=236551&curs=2015-01-01&period=months");
-			var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551"; //modif php pour repondre qqchose par defaut si pas de param
+			//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551"; //modif php pour repondre qqchose par defaut si pas de param
+			var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList;
 			fileTransfer.download(
 				    uri,
 				    fileURL,
