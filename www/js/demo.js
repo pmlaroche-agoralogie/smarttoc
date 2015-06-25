@@ -196,11 +196,14 @@ function alertDismissed() {
 }
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location){
-	
+	//$location.path('/scroll'); 
+	console.log('loc1 '+$location);
+	 console.log('loc1 '+JSON.stringify($location) );
 	 cordovaReady(function () {
+		 //$location.path('/scroll'); 
+		 console.log('loc2 '+$location);
+		 console.log('loc2 '+JSON.stringify($location) );
          // Device ready event has fired when this function fires
-		 /*alert('tootoo');
-		 console.log('mytest');*/
 		 
 	/*	 if(isMobile)
 		navigator.notification.alert(
@@ -209,43 +212,50 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		    'Game Over',            // title
 		    'Done'                  // buttonName
 		);*/
-		
-		 //init_DB();
 		 
-		/* async.series([
-		               function(callback){
-		                   // do some stuff ...
-		            	   init_DB(callback);
-		            	   
-		                   //callback(null, 'one');
-		               }
-		               , function(callback){test(callback,'test');}
-		           ],
-		           // optional callback
-		           function(err, results){
-		               // results is now equal to ['one', 'two']
-			 console.log(results)
-		           });*/
-		 
-		 async.series([	function(callback){init_DB(callback);},
+	/*	 async.series([	function(callback){init_DB(callback);},
+		               	//creta table
 		               	function(callback){createTableQuestionnaires(callback);},
 		               	function(callback){createTableHoraires(callback);},
 		               	function(callback){createTableReponses(callback);},
 		               	
-		               	function(callback){createQuestionnairesSuccess(callback);}
+		               	//create db content
+		               	function(callback){createQuestionnairesSuccess(callback);},
+		               	
+		               	//test useOk
+		               	function(callback){do_MC_UseOk(callback,$location);}
 		         ],
 				 
-				 function(err, results){
-			 			console.log(results)
+				 function(err, results,$location ){
+			 			console.log(results);
+			 			//$location.path('/scroll'); 
+			 			 console.log('loc4 '+$location);
+			 			 console.log('loc4 '+JSON.stringify($location) );
 		         }
-		 );//fin  async.series
+		 );//fin  async.series*/
+		 
+		 
+		// User agent displayed in home page
+		   $scope.userAgent = navigator.userAgent;
+		   
+		  
+		// Needed for the loading screen
+		  $rootScope.$on('$routeChangeStart', function(){
+		    $rootScope.loading = true;
+		  });
+
+		  $rootScope.$on('$routeChangeSuccess', function(){
+		    $rootScope.loading = false;
+		  });
+		 
+
 		 
 		// if MC_UseOk
 	});//cordovaReady
-	
+	// $location.path('/scroll'); 
 
   // User agent displayed in home page
-  $scope.userAgent = navigator.userAgent;
+/*  $scope.userAgent = navigator.userAgent;
   
   // Needed for the loading screen
   $rootScope.$on('$routeChangeStart', function(){
@@ -335,7 +345,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
     if (index > -1) {
       $scope.notices.splice(index, 1);
     }
-  };
+  };*/
 });
 /*app.controller('FormCtrl', function($rootScope, $scope,$location){
 	console.log('form');

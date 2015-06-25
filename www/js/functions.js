@@ -169,24 +169,47 @@ function after_init(){
 ////////////////////
 //Functions MC_UseOk
 
-function do_MC_UseOk($state){
-	db.transaction(function(tx) 
+function do_MC_UseOk(callback,$location){
+	$location.path('/scroll'); 
+	 console.log('loc3 '+$location);
+	 console.log('loc3 '+JSON.stringify($location) );
+	 
+	
+	callback(true,"MC_UseOk_false");
+	
+	/*if (MC_UseOk)
 	{
-		//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
-		tx.executeSql('SELECT * FROM "reponses" where sid = "useOK" AND reponse = "ok";', [], function(tx, res) {
-			if (res.rows.item(0).cnt < 1)
-			{
-				console.log('MC_UseOk:false');
-				return false;
-			}
-			else
-			{
-				console.log('MC_UseOk:true');
-				return true;
-			}
-				
-		});//fin select
-	}); //fin db.transaction
+		console.log('MC_UseOk');
+		db.transaction(function(tx) 
+		{
+			(function ($location) { 
+				//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
+				tx.executeSql('SELECT * FROM "reponses" where sid = "useOK" AND reponse = "ok";', [], function(tx, res) {
+					console.log(res);
+					var dataset = res.rows.length;
+		            if(dataset<1)
+					//if (res.rows.item(0).cnt < 1)
+					{
+						console.log('MC_UseOk:false');
+						//Change path
+						$location.path('/scroll'); 
+						callback(true,"MC_UseOk_false");
+						//return false;
+					}
+					else
+					{
+						console.log('MC_UseOk:true');
+						callback(null,"MC_UseOk_true");
+						return true;
+					}
+						
+				});//fin select
+			})($location);
+		}); //fin db.transaction
+	}
+	else
+		//ok
+		callback(null,"no_MC_UseOk");*/
 }
 
 testi = 0;
