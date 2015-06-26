@@ -169,15 +169,15 @@ function after_init(){
 ////////////////////
 //Functions MC_UseOk
 
-function do_MC_UseOk(callback,$location){
-	$location.path('/scroll'); 
+function do_MC_UseOk(callback,$location,$route){
+	/*$location.path('/scroll'); 
 	 console.log('loc3 '+$location);
-	 console.log('loc3 '+JSON.stringify($location) );
+	 console.log('loc3 '+JSON.stringify($location) );*/
 	 
 	
-	callback(true,"MC_UseOk_false");
+	//callback(null,"MC_UseOk_false");
 	
-	/*if (MC_UseOk)
+	if (MC_UseOk)
 	{
 		console.log('MC_UseOk');
 		db.transaction(function(tx) 
@@ -193,7 +193,8 @@ function do_MC_UseOk(callback,$location){
 						console.log('MC_UseOk:false');
 						//Change path
 						$location.path('/scroll'); 
-						callback(true,"MC_UseOk_false");
+						$route.reload();
+						//callback(true,"MC_UseOk_false");
 						//return false;
 					}
 					else
@@ -209,7 +210,7 @@ function do_MC_UseOk(callback,$location){
 	}
 	else
 		//ok
-		callback(null,"no_MC_UseOk");*/
+		callback(null,"no_MC_UseOk");
 }
 
 testi = 0;

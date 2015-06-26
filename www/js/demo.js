@@ -195,14 +195,42 @@ function alertDismissed() {
 	//alert('rr');
 }
 
-app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location){
+app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route){
 	//$location.path('/scroll'); 
 	console.log('loc1 '+$location);
 	 console.log('loc1 '+JSON.stringify($location) );
-	 cordovaReady(function () {
+	 async.series([	
+	               		function(callback){ cordovaReady(callback);},
+	               		function(callback){init_DB(callback);},
+	               		
+	               	//creta table
+		               	function(callback){createTableQuestionnaires(callback);},
+		               	function(callback){createTableHoraires(callback);},
+		               	function(callback){createTableReponses(callback);},
+		               	
+		               	//create db content
+		               	function(callback){createQuestionnairesSuccess(callback);},
+		               	
+		               	//test useOk
+		               	function(callback){do_MC_UseOk(callback,$location,$route);},
+		               	/*function(callback){console.log('loc5 '+$location);
+  			 			 console.log('loc5 '+JSON.stringify($location));console.log('toto');alert('toto');$location.path('/scroll');$route.reload();}*/
+	               		],
+	   				 
+	   				 function(err, results ){
+	   			 			console.log(results);
+	   			 			//$location.path('/scroll'); 
+	   			 			/* console.log('loc4 '+$location);
+	   			 			 console.log('loc4 '+JSON.stringify($location) );*/
+	   		         }
+	   		 );//fin  async.series*/
+	 
+	 
+	 //.then(function(){conole.log('oj')})
+	 /*cordovaReady(function () {
 		 //$location.path('/scroll'); 
 		 console.log('loc2 '+$location);
-		 console.log('loc2 '+JSON.stringify($location) );
+		 console.log('loc2 '+JSON.stringify($location) );*/
          // Device ready event has fired when this function fires
 		 
 	/*	 if(isMobile)
@@ -234,28 +262,14 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		         }
 		 );//fin  async.series*/
 		 
-		 
-		// User agent displayed in home page
-		   $scope.userAgent = navigator.userAgent;
-		   
-		  
-		// Needed for the loading screen
-		  $rootScope.$on('$routeChangeStart', function(){
-		    $rootScope.loading = true;
-		  });
-
-		  $rootScope.$on('$routeChangeSuccess', function(){
-		    $rootScope.loading = false;
-		  });
-		 
 
 		 
 		// if MC_UseOk
-	});//cordovaReady
+//	});//cordovaReady
 	// $location.path('/scroll'); 
 
   // User agent displayed in home page
-/*  $scope.userAgent = navigator.userAgent;
+  $scope.userAgent = navigator.userAgent;
   
   // Needed for the loading screen
   $rootScope.$on('$routeChangeStart', function(){
@@ -345,7 +359,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
     if (index > -1) {
       $scope.notices.splice(index, 1);
     }
-  };*/
+  };
 });
 /*app.controller('FormCtrl', function($rootScope, $scope,$location){
 	console.log('form');
@@ -554,10 +568,13 @@ angular.module('Cordova', [])
   return function(done) {
     if (typeof window.cordova === 'object') {
       document.addEventListener('deviceready', function () {
-        done();
+    	  console.log('cordovaready');
+       // done();
+    	  done(null,'cordoveaok');
       }, false);
     } else {
       done();
+      done(null,'cordoveako');
     }
   };
 });
