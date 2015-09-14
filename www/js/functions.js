@@ -16,9 +16,9 @@ function init_DB(callback)
 {
 	//init base
 	if(isMobile)
-    	db = window.sqlitePlugin.openDatabase("Database", "1.0", "Demo", -1);
+    	db = window.sqlitePlugin.openDatabase("Database_SmartToc", "1.0", "Demo", -1);
     else
-    	db = openDatabase("Database", "1.0", "Demo", -1);
+    	db = openDatabase("Database_SmartToc", "1.0", "Demo", -1);
 	callback(null,'initDb');
 }
 

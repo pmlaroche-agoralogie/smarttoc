@@ -65,6 +65,8 @@
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.camera" />
     
+     <gap:plugin name="org.apache.cordova.core.inappbrowser" />
+    
     <!--
         <gap:plugin name="Example" />
         A list of available plugins are available at https://build.phonegap.com/docs/plugins
