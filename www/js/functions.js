@@ -1,7 +1,8 @@
 var async = require('../dist/js/async.js');
 
-////////////////////
+/////////////////////////////////////////////////////////////////////
 //DB
+/////////////////////////////////////////////////////////////////////
 
 //DB common
 function errorHandler(tx, error) {
@@ -21,8 +22,6 @@ function init_DB(callback)
     	db = openDatabase("Database_SmartToc", "1.0", "Demo", -1);
 	callback(null,'initDb');
 }
-
-
 
 function createTableQuestionnaires(callback)
 {
@@ -76,41 +75,45 @@ function createTableReponses(callback)
 }
 
 
-//function createQuestionnairesSuccess(tx, result){
 function createQuestionnairesSuccess(callback){
-	if(isMobile)
-	{
-		store = cordova.file.applicationDirectory;
-		fileName = "www/db/questionnaires.txt";
-		//window.resolveLocalFileSystemURL(store + fileName, readQuestionnairesSuccess, readQuestionnairesFail);
-		window.resolveLocalFileSystemURL(store + fileName, function(fileEntry){readQuestionnairesSuccess(fileEntry,callback) }, readQuestionnairesFail);
-		//callback(null,'ok');
-	}
-	else
-	{    
-		    var req = new XMLHttpRequest();
-		    req.open('GET', '../www/db/questionnaires.txt', true);
-		    req.onreadystatechange = function (aEvt) {
-		      if (req.readyState == 4) {
-		         if(req.status == 200)
-		        	 {console.log("200000!!!!");
-		        	 res = req.responseText;
-		        	 insertQuestionnaire(res,callback);
-		        	 }
-		         else
-		        	 console.log("Erreur pendant le chargement de la page.\n");
-		      }
-		    };
-		    req.send(null);
-	}
-		
-	
-	console.log("dbquest");
-	//callback();
+	var req = new XMLHttpRequest();
+	req.open('GET', '../www/db/questionnaires.txt', true);
+
+	req.onreadystatechange = function (aEvt) {
+		if (req.readyState == 4) 
+		{
+			if(req.status == 200)
+			{
+				if (debug || debug_loadDB)
+					alertDebug("req.status == 200");
+				res = req.responseText;
+				insertQuestionnaire(res,callback);
+			}
+			else
+			{
+				console.log("Erreur pendant le chargement de la page.\n");
+				if (debug || debug_loadDB)
+					alertDebug("Erreur pendant le chargement de la page.\n Ou cas Iphone")
+				if(isMobile)
+				{
+					//cas iphone
+					store = cordova.file.applicationDirectory;
+					fileName = "www/db/questionnaires.txt";
+					window.resolveLocalFileSystemURL(store + fileName, function(fileEntry){readQuestionnairesSuccess(fileEntry,callback) }, readQuestionnairesFail);		
+				}
+			}
+		}
+	};
+	req.send(null);
+
+	if (debug || debug_loadDB)
+		alertDebug("createQuestionnairesSuccess");
 };
+
 function createQuestionnairesError(tx, error) {
     console.log("createQuestionnairesError: " + error.message);
 }
+
 function readQuestionnairesSuccess(fileEntry,callback) {
 	fileEntry.file(function(file) {
 		var reader = new FileReader();
@@ -122,10 +125,12 @@ function readQuestionnairesSuccess(fileEntry,callback) {
 		reader.readAsText(file);
 	});
 }
+
 function readQuestionnairesFail(e) {
 	console.log("FileSystem Error");
 	console.dir(e);
 }
+
 function insertQuestionnaire(res,callback){
 	db.transaction(function(tx) {
 		var line = res.split("\n");
@@ -144,7 +149,8 @@ function insertQuestionnaire(res,callback){
 								value[4]+'","'+
 								value[5]+'","'+
 								value[6]+'","'+
-								escape(JSON.stringify(line2[7].substring(0,value[7].length-1)))+'");',[], successHandler, errorHandler);
+								encodeURI(value[7].substring(0,value[7].length-1))+'");',[], successHandler, errorHandler);
+								//escape(JSON.stringify(line2[7].substring(0,value[7].length-1)))+'");',[], successHandler, errorHandler);
 						//line2[7].substring(0,line2[7].length-1).replace(/"/g,'\\"')+'");',[], successHandler, errorHandler);
 					}//fin if
 				},errorHandler);//fin select
@@ -166,17 +172,11 @@ function after_init(){
 	}
 }
 
-////////////////////
+/////////////////////////////////////////////////////////////////////
 //Functions MC_UseOk
+/////////////////////////////////////////////////////////////////////
 
 function do_MC_UseOk(callback,$location,$route){
-	/*$location.path('/scroll'); 
-	 console.log('loc3 '+$location);
-	 console.log('loc3 '+JSON.stringify($location) );*/
-	 
-	
-	//callback(null,"MC_UseOk_false");
-	
 	if (MC_UseOk)
 	{
 		console.log('MC_UseOk');
@@ -192,7 +192,7 @@ function do_MC_UseOk(callback,$location,$route){
 					{
 						console.log('MC_UseOk:false');
 						//Change path
-						$location.path('/scroll'); 
+						$location.path('/useok'); 
 						$route.reload();
 						//callback(true,"MC_UseOk_false");
 						//return false;
@@ -221,4 +221,22 @@ function test(callback,value){
 	console.log(value);
 	console.log("fin?");
 	callback(null, 'test');
+}
+
+/////////////////////////////////////////////////////////////////////
+//Functions Debug
+/////////////////////////////////////////////////////////////////////
+
+//Function affichage debug
+function alertDebug(message)
+{
+	if (isMobile)
+	navigator.notification.alert(
+			message,  // message
+		    function(){},         // callback
+		    'Debug',            // title
+		    'Ok'                  // buttonName
+		);
+	else
+		alert(message);
 }

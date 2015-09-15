@@ -196,9 +196,7 @@ function alertDismissed() {
 }
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route){
-	//$location.path('/scroll'); 
-	console.log('loc1 '+$location);
-	 console.log('loc1 '+JSON.stringify($location) );
+
 	 async.series([	
 	               		function(callback){ cordovaReady(callback);},
 	               		function(callback){init_DB(callback);},
@@ -267,6 +265,24 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		// if MC_UseOk
 //	});//cordovaReady
 	// $location.path('/scroll'); 
+	 
+	$scope.useOK = function(clickEvent){
+		console.log('useOK');
+	};
+	
+	$scope.useKO = function(clickEvent){
+		console.log('useKO');
+		if(isMobile)
+		{
+			console.log('device exit?');
+			if(navigator.app){console.log('navigator.app');
+				navigator.app.exitApp();
+			}else if(navigator.device){
+				console.log('navigator.device');
+				navigator.device.exitApp();
+			}
+		}
+	};
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
@@ -390,8 +406,19 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 	var curs = moment(MyDateString);
 	var curs = moment('2015-01-01');
      period = "1-month";
+     
+     $scope.openResultUrl = function(clickEvent){
+ 		console.log('openUrl');
+ 		var iabRef = window.open('http://icm.kpy.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
+ 		/*iabRef.insertCSS({
+            code: "body { background: #ffff00; }"
+        }, function() {
+            alert("Styles Altered");
+        });*/
+ 		iabRef.toolbar.barStyle = UIBarStyleDefault;
+ 	};
 	
-	  $scope.$on('mobile-angular-ui.state.changed.activeTab', function(e, newVal, oldVal) {
+	/*  $scope.$on('mobile-angular-ui.state.changed.activeTab', function(e, newVal, oldVal) {
 		  
 		  if (newVal == 1) {
 			   period = "1-month";
@@ -401,7 +428,7 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 		  }
 		  else  if (newVal == 3) {
 			   period = "3-month";
-		  }
+		  }*/
 
 	var grid = [],
 		labels = [];
@@ -443,6 +470,8 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 		}
 	}
 	
+	console.log('Questions');
+	console.log(Questions);
 	
 	Questions.all({sid:sid}).then(function(response) {
 		var q = [];
@@ -457,10 +486,12 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 		q.push(q.shift()); // first and second at the end (demo)
 		q.push(q.shift());
 		$scope.questions = q;
-		/*Chart.defaults.global = {
-		responsive: false,
-	    maintainAspectRatio: true
-}*/
+		console.log('$scope.questions');
+		console.log($scope.questions);
+		//Chart.defaults.global = {
+		//responsive: false,
+	 //   maintainAspectRatio: true
+//}
 		
 		Charts.all({sid:sid,in:_in.format('YYYY-MM-DD'),out:_out.format('YYYY-MM-DD')}).then(function(response) {
 			q.forEach(function(question,i) {
@@ -499,6 +530,8 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 			
 			//$scope.charts = response.data;
 		});
+		
+		
 		
 		$scope.emailMe = function(clickEvent){
 		var questionList = "";
@@ -558,7 +591,7 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 		}
 	});
 	
-	  });// $scope.$on
+	 // });// $scope.$on
 });
 
 

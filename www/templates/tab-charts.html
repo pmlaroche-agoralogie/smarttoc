@@ -4,6 +4,7 @@
 	</div>
 	<div class="scrollable">
  		<div class="scrollable-content section">
+ 		<!--  
 			<ui-state id='activeTab' default='1'></ui-state>
 			<div class="btn-group justified nav-tabs">
 			  <a ui-set="{'activeTab': 1}" 
@@ -18,9 +19,18 @@
 				<p class="text-center">{{question.label}}</p>
 				<canvas style="width:100% !important;height:auto !important;max-width:400px;" id="chart-{{question.key}}" height="200" width="400"></canvas>
 			</div>
+			 -->
+
+	
+			<!--    <a class="btn btn-default" onClick="iabRef=window.open('http://icm.kpy.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer')">Visualiser mes résultats</a>
+			 -->
+			  <button class="btn btn-primary" ng-click="openResultUrl($event)">Visualiser mes résultats</button>
+			  
+			  <br/>
+			 
 			<a href="" 
 	          ui-turn-on="modalchartsshare"
-	          class="btn btn-default">Show Modal</a>
+	          class="btn btn-default">Envoyer mes résultats par mail</a>
 		</div>
 	</div>
 	<div ui-content-for="modals">
