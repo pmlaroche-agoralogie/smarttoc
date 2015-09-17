@@ -409,7 +409,8 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
      
      $scope.openResultUrl = function(clickEvent){
  		console.log('openUrl');
- 		var iabRef = window.open('http://icm.kpy.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
+ 		//var iabRef = window.open('http://icm.kpy.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
+ 		var iabRef = window.open('http://restitution.altotoc.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
  		/*iabRef.insertCSS({
             code: "body { background: #ffff00; }"
         }, function() {
