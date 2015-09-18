@@ -251,6 +251,18 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			}
 		}
 	};
+	
+	$scope.nextProfile = function(clickEvent){
+		console.log('nextProfile');
+		if ($scope.profileok == "page1")
+			$scope.profileok = "page2";
+		else if ($scope.profileok == "page2")
+			$scope.profileok = "page3";
+		else if ($scope.profileok == "page3")
+			$scope.profileok = "page4";
+		else if ($scope.profileok == "page4")
+			$scope.profileok = "quiz";
+	}
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
