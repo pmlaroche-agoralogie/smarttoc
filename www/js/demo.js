@@ -36,6 +36,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/drag',          {templateUrl: 'templates/drag.html', reloadOnSearch: false});
   $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});
   $routeProvider.when('/useok',      	{templateUrl: 'templates/useok.html', reloadOnSearch: false});
+  $routeProvider.when('/profileok',     {templateUrl: 'templates/profileok.html', reloadOnSearch: false});
   $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
 });
 
@@ -196,81 +197,48 @@ function alertDismissed() {
 }
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route){
-
-	 async.series([	
-	               		function(callback){ cordovaReady(callback);},
-	               		function(callback){init_DB(callback);},
+	
+	$scope.test ="test";
+	
+	//Séquence d'initialisation
+	async.series([	
+	              	function(callback){ cordovaReady(callback);},
+	              	function(callback){init_DB(callback);},
 	               		
-	               	//creta table
-		               	function(callback){createTableQuestionnaires(callback);},
-		               	function(callback){createTableHoraires(callback);},
-		               	function(callback){createTableReponses(callback);},
+	              	//create tables
+	              	function(callback){createTableQuestionnaires(callback);},
+	              	function(callback){createTableHoraires(callback);},
+	              	function(callback){createTableReponses(callback);},
 		               	
-		               	//create db content
-		               	function(callback){createQuestionnairesSuccess(callback);},
+	              	//create db content
+	              	function(callback){createQuestionnairesSuccess(callback);},
+	              	//TODO : horaires
 		               	
-		               	//test useOk
-		               	function(callback){do_MC_UseOk(callback,$location,$route);},
-		               	/*function(callback){console.log('loc5 '+$location);
-  			 			 console.log('loc5 '+JSON.stringify($location));console.log('toto');alert('toto');$location.path('/scroll');$route.reload();}*/
-	               		],
-	   				 
-	   				 function(err, results ){
-	   			 			console.log(results);
-	   			 			//$location.path('/scroll'); 
-	   			 			/* console.log('loc4 '+$location);
-	   			 			 console.log('loc4 '+JSON.stringify($location) );*/
-	   		         }
-	   		 );//fin  async.series*/
+	              	//test useOk
+	              	function(callback){do_MC_UseOk(callback,$location,$route,$scope);},
+	              	/*function(callback){console.log('loc5 '+$location);
+					console.log('loc5 '+JSON.stringify($location));console.log('toto');alert('toto');$location.path('/scroll');$route.reload();}*/
+	        ],	   				 
+			function(err, results ){
+					console.log(results);
+			}
+		);//fin  async.series*/
 	 
 	 
-	 //.then(function(){conole.log('oj')})
-	 /*cordovaReady(function () {
-		 //$location.path('/scroll'); 
-		 console.log('loc2 '+$location);
-		 console.log('loc2 '+JSON.stringify($location) );*/
-         // Device ready event has fired when this function fires
-		 
-	/*	 if(isMobile)
-		navigator.notification.alert(
-		    'You are the winner!',  // message
-		    alertDismissed,         // callback
-		    'Game Over',            // title
-		    'Done'                  // buttonName
-		);*/
-		 
-	/*	 async.series([	function(callback){init_DB(callback);},
-		               	//creta table
-		               	function(callback){createTableQuestionnaires(callback);},
-		               	function(callback){createTableHoraires(callback);},
-		               	function(callback){createTableReponses(callback);},
-		               	
-		               	//create db content
-		               	function(callback){createQuestionnairesSuccess(callback);},
-		               	
-		               	//test useOk
-		               	function(callback){do_MC_UseOk(callback,$location);}
-		         ],
-				 
-				 function(err, results,$location ){
-			 			console.log(results);
-			 			//$location.path('/scroll'); 
-			 			 console.log('loc4 '+$location);
-			 			 console.log('loc4 '+JSON.stringify($location) );
-		         }
-		 );//fin  async.series*/
-		 
-
-		 
-		// if MC_UseOk
-//	});//cordovaReady
-	// $location.path('/scroll'); 
-	 
+	/////////////
+	//BUTTON USE OK
 	$scope.useOK = function(clickEvent){
 		console.log('useOK');
+		//save in BDD
+		save_MC_UseOk();
+		//Et suite
+		MC_ProfileOk(false,$location,$route,$scope);
 	};
 	
+	/////////////
+	//BUTTON USE KO
 	$scope.useKO = function(clickEvent){
+		//TODO : Page d'information
 		console.log('useKO');
 		if(isMobile)
 		{
@@ -416,7 +384,7 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
         }, function() {
             alert("Styles Altered");
         });*/
- 		iabRef.toolbar.barStyle = UIBarStyleDefault;
+ 		//iabRef.toolbar.barStyle = UIBarStyleDefault;
  	};
 	
 	/*  $scope.$on('mobile-angular-ui.state.changed.activeTab', function(e, newVal, oldVal) {

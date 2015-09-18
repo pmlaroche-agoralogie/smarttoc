@@ -176,13 +176,13 @@ function after_init(){
 //Functions MC_UseOk
 /////////////////////////////////////////////////////////////////////
 
-function do_MC_UseOk(callback,$location,$route){
+function do_MC_UseOk(callback,$location,$route,$scope){
 	if (MC_UseOk)
 	{
 		console.log('MC_UseOk');
 		db.transaction(function(tx) 
 		{
-			(function ($location) { 
+			(function ($location,$scope) { 
 				//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
 				tx.executeSql('SELECT * FROM "reponses" where sid = "useOK" AND reponse = "ok";', [], function(tx, res) {
 					console.log(res);
@@ -194,34 +194,85 @@ function do_MC_UseOk(callback,$location,$route){
 						//Change path
 						$location.path('/useok'); 
 						$route.reload();
+						
 						//callback(true,"MC_UseOk_false");
 						//return false;
 					}
 					else
 					{
 						console.log('MC_UseOk:true');
-						callback(null,"MC_UseOk_true");
+						//callback(null,"MC_UseOk_true");
+						MC_ProfileOk(callback,$location,$route,$scope);
+						//return true;
+					}
+						
+				});//fin select
+			})($location,$scope);
+		}); //fin db.transaction
+	}
+	else
+	{
+		//ok
+		//callback(null,"no_MC_UseOk");
+		MC_ProfileOk(callback,$location,$route,$scope);
+	}
+}
+
+function save_MC_UseOk()
+{
+	db.transaction(function(tx) 
+	{
+		tx.executeSql('INSERT INTO "reponses" (sid, reponse,envoi) VALUES ("useOK","ok",1)');
+	}); //fin db.transaction
+}
+
+/////////////////////////////////////////////////////////////////////
+//Functions MC_ProfileOk
+/////////////////////////////////////////////////////////////////////
+function MC_ProfileOk(callback,$location,$route,$scope){
+//function MC_ProfileOk($location,$route){
+	if (MC_ProfileOk)
+	{
+		console.log('MC_ProfileOk');
+		db.transaction(function(tx) 
+		{
+			(function ($location,$scope) { 
+				//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
+				tx.executeSql('SELECT * FROM "reponses" where sid = "'+quiz_profile+'" AND reponse = "done";', [], function(tx, res) {
+					console.log(res);
+					var dataset = res.rows.length;
+		            if(dataset<1)
+					//if (res.rows.item(0).cnt < 1)
+					{
+						console.log('MC_ProfileOk:false');
+						//Change path
+						$location.path('/profileok'); 
+						$route.reload();
+						$scope.profileok = "page1";
+						if (callback)
+							callback(true,"MC_ProfileOk_false");
+						//return false;
+					}
+					else
+					{
+						console.log('MC_ProfileOk:true');
+						//callback(null,"MC_UseOk_true");
 						return true;
 					}
 						
 				});//fin select
-			})($location);
+			})($location,$scope);
 		}); //fin db.transaction
 	}
 	else
+	{
 		//ok
-		callback(null,"no_MC_UseOk");
+		if (callback)
+			callback(null,"no_MC_ProfileOk");
+		$location.path('/'); 
+	}
 }
 
-testi = 0;
-function test(callback,value){
-//var test = function(tx,value){
-	testi = testi + 1;
-	console.log(testi);
-	console.log(value);
-	console.log("fin?");
-	callback(null, 'test');
-}
 
 /////////////////////////////////////////////////////////////////////
 //Functions Debug
