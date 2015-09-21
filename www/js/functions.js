@@ -165,7 +165,8 @@ function getQuestionsBySID($scope,sid,current,callback)
 	if (debug)
 		alert('getQuestionsBySID');
 	db.transaction(function(tx) {
-		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+(current-1)+','+current+';', [], function(tx, res) {
+		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+(current-1)+','+current+';');
+		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+(current-1)+',1;', [], function(tx, res) {
 			if (debug)
 				alert('getQuestionsBySID');
 			if (debug) alert('scope getQuestionsByGroupe1');
@@ -177,6 +178,7 @@ function getQuestionsBySID($scope,sid,current,callback)
 			{
 				console.log('fin');
 				$scope.quiz.actif = 'fin';
+				callback(null,'fin');
 			}
 			else
 				
@@ -219,7 +221,9 @@ function getQuestionsBySID($scope,sid,current,callback)
 	
 }
 
-function displayQuestionTemplate($scope,sid,current){
+function displayQuestionTemplate($route,$location,$scope,sid,current){
+	console.log('displayQuestionTemplate');
+	console.log($scope.quiz);
 		console.log(current);
 		if (debug)
 			alert('displayQuestionTemplate');
@@ -230,13 +234,26 @@ function displayQuestionTemplate($scope,sid,current){
 		],
 			 
 			function(err, results ){	
+			 console.log('ici');
 			 	
-				console.log(results);
+			 	if ($scope.quiz.actif == "fin")
+			 		if ($scope.quiz.sid == quiz_profile)
+			 		{
+			 			console.log('fin profile');
+			 			//TODO: fonction envoi.
+			 			//go to home
+			 			
+			 			//Change path
+						$location.path('/home'); 
+						$route.reload();
+			 		}
+			 	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+			/*	console.log(results);
 				if (debug) alert(JSON.stringify($scope.quiz));
 				var timestamp = Math.round(new Date().getTime() / 1000);
 			 	$scope.quiz.tsdeb = timestamp;
 				$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
-				console.log($scope.quiz);
+				console.log($scope.quiz);*/
 		}
 		);//fin  async.series
 

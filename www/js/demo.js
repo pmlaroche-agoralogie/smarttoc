@@ -27,7 +27,7 @@ var app = angular.module('MobileAngularUiExamples', [
 // 
 app.config(function($routeProvider) {
   $routeProvider.when('/',              {templateUrl: 'templates/home.html', reloadOnSearch: false});
-  $routeProvider.when('/scroll',        {templateUrl: 'templates/scroll.html', reloadOnSearch: false}); 
+ /* $routeProvider.when('/scroll',        {templateUrl: 'templates/scroll.html', reloadOnSearch: false}); 
   $routeProvider.when('/toggle',        {templateUrl: 'templates/toggle.html', reloadOnSearch: false}); 
   $routeProvider.when('/tabs',          {templateUrl: 'templates/tabs.html', reloadOnSearch: false}); 
   $routeProvider.when('/accordion',     {templateUrl: 'templates/accordion.html', reloadOnSearch: false}); 
@@ -35,168 +35,12 @@ app.config(function($routeProvider) {
   $routeProvider.when('/forms',         {templateUrl: 'templates/forms.html', reloadOnSearch: false});
   $routeProvider.when('/dropdown',      {templateUrl: 'templates/dropdown.html', reloadOnSearch: false});
   $routeProvider.when('/drag',          {templateUrl: 'templates/drag.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});
+  $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});*/
   $routeProvider.when('/useok',      	{templateUrl: 'templates/useok.html', reloadOnSearch: false});
   $routeProvider.when('/profileok',     {templateUrl: 'templates/profileok.html', reloadOnSearch: false});
   $routeProvider.when('/quiz',     		{templateUrl: 'templates/quiz.html', reloadOnSearch: false});
   $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
 });
-
-
-
-
-//
-// `$drag` example: drag to dismiss
-//
-app.directive('dragToDismiss', function($drag, $parse, $timeout){
-  return {
-    restrict: 'A',
-    compile: function(elem, attrs) {
-      var dismissFn = $parse(attrs.dragToDismiss);
-      return function(scope, elem, attrs){
-        var dismiss = false;
-
-        $drag.bind(elem, {
-          constraint: {
-            minX: 0, 
-            minY: 0, 
-            maxY: 0 
-          },
-          move: function(c) {
-            if( c.left >= c.width / 4) {
-              dismiss = true;
-              elem.addClass('dismiss');
-            } else {
-              dismiss = false;
-              elem.removeClass('dismiss');
-            }
-          },
-          cancel: function(){
-            elem.removeClass('dismiss');
-          },
-          end: function(c, undo, reset) {
-            if (dismiss) {
-              elem.addClass('dismitted');
-              $timeout(function() { 
-                scope.$apply(function() {
-                  dismissFn(scope);  
-                });
-              }, 400);
-            } else {
-              reset();
-            }
-          }
-        });
-      };
-    }
-  };
-});
-
-//
-// Another `$drag` usage example: this is how you could create 
-// a touch enabled "deck of cards" carousel. See `carousel.html` for markup.
-//
-app.directive('carousel', function(){
-  return {
-    restrict: 'C',
-    scope: {},
-    controller: function($scope) {
-      this.itemCount = 0;
-      this.activeItem = null;
-
-      this.addItem = function(){
-        var newId = this.itemCount++;
-        this.activeItem = this.itemCount == 1 ? newId : this.activeItem;
-        return newId;
-      };
-
-      this.next = function(){
-        this.activeItem = this.activeItem || 0;
-        this.activeItem = this.activeItem == this.itemCount - 1 ? 0 : this.activeItem + 1;
-      };
-
-      this.prev = function(){
-        this.activeItem = this.activeItem || 0;
-        this.activeItem = this.activeItem === 0 ? this.itemCount - 1 : this.activeItem - 1;
-      };
-    }
-  };
-});
-
-app.directive('carouselItem', function($drag) {
-  return {
-    restrict: 'C',
-    require: '^carousel',
-    scope: {},
-    transclude: true,
-    template: '<div class="item"><div ng-transclude></div></div>',
-    link: function(scope, elem, attrs, carousel) {
-      scope.carousel = carousel;
-      var id = carousel.addItem();
-      
-      var zIndex = function(){
-        var res = 0;
-        if (id == carousel.activeItem){
-          res = 2000;
-        } else if (carousel.activeItem < id) {
-          res = 2000 - (id - carousel.activeItem);
-        } else {
-          res = 2000 - (carousel.itemCount - 1 - carousel.activeItem + id);
-        }
-        return res;
-      };
-
-      scope.$watch(function(){
-        return carousel.activeItem;
-      }, function(n, o){
-        elem[0].style['z-index']=zIndex();
-      });
-      
-
-      $drag.bind(elem, {
-        constraint: { minY: 0, maxY: 0 },
-        adaptTransform: function(t, dx, dy, x, y, x0, y0) {
-          var maxAngle = 15;
-          var velocity = 0.02;
-          var r = t.getRotation();
-          var newRot = r + Math.round(dx * velocity);
-          newRot = Math.min(newRot, maxAngle);
-          newRot = Math.max(newRot, -maxAngle);
-          t.rotate(-r);
-          t.rotate(newRot);
-        },
-        move: function(c){
-          if(c.left >= c.width / 4 || c.left <= -(c.width / 4)) {
-            elem.addClass('dismiss');  
-          } else {
-            elem.removeClass('dismiss');  
-          }          
-        },
-        cancel: function(){
-          elem.removeClass('dismiss');
-        },
-        end: function(c, undo, reset) {
-          elem.removeClass('dismiss');
-          if(c.left >= c.width / 4) {
-            scope.$apply(function() {
-              carousel.next();
-            });
-          } else if (c.left <= -(c.width / 4)) {
-            scope.$apply(function() {
-              carousel.next();
-            });
-          }
-          reset();
-        }
-      });
-    }
-  };
-});
-
-function alertDismissed() {
-    // do something
-	//alert('rr');
-}
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route){
 	
@@ -218,8 +62,6 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		               	
 	              	//test useOk
 	              	function(callback){do_MC_UseOk(callback,$location,$route,$scope);},
-	              	/*function(callback){console.log('loc5 '+$location);
-					console.log('loc5 '+JSON.stringify($location));console.log('toto');alert('toto');$location.path('/scroll');$route.reload();}*/
 	        ],	   				 
 			function(err, results ){
 					console.log(results);
@@ -272,12 +114,12 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_profile)
 				$scope.quiz.sid = quiz_profile;
 			$scope.quiz.actif = true;
-			displayQuestionTemplate($scope,$scope.quiz.sid,1);
+			displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
 			//Change path
 			$location.path('/quiz'); 
 			$route.reload();
 		}
-		else if ($scope.profileok = "quiz")
+		/*else if ($scope.profileok = "quiz")
 		{
 			if ($scope.quiz === undefined)
 				$scope.quiz ={};
@@ -287,7 +129,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			console.log('SCOPE2');
 			console.log(JSON.stringify($scope.quiz));
 
-		}
+		}*/
 		if (debug) alert(JSON.stringify($scope.quiz));
 		console.log('SCOPE');
 		console.log(JSON.stringify($scope.quiz));
@@ -306,7 +148,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		   				 
                		function(err, results ){		 	
 							$( "input" ).prop( "checked", false );
-							displayQuestionTemplate($scope,$scope.quiz.sid,$scope.quiz.next);
+							displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,$scope.quiz.next);
    			 			console.log(results);
    		         }
    		 );//fin  async.series
@@ -317,117 +159,13 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 					{
 							//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
 							tx.executeSql('INSERT INTO "reponses" (sid, gid,qid, reponse,tsreponse) VALUES ("'+res.rows.item(current).sid+'","'+res.rows.item(current).gid+'","'+res.rows.item(current).qid+'","'+rep+'","'+timestamp+'");', [], function(tx, res) {});//insert
-					});//Transaction*/
+					});//Transaction*/		
 
-			
-				
+		}//FIN BUTTON NEXT Quiz
 
-		}
 
-  // User agent displayed in home page
-  $scope.userAgent = navigator.userAgent;
-  
-  // Needed for the loading screen
-  $rootScope.$on('$routeChangeStart', function(){
-    $rootScope.loading = true;
-  });
+}); // fin MainController
 
-  $rootScope.$on('$routeChangeSuccess', function(){
-    $rootScope.loading = false;
-  });
-  
-  //Change path
-  //$location.path('/scroll'); 
-  
- // console.log($rootScope);
-  
- 
-  // Fake text i used here and there.
-  $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
-
-  // 
-  // 'Scroll' screen
-  // 
-  var scrollItems = [];
-
-  for (var i=1; i<=100; i++) {
-    scrollItems.push('Item ' + i);
-  }
-
-  $scope.scrollItems = scrollItems;
-
-  $scope.bottomReached = function() {
-    alert('Congrats you scrolled to the end of the list!');
-  }
-
-  // 
-  // Right Sidebar
-  // 
-  $scope.chatUsers = [
-    { name: 'Carlos  Flowers', online: true },
-    { name: 'Byron Taylor', online: true },
-    { name: 'Jana  Terry', online: true },
-    { name: 'Darryl  Stone', online: true },
-    { name: 'Fannie  Carlson', online: true },
-    { name: 'Holly Nguyen', online: true },
-    { name: 'Bill  Chavez', online: true },
-    { name: 'Veronica  Maxwell', online: true },
-    { name: 'Jessica Webster', online: true },
-    { name: 'Jackie  Barton', online: true },
-    { name: 'Crystal Drake', online: false },
-    { name: 'Milton  Dean', online: false },
-    { name: 'Joann Johnston', online: false },
-    { name: 'Cora  Vaughn', online: false },
-    { name: 'Nina  Briggs', online: false },
-    { name: 'Casey Turner', online: false },
-    { name: 'Jimmie  Wilson', online: false },
-    { name: 'Nathaniel Steele', online: false },
-    { name: 'Aubrey  Cole', online: false },
-    { name: 'Donnie  Summers', online: false },
-    { name: 'Kate  Myers', online: false },
-    { name: 'Priscilla Hawkins', online: false },
-    { name: 'Joe Barker', online: false },
-    { name: 'Lee Norman', online: false },
-    { name: 'Ebony Rice', online: false }
-  ];
-
-  //
-  // 'Forms' screen
-  //  
-  $scope.rememberMe = true;
-  $scope.email = 'me@example.com';
-  
-  $scope.login = function() {
-    alert('You submitted the login form');
-  };
-
-  // 
-  // 'Drag' screen
-  // 
-  $scope.notices = [];
-  
-  for (var j = 0; j < 10; j++) {
-    $scope.notices.push({icon: 'envelope', message: 'Notice ' + (j + 1) });
-  }
-
-  $scope.deleteNotice = function(notice) {
-    var index = $scope.notices.indexOf(notice);
-    if (index > -1) {
-      $scope.notices.splice(index, 1);
-    }
-  };
-});
-/*app.controller('FormCtrl', function($rootScope, $scope,$location){
-	console.log('form');
-	console.log(testglobal);
-	 $location.path('/toggle'); 
-});*/
-
-/* $rootScope.$apply(function() {
-
-$location.path('/scroll'); 
-//console.log($location.path());
-});*/
 
 //CHARTS
 app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
@@ -656,14 +394,11 @@ app.directive("groupe", function() {
 	        if ($scope.groupe.qtype == "N")
 	        {
 	        	if ($scope.groupe.config.tpl == "radio")
-	          //return myLocalized.partials + "tpl_radio.tpl.html";
 	        		return "templates/tpl_radio.tpl.html";
 	        	if ($scope.groupe.config.tpl == "slider")
-		          //return myLocalized.partials + "tpl_radio.tpl.html";
 		        	return "templates/tpl_slide.tpl.html";
 	        	if ($scope.groupe.config.tpl == "texte")
-			          //return myLocalized.partials + "tpl_radio.tpl.html";
-			        	return "templates/tpl_text.tpl.html";
+			        return "templates/tpl_text.tpl.html";
 	        }
 	      }
 	    }
