@@ -160,6 +160,154 @@ function insertQuestionnaire(res,callback){
 }
 
 
+function getQuestionsBySID($scope,sid,current,callback)
+{
+	if (debug)
+		alert('getQuestionsBySID');
+	db.transaction(function(tx) {
+		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+(current-1)+','+current+';', [], function(tx, res) {
+			if (debug)
+				alert('getQuestionsBySID');
+			if (debug) alert('scope getQuestionsByGroupe1');
+			if (debug) alert(JSON.stringify($scope.quiz));
+			console.log('question');
+			//console.log(res);
+			//if (res.rows.item(0).cnt < 1)
+			if (res.rows.length < 1)
+			{
+				console.log('fin');
+				$scope.quiz.actif = 'fin';
+			}
+			else
+				
+			{
+				var groupes = {};
+				var next = 0;
+				groupe = res.rows.item(0);
+				groupe.config = getQuestionConfig(res.rows.item(0)['qhelp-question_config']);
+				groupe.reponses = JSON.parse(decodeURI(res.rows.item(0).answers));
+				groupes[0] = groupe;
+				next = current + 1;
+				$scope.quiz.groupes = groupes;
+				$scope.quiz.next = next;
+				$scope.quiz.actif = true;
+				callback(null,'ok');
+				
+				/*tx.executeSql('SELECT * FROM "questionnaires" WHERE gid = "'+res.rows.item(0)['gid']+'";', [], function(tx, res2) {		
+					if (debug)
+						alert('getQuestionsByGroupe2');
+					var groupes = {};
+					var next = 0;
+					for (var i = 0; i < res2.rows.length; i++)
+		            {
+						groupe = res2.rows.item(i);
+						groupe.config = getQuestionConfig(res2.rows.item(i)['qhelp-question_config']);
+						groupe.reponses = JSON.parse(decodeURI(res2.rows.item(i).answers));
+						groupes[i] = groupe;
+						next = parseInt(res2.rows.item(i).id) + 1;
+		            }
+					$scope.quiz.groupes = groupes;
+					$scope.quiz.next = next;
+					$scope.quiz.actif = true;
+					callback(null,'ok');
+					
+				}); //SELECT GROUPE*/
+			}
+		});//select
+	//},function(tx){callback(true,'err')},function(tx){callback(null,'ok')});//DB transaction
+	});//DB transaction
+	
+}
+
+function displayQuestionTemplate($scope,sid,current){
+		console.log(current);
+		if (debug)
+			alert('displayQuestionTemplate');
+		if (debug)
+			alert(current);
+		
+		 async.series([ function(callback){ getQuestionsBySID($scope,sid,current,callback);}                            
+		],
+			 
+			function(err, results ){	
+			 	
+				console.log(results);
+				if (debug) alert(JSON.stringify($scope.quiz));
+				var timestamp = Math.round(new Date().getTime() / 1000);
+			 	$scope.quiz.tsdeb = timestamp;
+				$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+				console.log($scope.quiz);
+		}
+		);//fin  async.series
+
+}
+
+function saveReponses(quiz,callback)
+{
+	console.log('save');
+	console.log(quiz);
+	var timestamp = Math.round(new Date().getTime() / 1000);
+ 	quiz.tsfin = timestamp;
+	
+
+	db.transaction(function(tx) {
+		console.log('quiz????');
+		console.log(quiz);
+		$.each( quiz.groupes, function( key, groupe ) {
+			console.log(quiz);
+			console.log(groupe);
+			var sql = "";
+			//console.log('save ' + this.attr('monID'));
+			console.log('save groupe ???????????');
+			console.log(groupe);
+			console.log('save groupe !!!!!!!!!!');
+			reponse = "";
+			if (groupe.config.tpl == 'texte')
+			{
+				console.log('save texte');
+				//tx.executeSql('CREATE TABLE IF NOT EXISTS "reponses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT , "idhoraire" VARCHAR, "sid" VARCHAR, "gid" VARCHAR, "qid" VARCHAR, "reponse" VARCHAR, "tsreponse_deb" INTEGER, "tsreponse_fin" INTEGER, "envoi" BOOLEAN not null default 0);');
+				
+				reponse = $('.question[monID="'+groupe.qid+'"] input').val();
+				
+			}
+			if (groupe.config.tpl == 'radio')
+			{
+				
+				console.log('save radio');
+				reponse = $('.question[monID="'+groupe.qid+'"] input:checked').val();
+			}
+			if (groupe.config.tpl == 'slider')
+			{
+				console.log('save slider');
+				reponse = $('.question[monID="'+groupe.qid+'"] input').val();
+			}
+			//sql ='INSERT INTO "reponses" (idhoraire,sid, gid,qid, reponse, tsreponse_deb,tsreponse_fin) '+
+			sql ='INSERT INTO "reponses" (idhoraire,sid, gid,qid, reponse,tsreponse) '+
+			
+			'VALUES('+
+			'"'+quiz.uuid+'",'+ //uuid
+			'"'+groupe.sid+'",'+ // sid
+			'"'+groupe.gid+'",'+ //gid
+			'"'+groupe.qid+'",'+ //qid
+			'"'+reponse+'",'+ //reponse
+			//''+quiz.tsdeb+','+ //tsreponse_deb
+			''+quiz.tsfin+''+ //tsreponse_fin
+			');';
+			
+			console.log(sql);
+			if (sql != "")
+			{
+				
+					(function (reqSql) { 
+						tx.executeSql(reqSql,[], successHandler, errorHandler);// requête
+					})(sql);
+			
+			}
+		});
+	},function(tx){callback(true,'err')},function(tx){callback(null,'ok')});// DB TRANSACTION
+	//});// DB TRANSACTION
+}
+
 
 ////////////////////
 //Functions after_init
@@ -290,4 +438,46 @@ function alertDebug(message)
 		);
 	else
 		alert(message);
+}
+
+/////////////////////////////////////////////////////////////////////
+//Functions Decode
+/////////////////////////////////////////////////////////////////////
+
+function getSurveyConfig()
+{
+	var config = {};
+	var strSurveyConfig = surveys_languagesettings[0].surveyls_description;
+	//alert(surveys_languagesettings[0].surveyls_description);
+	var line = strSurveyConfig.split("#");
+	for (var linekey in line)
+	{
+		line2 = line[linekey].split(":");
+		if (line2[0]!= "")
+		{
+			line20=line2[0];
+			line21=line2[1];
+			config[line20] = line21;
+		}
+	}
+	return config;
+}
+
+function getQuestionConfig(qhelp)
+{
+	var config = {};
+	//var strSurveyConfig = question.help;
+	//alert(surveys_languagesettings[0].surveyls_description);
+	var line = qhelp.split("#");
+	for (var linekey in line)
+	{
+		line2 = line[linekey].split(":");
+		if (line2[0]!= "")
+		{
+			line20=line2[0];
+			line21=line2[1];
+			config[line20] = line21;
+		}
+	}
+	return config;
 }

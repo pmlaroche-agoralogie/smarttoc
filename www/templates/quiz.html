@@ -1,0 +1,44 @@
+<div class="scrollable">  
+  <div class="scrollable-content">
+
+    <div class="list-group text-center">
+      <div class="list-group-item list-group-item-home">
+        <h1>Demo ProfileOK ?</h1>
+      </div>
+      <div class="list-group-item list-group-item-home media">
+        <div>
+          <i class="fa fa-gamepad feature-icon text-primary"></i>
+        </div>
+        <div class="media-body">
+		<div ng-if="quiz.actif == true">
+	         GROUPE
+	       <groupe ng-repeat="groupe in quiz.groupes" data="groupe">
+			  <!-- Include template dyn -->	
+			  toto
+			</groupe>
+			<button class="btn btn-primary" ng-click="nextQuiz($event)">Next</button>
+	 	</div>
+	 	 <div ng-if="quiz.actif == 'getID'">
+	 	 	getID
+	 	 	<groupe ng-repeat="groupe in quiz.groupes" data="groupe">
+			  <!-- Include template dyn -->	
+			  toto
+			</groupe>
+		 	
+		 	  <button class="btn btn-primary" ng-click="goToStartQuiz($event)">Go to Start</button>
+		 	  <button class="btn btn-primary" ng-click="sendQuiz($event)">send reuslts</button>
+	 	 </div>
+	 	<div ng-if="quiz.actif == 'fin'">
+
+	       Fin
+			<button class="btn btn-primary" ng-click="finQuiz($event)">Fin</button>
+	 	</div>
+		 <button class="btn btn-primary" ng-click="nextProfile($event)">Suivant</button>
+    
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+</div>

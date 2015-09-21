@@ -5,6 +5,7 @@
 var app = angular.module('MobileAngularUiExamples', [
   'Cordova',                                                   
   'ngRoute',
+  'ngSanitize',
   'mobile-angular-ui',
   
   // touch/drag feature: this is from 'mobile-angular-ui.gestures.js'
@@ -37,6 +38,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});
   $routeProvider.when('/useok',      	{templateUrl: 'templates/useok.html', reloadOnSearch: false});
   $routeProvider.when('/profileok',     {templateUrl: 'templates/profileok.html', reloadOnSearch: false});
+  $routeProvider.when('/quiz',     		{templateUrl: 'templates/quiz.html', reloadOnSearch: false});
   $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
 });
 
@@ -252,6 +254,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		}
 	};
 	
+	/////////////
+	//BUTTON NEXT PROFILE
 	$scope.nextProfile = function(clickEvent){
 		console.log('nextProfile');
 		if ($scope.profileok == "page1")
@@ -261,8 +265,64 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		else if ($scope.profileok == "page3")
 			$scope.profileok = "page4";
 		else if ($scope.profileok == "page4")
+		{
 			$scope.profileok = "quiz";
-	}
+			if ($scope.quiz === undefined)
+				$scope.quiz ={};
+			if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_profile)
+				$scope.quiz.sid = quiz_profile;
+			$scope.quiz.actif = true;
+			displayQuestionTemplate($scope,$scope.quiz.sid,1);
+			//Change path
+			$location.path('/quiz'); 
+			$route.reload();
+		}
+		else if ($scope.profileok = "quiz")
+		{
+			if ($scope.quiz === undefined)
+				$scope.quiz ={};
+			console.log("quiz");
+			if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_profile)
+				$scope.quiz.sid = quiz_profile;
+			console.log('SCOPE2');
+			console.log(JSON.stringify($scope.quiz));
+
+		}
+		if (debug) alert(JSON.stringify($scope.quiz));
+		console.log('SCOPE');
+		console.log(JSON.stringify($scope.quiz));
+			
+			
+	}//FIN BUTTON NEXT PROFILE
+	
+	/////////////
+	//BUTTON NEXT Quiz
+	$scope.nextQuiz = function(clickEvent){
+			//save
+			quiz = $scope.quiz;
+			async.series([	
+			              function(callback){ saveReponses(quiz,callback);},
+		               	],
+		   				 
+               		function(err, results ){		 	
+							$( "input" ).prop( "checked", false );
+							displayQuestionTemplate($scope,$scope.quiz.sid,$scope.quiz.next);
+   			 			console.log(results);
+   		         }
+   		 );//fin  async.series
+			/*console.log($("input[name="+res.rows.item(current).qid+"]:checked").attr("value"));
+			rep = $("input[name="+res.rows.item(current).qid+"]:checked").attr("value");*/
+		//	var timestamp = Math.round(new Date().getTime() / 1000);
+		/*	db.transaction(function(tx) 
+					{
+							//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
+							tx.executeSql('INSERT INTO "reponses" (sid, gid,qid, reponse,tsreponse) VALUES ("'+res.rows.item(current).sid+'","'+res.rows.item(current).gid+'","'+res.rows.item(current).qid+'","'+rep+'","'+timestamp+'");', [], function(tx, res) {});//insert
+					});//Transaction*/
+
+			
+				
+
+		}
 
   // User agent displayed in home page
   $scope.userAgent = navigator.userAgent;
@@ -575,6 +635,40 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 	 // });// $scope.$on
 });
 
+
+//DYN TEMPLATE
+/**GESTION TEMPLATE DYN **/
+app.directive("groupe", function() {
+	return {
+	    template: '<ng-include src="getTemplateUrl()"/>',
+	    //scope: {},
+    	//transclude: true,
+	    scope: {
+	      groupe: '=data'
+	    },
+	    restrict: 'E',
+	  //  scope: true,
+	    controller: function($scope, $element, $attrs) {
+	      //function used on the ng-include to resolve the template
+	      $scope.getTemplateUrl = function() {
+	    	  console.log('template dyn');
+	        //switch template
+	        if ($scope.groupe.qtype == "N")
+	        {
+	        	if ($scope.groupe.config.tpl == "radio")
+	          //return myLocalized.partials + "tpl_radio.tpl.html";
+	        		return "templates/tpl_radio.tpl.html";
+	        	if ($scope.groupe.config.tpl == "slider")
+		          //return myLocalized.partials + "tpl_radio.tpl.html";
+		        	return "templates/tpl_slide.tpl.html";
+	        	if ($scope.groupe.config.tpl == "texte")
+			          //return myLocalized.partials + "tpl_radio.tpl.html";
+			        	return "templates/tpl_text.tpl.html";
+	        }
+	      }
+	    }
+	  };
+	});
 
 //CORDOVA
 angular.module('Cordova', [])
