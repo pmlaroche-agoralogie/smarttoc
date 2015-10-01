@@ -6,42 +6,53 @@
         <h1>Demo ProfileOK ?</h1>
       </div>
       <div class="list-group-item list-group-item-home media">
-        <div>
-          <i class="fa fa-gamepad feature-icon text-primary"></i>
-        </div>
+
         <div class="media-body">
         <div ng-if="profileok == 'page1'">
-        page1
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultrices iaculis posuere. Ut ultrices sem enim, eu mattis libero luctus at. Vivamus at lorem ligula. Morbi ac erat augue. Donec nibh erat, tristique a mattis eu, tempus et ligula. Suspendisse viverra eros vitae pretium egestas. Etiam quis augue sed erat convallis rhoncus id auctor nibh. Ut leo eros, sagittis eu nibh quis, interdum sodales leo.
-
-		Sed in mi ac risus tempus laoreet. Nullam vehicula maximus ligula ac condimentum. Vivamus vel arcu rhoncus sapien fermentum maximus. Suspendisse elementum facilisis condimentum. Pellentesque posuere, nunc eget vehicula vestibulum, dolor magna blandit dui, id posuere tellus tortor eget lacus. Praesent in ipsum sed orci imperdiet tristique. Cras faucibus metus massa, vel vehicula mauris tincidunt eget.
-        
+        <strong>Bonjour et bienvenue dans votre journal de bord Multicollect !</strong>
+		<br/><br/>
+		Ce journal de bord va vous permettre de suivre votre évolution au quotidien. 
+		Je vous poserai des questions soit le matin soit le soir. Vous aurez 20 minutes pour y répondre, 
+		sauf le dimanche, où vous pourrez y répondre à n’importe quel moment de la journée. 
         </div>
          <div ng-if="profileok == 'page2'">
-        page2
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultrices iaculis posuere. Ut ultrices sem enim, eu mattis libero luctus at. Vivamus at lorem ligula. Morbi ac erat augue. Donec nibh erat, tristique a mattis eu, tempus et ligula. Suspendisse viverra eros vitae pretium egestas. Etiam quis augue sed erat convallis rhoncus id auctor nibh. Ut leo eros, sagittis eu nibh quis, interdum sodales leo.
-
-		Sed in mi ac risus tempus laoreet. Nullam vehicula maximus ligula ac condimentum. Vivamus vel arcu rhoncus sapien fermentum maximus. Suspendisse elementum facilisis condimentum. Pellentesque posuere, nunc eget vehicula vestibulum, dolor magna blandit dui, id posuere tellus tortor eget lacus. Praesent in ipsum sed orci imperdiet tristique. Cras faucibus metus massa, vel vehicula mauris tincidunt eget.
-        
+        À chaque fois que j’aurai des questions à vous poser, je vous préviendrai par une notification 
+        sur votre téléphone et si je n’ai pas de nouvelles de vous après quelques minutes, je peux vous écrire un sms. 
+		<br/><br/>
+		Bien sûr, je peux comprendre que parfois vous ne soyez pas disponible ou que vous n’ayez pas envie de répondre. 
+		J’attendrai donc le lendemain pour prendre de vos nouvelles.
         </div>
         <div ng-if="profileok == 'page3'">
-        page3
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultrices iaculis posuere. Ut ultrices sem enim, eu mattis libero luctus at. Vivamus at lorem ligula. Morbi ac erat augue. Donec nibh erat, tristique a mattis eu, tempus et ligula. Suspendisse viverra eros vitae pretium egestas. Etiam quis augue sed erat convallis rhoncus id auctor nibh. Ut leo eros, sagittis eu nibh quis, interdum sodales leo.
-
-		Sed in mi ac risus tempus laoreet. Nullam vehicula maximus ligula ac condimentum. Vivamus vel arcu rhoncus sapien fermentum maximus. Suspendisse elementum facilisis condimentum. Pellentesque posuere, nunc eget vehicula vestibulum, dolor magna blandit dui, id posuere tellus tortor eget lacus. Praesent in ipsum sed orci imperdiet tristique. Cras faucibus metus massa, vel vehicula mauris tincidunt eget.
-        
+        Pour que je puisse vous envoyer un sms quand vous n’avez pas vu que j’avais une question à vous poser, 
+        inscrivez votre numéro ci-dessous, sinon passez directement à la suite.
+        <input type='text'>
         </div>
         <div ng-if="profileok == 'page4'">
-        page4
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultrices iaculis posuere. Ut ultrices sem enim, eu mattis libero luctus at. Vivamus at lorem ligula. Morbi ac erat augue. Donec nibh erat, tristique a mattis eu, tempus et ligula. Suspendisse viverra eros vitae pretium egestas. Etiam quis augue sed erat convallis rhoncus id auctor nibh. Ut leo eros, sagittis eu nibh quis, interdum sodales leo.
-
-		Sed in mi ac risus tempus laoreet. Nullam vehicula maximus ligula ac condimentum. Vivamus vel arcu rhoncus sapien fermentum maximus. Suspendisse elementum facilisis condimentum. Pellentesque posuere, nunc eget vehicula vestibulum, dolor magna blandit dui, id posuere tellus tortor eget lacus. Praesent in ipsum sed orci imperdiet tristique. Cras faucibus metus massa, vel vehicula mauris tincidunt eget.
-        
+        Pour commencer, je vous propose de remplir un bref questionnaire pour mieux vous connaître. 
+        </div>
+        <div ng-if="profileok == 'page5'">
+        A présent, voici votre identifiant Multicollect :
+		<br/><br/>
+		XXXXXXXX
+		<br/><br/>
+		Veuillez le noter : il vous servira à récupérer vos données en cas de problème avec votre téléphone. 
+		<button class="btn btn-primary" ng-click="">M’envoyer un mail avec mon identifiant</button>
+        </div>
+        <div ng-if="profileok == 'page6'">
+        Bravo ! Vous avez terminé la configuration de Multicollect et j’ai toutes les informations dont j’ai besoin.
+		<br/><br/>
+		Vous pouvez fermer l’application ou revenir à l’accueil. Je me signalerai lorsque j’aurai une question à vous poser.
         </div>
         <div ng-if="profileok == 'quiz'">
         QUIZ
         </div>
-		 <button class="btn btn-primary" ng-click="nextProfile($event)">Suivant</button>
+        <br/><br/>
+         <div ng-if="profileok != 'page6'">
+			<button class="btn btn-primary" ng-click="nextProfile($event)">Suivant</button>
+		</div>
+		<div ng-if="profileok == 'page6'">
+			<button class="btn btn-primary" ng-click="nextProfile($event)">Retourner à l’accueil</button>
+		</div>
     
         </div>
       </div>

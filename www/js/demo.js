@@ -58,6 +58,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		               	
 	              	//create db content
 	              	function(callback){createQuestionnairesSuccess(callback);},
+	              	function(callback){createHorairesSuccess(callback);},
 	              	//TODO : horaires
 		               	
 	              	//test useOk
@@ -119,6 +120,15 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			$location.path('/quiz'); 
 			$route.reload();
 		}
+		else if ($scope.profileok == "page5")
+		{
+			$scope.profileok = "page6";
+		}
+		else if ($scope.profileok == "page6")
+		{
+			$location.path('/'); 
+			$route.reload();
+		}
 		/*else if ($scope.profileok = "quiz")
 		{
 			if ($scope.quiz === undefined)
@@ -137,6 +147,36 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			
 	}//FIN BUTTON NEXT PROFILE
 	
+	$scope.startQuoti = function(clickEvent){
+		if ($scope.quiz === undefined)
+			$scope.quiz ={};
+		$scope.quiz.actif = true;
+		if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_quotidien)
+			$scope.quiz.sid = quiz_quotidien;
+		$scope.quiz.actif = true;
+		console.log('startQuoti');
+		console.log($scope);
+		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
+		//Change path
+		$location.path('/quiz'); 
+		$route.reload();
+		
+	}// fin startQuoti
+	
+	
+	$scope.startHebdo = function(clickEvent){
+		if ($scope.quiz === undefined)
+			$scope.quiz ={};
+		$scope.quiz.actif = true;
+		if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_hebdo)
+			$scope.quiz.sid = quiz_hebdo;
+		
+		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
+		//Change path
+		$location.path('/quiz'); 
+		$route.reload();
+		
+	}// fin startQuoti
 	/////////////
 	//BUTTON NEXT Quiz
 	$scope.nextQuiz = function(clickEvent){
@@ -163,6 +203,10 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 
 		}//FIN BUTTON NEXT Quiz
 
+	$scope.finQuiz = function(clickEvent){
+		$location.path('/'); 
+		$route.reload();
+	}
 
 }); // fin MainController
 

@@ -110,6 +110,54 @@ function createQuestionnairesSuccess(callback){
 		alertDebug("createQuestionnairesSuccess");
 };
 
+function createHorairesSuccess(callback)
+{
+	console.log('createHorairesSuccess');
+	//tx.executeSql('CREATE TABLE IF NOT EXISTS "horaires" ("id" INTEGER PRIMARY KEY AUTOINCREMENT ,
+	//"uidquestionnaire" VARCHAR, "tsdebut" INTEGER, "dureevalidite" INTEGER, "notification" INTEGER, "fait" INTEGER);');      
+	xhr_object = new XMLHttpRequest(); 
+	xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
+	xhr_object.open("GET", "http://restitution.altotoc.fr/horaires_smarttocv1.php", true);  
+	xhr_object.send(null); 
+	xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
+	xhr_object.onreadystatechange = function () {
+		if(xhr_object.readyState == 4) 
+		{
+			
+			//setTimeout(function() {
+			console.log('Id récupéré !');
+			console.log(xhr_object);
+			console.log(xhr_object.response);
+			var MyHoraires = JSON.parse(xhr_object.response);
+			db.transaction(function(tx) 
+			{  
+				for(var k in MyHoraires) {
+					   console.log(k, MyHoraires[k]);
+					   console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = "'+MyHoraires[k].ts+'"');
+					   (function (value) { 
+					   tx.executeSql('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = "'+MyHoraires[k].ts+'";', [], function(tx, res) {
+						   if (res.rows.item(0).cnt < 1)
+						   {
+							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut) VALUES("'+
+									   value.sid+'","'+
+									   value.ts+'");',[], successHandler, errorHandler);
+						   }
+					   },createQuestionnairesError); //SELECT COUNT
+					   })(MyHoraires[k]);
+					   
+				}
+			},function(tx){callback(true,'setHorairesError')},function(tx){callback(null,'setHorairesSuccess')});
+			//});//DB TRANSACTION
+			/*$scope.userId = xhr_object.response;
+			$scope.encours = false;
+			//$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+			callback(null,'idok');*/
+			//},1250);
+		}
+	}
+}
+
+
 function createQuestionnairesError(tx, error) {
     console.log("createQuestionnairesError: " + error.message);
 }
@@ -241,10 +289,15 @@ function displayQuestionTemplate($route,$location,$scope,sid,current){
 			 		{
 			 			console.log('fin profile');
 			 			//TODO: fonction envoi.
-			 			//go to home
+			 			
+			 			//TODO: fonction enregistre fin.
+			 			save_MC_ProfileOk();
+			 			
+			 			//go to next profile
+			 			$scope.profileok = "page5";
 			 			
 			 			//Change path
-						$location.path('/home'); 
+						$location.path('/profileok'); 
 						$route.reload();
 			 		}
 			 	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
@@ -436,6 +489,14 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 			callback(null,"no_MC_ProfileOk");
 		$location.path('/'); 
 	}
+}
+
+function save_MC_ProfileOk()
+{
+	db.transaction(function(tx) 
+	{
+		tx.executeSql('INSERT INTO "reponses" (sid, reponse,envoi) VALUES ("'+quiz_profile+'","done",1)');
+	}); //fin db.transaction
 }
 
 
