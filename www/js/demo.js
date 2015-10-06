@@ -437,12 +437,22 @@ app.directive("groupe", function() {
 	        //switch template
 	        if ($scope.groupe.qtype == "N")
 	        {
+	        	
+	        	if ($scope.groupe.config.tpl == "libre_age")
+	        		return "templates/tpl_libre_age.tpl.html";
 	        	if ($scope.groupe.config.tpl == "radio")
 	        		return "templates/tpl_radio.tpl.html";
-	        	if ($scope.groupe.config.tpl == "slider")
-		        	return "templates/tpl_slide.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl1")
+		        	return "templates/tpl_sl1.tpl.html";
 	        	if ($scope.groupe.config.tpl == "texte")
 			        return "templates/tpl_text.tpl.html";
+	        }
+	        if ($scope.groupe.qtype == "L")
+	        {
+	        	if ($scope.groupe.config.tpl == "radio_demo_genre")
+	        		return "templates/tpl_radio_demo_genre.tpl.html";
+	        	if ($scope.groupe.config.tpl == "radio")
+	        		return "templates/tpl_radio.tpl.html";
 	        }
 	      }
 	    }
