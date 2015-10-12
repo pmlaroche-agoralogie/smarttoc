@@ -298,6 +298,7 @@ function displayQuestionTemplate($route,$location,$scope,sid,current){
 			 			
 			 			//Change path
 						$location.path('/profileok'); 
+						$scope.menu = false;
 						$route.reload();
 			 		}
 			 	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
@@ -411,6 +412,7 @@ function do_MC_UseOk(callback,$location,$route,$scope){
 						console.log('MC_UseOk:false');
 						//Change path
 						$location.path('/useok'); 
+						$scope.menu = false;
 						$route.reload();
 						
 						//callback(true,"MC_UseOk_false");
@@ -465,6 +467,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 						console.log('MC_ProfileOk:false');
 						//Change path
 						$location.path('/profileok'); 
+						$scope.menu = false;
 						$route.reload();
 						$scope.profileok = "page1";
 						if (callback)
@@ -474,6 +477,10 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 					else
 					{
 						console.log('MC_ProfileOk:true');
+						//Change path
+						$location.path('/'); 
+						$scope.menu = true;
+						$route.reload();
 						//callback(null,"MC_UseOk_true");
 						return true;
 					}
@@ -488,6 +495,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 		if (callback)
 			callback(null,"no_MC_ProfileOk");
 		$location.path('/'); 
+		$scope.menu = true;
 	}
 }
 

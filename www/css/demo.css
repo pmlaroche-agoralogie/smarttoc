@@ -159,8 +159,140 @@ input.scrollable-header {
   border-bottom: 3px solid #ccc;
 }
 
-/*AJOUT*/
+/****AJOUT*****/
 
+.clear {clear:both}
+
+/*HEADER*/
+div.titre_journal {
+    background: url('../img/spirale.png') top left repeat-x lightgrey;
+    padding: 40px 20px 4px;
+    position: relative;
+    z-index: 1;
+    color: grey;
+    /*height: 40px;*/
+    background-color: lightgrey;
+    font-size: 30px;
+    padding-top: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+/*CONTENU*/
+
+/*BULLE petite fille*/
+
+.bulle {
+	width:90%;
+  position:relative;
+  padding:50px 15px;
+  margin:1em 5% 3em;
+  border:1px solid #333;
+  text-align:center;
+  color:#333;
+  background:#fff;
+  /* css3 */
+  -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+  border-radius:20px;
+  background:#eee;
+}
+
+/* creates larger curve */
+.bulle:before {
+  content:"";
+  position:absolute;
+  z-index:10;
+  bottom:-31px;
+  left:50px;
+  width:50px;
+  height:30px;
+  border-style:solid;
+  border-width:0 1px 1px 0;
+  border-color:#333;
+  background:transparent;
+   background:#eee;
+  /* css3 */
+  -webkit-border-bottom-right-radius:80px 50px;
+  -moz-border-radius-bottomright:80px 50px;
+  border-bottom-right-radius:80px 50px;
+  /* reduce the damage in FF3.0 */
+  display:block;
+}
+
+/* creates smaller curve */
+.bulle:after {
+  content:"";
+  position:absolute;
+  z-index:10;
+  bottom:-31px;
+  left:50px;
+  width:20px;
+  height:30px;
+  border-style:solid;
+  border-width:0 1px 1px 0;
+  border-color:#333;
+  background:transparent;
+   background:white;
+  /* css3 */
+  -webkit-border-bottom-right-radius:40px 50px;
+  -moz-border-radius-bottomright:40px 50px;
+  border-bottom-right-radius:40px 50px;
+  /* reduce the damage in FF3.0 */
+  display:block;
+}
+
+
+
+/* creates a small circle to produce a rounded point where the two curves meet */
+/*.bulle > :first-child:before {
+  content:"";
+  position:absolute;
+  bottom:-40px;
+  left:45px;
+  width:10px;
+  height:10px;
+  background:#5a8f00;
+
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}*/
+
+/* creates a white rectangle to cover part of the oval border*/
+.bulle > :first-child:after {
+  content:"";
+  position:absolute;
+  bottom:-1px;
+  left:70px;
+  width:29px;
+  height:1px;
+  background:#eee;
+}
+
+.bulle p {
+    margin: 0;text-align:left;}
+
+.fille1{background: url('../img/fille1.png') top left no-repeat transparent;width:30%;padding-bottom:30%;background-size:contain;
+	float:left;}
+
+/*USE*/
+.usequestion {float:left;text-align:left;width:70%;}
+.usequestion input {display:none;}
+.usequestion label{width:100%;min-height:40px;}
+.usequestion label{display:flex;}
+.usequestion label .icon{flex:1;width:40px;flex-basis: auto;}
+.usequestion label .txt{flex:10;padding:20px;}
+.usequestion label[for="useok"] .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
+.usequestion label[for="useko"] .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
+input+label .icon{opacity:0.5}
+input:checked+label .icon{opacity:1}
+/*input+label:after{opacity:0.75}
+input:checked+label:after{opacity:1}*/
+
+
+
+/*RANGE*/
 .left {float:left;font-size:20px;}
 .left.bulle {background-image:url(../img/bulle_gauche.jpg);background-repeat:no-repeat;width:141px;height:105px;text-align:center;padding-top:28px;font-size:20px;}
 .left.bulle.une_ligne{height:67px;padding-top:38px;}

@@ -45,6 +45,7 @@ app.config(function($routeProvider) {
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route){
 	
 	$scope.test ="test";
+	$scope.menu = false;
 	
 	//Séquence d'initialisation
 	async.series([	
@@ -70,6 +71,39 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		);//fin  async.series*/
 	 
 	 
+	/////////////
+	//BUTTON USE 
+	$scope.useClick = function(clickEvent){
+		if ($('input[name="useanswer"]:checked').val() == "useOK")
+		{
+			console.log('useOK');
+			//save in BDD
+			save_MC_UseOk();
+			//Et suite
+			MC_ProfileOk(false,$location,$route,$scope);
+		}
+		else
+		{
+			//TODO : Page d'information
+			console.log('useKO');
+			if(isMobile)
+			{
+				console.log('device exit?');
+				if(navigator.app){console.log('navigator.app');
+					navigator.app.exitApp();
+				}else if(navigator.device){
+					console.log('navigator.device');
+					navigator.device.exitApp();
+				}
+			}
+		}
+		//save in BDD
+		/*save_MC_UseOk();
+		//Et suite
+		MC_ProfileOk(false,$location,$route,$scope);*/
+	};
+	
+	
 	/////////////
 	//BUTTON USE OK
 	$scope.useOK = function(clickEvent){
@@ -102,11 +136,11 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.nextProfile = function(clickEvent){
 		console.log('nextProfile');
 		if ($scope.profileok == "page1")
-			$scope.profileok = "page2";
-		else if ($scope.profileok == "page2")
+			$scope.profileok = "page4";
+		/*else if ($scope.profileok == "page2")
 			$scope.profileok = "page3";
 		else if ($scope.profileok == "page3")
-			$scope.profileok = "page4";
+			$scope.profileok = "page4";*/
 		else if ($scope.profileok == "page4")
 		{
 			$scope.profileok = "quiz";
@@ -118,6 +152,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
 			//Change path
 			$location.path('/quiz'); 
+			$scope.menu = false;
 			$route.reload();
 		}
 		else if ($scope.profileok == "page5")
@@ -127,6 +162,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		else if ($scope.profileok == "page6")
 		{
 			$location.path('/'); 
+			$scope.menu = true;
 			$route.reload();
 		}
 		/*else if ($scope.profileok = "quiz")
@@ -159,6 +195,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
 		//Change path
 		$location.path('/quiz'); 
+		$scope.menu = false;
 		$route.reload();
 		
 	}// fin startQuoti
@@ -174,6 +211,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
 		//Change path
 		$location.path('/quiz'); 
+		$scope.menu = false;
 		$route.reload();
 		
 	}// fin startQuoti
@@ -205,6 +243,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 
 	$scope.finQuiz = function(clickEvent){
 		$location.path('/'); 
+		$scope.menu = true;
 		$route.reload();
 	}
 
