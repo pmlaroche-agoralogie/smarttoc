@@ -178,6 +178,27 @@ div.titre_journal {
     z-index: 1;
 }
 
+div.titre_journal div.postit{
+background-image: url('../img/postit_01.png'), url('../img/postit_03.png');
+background-position: center top, center bottom;
+background-repeat: no-repeat,no-repeat;
+background-size : 100%,100%;
+padding: 13% 0 15%;
+}
+div.titre_journal div.question{
+	background-image:  url('../img/postit_02.png');
+background-position: center center;
+background-repeat: repeat-y;
+background-size : 100%;
+background-color : transparent;
+font-size:16px;
+padding: 0 14%;
+}
+div.titre_journal div.question h1{margin:0;padding:0;}
+div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repeat transparent;width:12%;
+	background-size:100%;height:100%;/*max-width:50px;*/position:absolute;z-index:10;top:60px;left:5px;}
+
+
 /*CONTENU*/
 
 /*BULLE petite fille*/
@@ -289,6 +310,7 @@ input+label .icon{opacity:0.5}
 input:checked+label .icon{opacity:1}
 /*input+label:after{opacity:0.75}
 input:checked+label:after{opacity:1}*/
+
 
 
 
