@@ -38,11 +38,12 @@ app.config(function($routeProvider) {
   $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});*/
   $routeProvider.when('/useok',      	{templateUrl: 'templates/useok.html', reloadOnSearch: false});
   $routeProvider.when('/profileok',     {templateUrl: 'templates/profileok.html', reloadOnSearch: false});
+  $routeProvider.when('/quizProfile',    {templateUrl: 'templates/quizprofile.html', reloadOnSearch: false});
   $routeProvider.when('/quiz',     		{templateUrl: 'templates/quiz.html', reloadOnSearch: false});
   $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
 });
 
-app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route){
+app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce){
 	
 	$scope.test ="test";
 	$scope.menu = false;
@@ -75,6 +76,10 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			}
 		);//fin  async.series*/
 	 
+	
+	$scope.toTrustedHTML = function( html ){
+	    return $sce.trustAsHtml( html );
+	}
 	 
 	/////////////
 	//BUTTON USE 
@@ -156,7 +161,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			$scope.quiz.actif = true;
 			displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
 			//Change path
-			$location.path('/quiz'); 
+			$location.path('/quizProfile'); 
 			$scope.menu = false;
 			$route.reload();
 		}
@@ -490,9 +495,10 @@ app.directive("groupe", function() {
 	    template: '<ng-include src="getTemplateUrl()"/>',
 	    //scope: {},
     	//transclude: true,
-	    scope: {
+	    /*scope: {
 	      groupe: '=data'
-	    },
+	    },*/
+	    scope: true,
 	    restrict: 'E',
 	  //  scope: true,
 	    controller: function($scope, $element, $attrs) {
