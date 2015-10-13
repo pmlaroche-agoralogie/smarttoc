@@ -188,6 +188,23 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			
 	}//FIN BUTTON NEXT PROFILE
 	
+	/////////////
+	//BUTTON ENVOI IDENTIFIANT
+	$scope.emailDeviceId = function(clickEvent){
+		console.log('emailDeviceId');
+		cordova.plugins.email.isAvailable(function(result){ 
+        	if (result) //mail dispo
+        	{
+        		cordova.plugins.email.open({
+        			subject: "Votre identifiant Smart'TOC",
+        			body:     'Votre idendifient : '+$scope.deviceID //=> res/drawable/icon (Android)
+        		});
+        	}
+        });
+	}
+	
+	/////////////
+	//BUTTON START QUOTI
 	$scope.startQuoti = function(clickEvent){
 		if ($scope.quiz === undefined)
 			$scope.quiz ={};
@@ -206,6 +223,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	}// fin startQuoti
 	
 	
+	/////////////
+	//BUTTON START HEBDO
 	$scope.startHebdo = function(clickEvent){
 		if ($scope.quiz === undefined)
 			$scope.quiz ={};
@@ -220,6 +239,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$route.reload();
 		
 	}// fin startQuoti
+	
+	
 	/////////////
 	//BUTTON NEXT Quiz
 	$scope.nextQuiz = function(clickEvent){

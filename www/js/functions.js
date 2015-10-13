@@ -333,7 +333,7 @@ function saveReponses(quiz,callback)
 			console.log(groupe);
 			console.log('save groupe !!!!!!!!!!');
 			reponse = "";
-			if (groupe.config.tpl == 'texte')
+			if ((groupe.config.tpl == 'texte') || (groupe.config.tpl == 'libre_age'))
 			{
 				console.log('save texte');
 				//tx.executeSql('CREATE TABLE IF NOT EXISTS "reponses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT , "idhoraire" VARCHAR, "sid" VARCHAR, "gid" VARCHAR, "qid" VARCHAR, "reponse" VARCHAR, "tsreponse_deb" INTEGER, "tsreponse_fin" INTEGER, "envoi" BOOLEAN not null default 0);');
@@ -341,7 +341,7 @@ function saveReponses(quiz,callback)
 				reponse = $('.question[monID="'+groupe.qid+'"] input').val();
 				
 			}
-			if (groupe.config.tpl == 'radio')
+			if ((groupe.config.tpl == 'radio') || (groupe.config.tpl == 'radio_demo_genre'))
 			{
 				
 				console.log('save radio');
