@@ -14,12 +14,16 @@
 
         
 		<div ng-if="quiz.actif == true">
-	       <groupe ng-repeat="groupe in quiz.groupes" data="groupe">
-			  <!-- Include template dyn -->	
-			  toto
-			</groupe>
-			<button class="btn btn-primary" ng-click="nextQuiz($event)">Next</button>
+			<form name="myQuiz" novalidate>
+		       <groupe ng-repeat="groupe in quiz.groupes" data="groupe">
+				  <!-- Include template dyn -->	
+				  
+				</groupe>
+				<button class="btn btn-primary" ng-click="nextQuiz($event)" ng-disabled="myQuiz.$invalid" ng-class="{'btn-success': myQuiz.$valid,'btn-danger': myQuiz.$invalid}">Next</button>
+			</form>
 	 	</div>
+	 	
+	 	
 	 	 <div ng-if="quiz.actif == 'getID'">
 	 	 	getID
 	 	 	<groupe ng-repeat="groupe in quiz.groupes" data="groupe">
@@ -34,6 +38,7 @@
 
 	       Fin
 			<button class="btn btn-primary" ng-click="finQuiz($event)">Fin</button>
+			
 	 	</div>
       </div>
       

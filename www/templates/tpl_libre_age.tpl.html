@@ -1,11 +1,9 @@
 <div class="question" monID="{{groupe.qid}}">
-	<div ng-bind-html="groupe.question"></div>
-	<div ng-repeat="(keyrep, valuerep) in groupe.reponses"> 
-			<input type="radio" name="{{groupe.qid}}" value="{{keyrep}}" id="{{groupe.qid}}_{{keyrep}}"><label for="{{groupe.qid}}_{{keyrep}}" ng-bind-html="valuerep"></label>
-	</div>
+	<!--<div ng-bind-html="groupe.question"></div>-->
+	<div> Vous avez : </div>
+	<input id ="userID" type="text" name="{{groupe.qid}}" ng-model="mytext" ng-required="true" 
+		class="form-control ng-pristine ng-valid needsclick ng-valid-email ng-touched" > ans
 </div>
-	
-libre age
 
 
 <!--  {{groupe.title}}

@@ -306,13 +306,21 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 .usequestion label .txt{flex:10;padding:20px;}
 .usequestion label[for="useok"] .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
 .usequestion label[for="useko"] .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
-input+label .icon{opacity:0.5}
-input:checked+label .icon{opacity:1}
+.usequestion input+label .icon{opacity:0.5}
+.usequestion input:checked+label .icon{opacity:1}
 /*input+label:after{opacity:0.75}
 input:checked+label:after{opacity:1}*/
 
+/*RADIO*/
 
-
+/*genre*/
+.question.genre input{display:none}
+.question.genre .answers {display:inline-block;}
+.question.genre label {display:inline-block;margin:0 20px;}
+.question.genre .answers:nth-child(2) label {background: url('../img/femme.png') left center no-repeat transparent;width:111px;height:278px;}
+.question.genre .answers:nth-child(3) label {background: url('../img/homme.png') left center no-repeat transparent;width:111px;height:278px;}
+.question.genre input+label {opacity:0.5}
+.question.genre input:checked+label {opacity:1}
 
 /*RANGE*/
 .left {float:left;font-size:20px;}

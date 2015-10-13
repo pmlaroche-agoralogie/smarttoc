@@ -11,11 +11,11 @@
 		    <div ng-if="profileok == 'page1'">
 		    	<div class="bulle">
 	    			<p>
-				        <strong>Bonjour et bienvenue dans votre journal de bord Smart'TOC !</strong>
+	    				<strong>Bonjour et bienvenue dans votre journal de bord Smart’TOC !</strong>
 						<br/><br/>
 						Ce journal de bord va vous permettre de suivre votre évolution au quotidien. 
-						Je vous poserai des questions soit le matin soit le soir. Vous aurez 20 minutes pour y répondre, 
-						sauf le dimanche, où vous pourrez y répondre à n’importe quel moment de la journée. 
+						Je vous poserai des questions soit le matin soit le soir. Je vous enverrai chaque 
+						jour une notification pour vous rappeler de remplir votre journal.
 					</p>
 		    	</div>
 		    	<div class="fille1"></div>
@@ -36,7 +36,7 @@
 	        <div ng-if="profileok == 'page4'">
 	        <div class="bulle">
 	    			<p>
-	        			Pour commencer, je vous propose de remplir un bref questionnaire pour mieux vous connaître. 
+	        			Pour commencer, je vous propose de remplir un bref questionnaire pour mieux vous connaître.
 	        		</p>
 		    	</div>
 		    	<div class="fille1"></div>
@@ -46,11 +46,11 @@
 		    <div ng-if="profileok == 'page5'">
 		    	<div class="bulle">
 	    			<p>
-				        A présent, voici votre identifiant Smart'TOC :
+				        A présent, voici votre identifiant Smart’TOC :
 						<br/><br/>
-						XXXXXXXX
+						{{deviceID}}
 						<br/><br/>
-						Veuillez le noter : il vous servira à récupérer vos données en cas de problème avec votre téléphone. 
+						Veuillez le noter : il vous servira à récupérer vos données en cas de problème avec votre téléphone.  
 						</p>
 		    	</div>
 		    	<div class="fille1"></div>

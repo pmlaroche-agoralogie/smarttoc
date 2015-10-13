@@ -47,6 +47,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.test ="test";
 	$scope.menu = false;
 	
+	
 	//Séquence d'initialisation
 	async.series([	
 	              	function(callback){ cordovaReady(callback);},
@@ -61,11 +62,15 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	              	function(callback){createQuestionnairesSuccess(callback);},
 	              	function(callback){createHorairesSuccess(callback);},
 	              	//TODO : horaires
-		               	
+	              	
+	              	//create deviceID
+	              	function(callback){createDeviceID(callback,$scope);},
+	              	
 	              	//test useOk
 	              	function(callback){do_MC_UseOk(callback,$location,$route,$scope);},
 	        ],	   				 
 			function(err, results ){
+		
 					console.log(results);
 			}
 		);//fin  async.series*/

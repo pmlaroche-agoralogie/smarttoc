@@ -634,3 +634,11 @@ function sendReponses() {
 		});
 	});
 };
+
+function createDeviceID(callback,$scope){
+	if (isMobile)
+		$scope.deviceID = md5(device.uuid);
+	else
+		$scope.deviceID = "monDeviceUid";
+	callback(null,'deviceID')
+}
