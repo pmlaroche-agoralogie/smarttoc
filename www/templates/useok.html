@@ -2,6 +2,7 @@
   <div class="scrollable-content">
 
     <div class="list-group text-center">
+    <form name="myUse" novalidate>
       <div class="list-group-item list-group-item-home titre_journal">
         <h1>Smart'TOC</h1>
       </div>
@@ -21,7 +22,7 @@
 				</p>
 			</div>
 			<div class="fille1"></div>
-			<form name="myUse" novalidate>
+			
 				<div class="usequestion">
 					<input type="radio" name="useanswer" value="useOK" id="useok" ng-required="true" ng-model="reponse">
 					<label for="useok">
@@ -35,12 +36,16 @@
 					</label>
 				</div>
 				<div class="clear"></div>
-				<button class="btn" ng-click="useClick($event)" ng-disabled="myUse.$invalid" ng-class="{'btn-success': myUse.$valid,'btn-danger': myUse.$invalid}">Suivant</button>
-			</form>    
+						
+			
         </div>
       </div>
       
-    </div>
-
+    
+    <div class="list-group-item list-group-item-home media startButton">
+				<button class="btn" ng-click="useClick($event)" ng-disabled="myUse.$invalid" ng-class="{'btn-success': myUse.$valid,'btn-danger': myUse.$invalid}">Suivant</button>
+				</div>	
+    </form>    
+</div>
   </div>
 </div>

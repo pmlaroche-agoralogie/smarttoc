@@ -1,0 +1,14 @@
+<div class="question" monID="{{groupe.qid}}">
+	<div ng-if="profileok == 'quiz'">
+	<div ng-bind-html="toTrustedHTML(groupe.question)"></div>
+	</div>
+	<div class="left"><img src="img/nuage.png" alt="mal" /><br />Moins bien</div>
+	<div class="right"><img src="img/soleil.png" alt="bien" /><br />Mieux</div>
+	<div class="clear"></div>
+	<!-- <input type="range" value="50" max="100" min="0" ng-model="groupe.reponse" ng-init="groupe.reponse = '50'" ng-required="true"> -->
+	<input type="range" value="50" max="100" min="0" ng-model="groupe.reponse" ng-required="true"> 
+</div>
+	
+	
+
+

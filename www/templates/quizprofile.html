@@ -2,6 +2,8 @@
   <div class="scrollable-content">
 
     <div class="list-group text-center">
+    <div ng-if="quiz.actif == true">
+			<form name="myQuiz" novalidate>
       <div class="list-group-item list-group-item-home titre_journal">
      	 <div ng-if="profileok == 'quiz'">
         	<div class="fille"></div>
@@ -13,27 +15,15 @@
       <div class="list-group-item list-group-item-home media">
 
         
-		<div ng-if="quiz.actif == true">
-			<form name="myQuiz" novalidate>
+		
 		       <groupe ng-repeat="groupe in quiz.groupes" data="groupe">
 				  <!-- Include template dyn -->	
 				  
 				</groupe>
-				<button class="btn btn-primary" ng-click="nextQuiz($event)" ng-disabled="myQuiz.$invalid" ng-class="{'btn-success': myQuiz.$valid,'btn-danger': myQuiz.$invalid}">Next</button>
-			</form>
-	 	</div>
+				
 	 	
 	 	
-	 	 <div ng-if="quiz.actif == 'getID'">
-	 	 	getID
-	 	 	<groupe ng-repeat="groupe in quiz.groupes" data="groupe">
-			  <!-- Include template dyn -->	
-			  toto
-			</groupe>
-		 	
-		 	  <button class="btn btn-primary" ng-click="goToStartQuiz($event)">Go to Start</button>
-		 	  <button class="btn btn-primary" ng-click="sendQuiz($event)">send reuslts</button>
-	 	 </div>
+
 	 	<div ng-if="quiz.actif == 'fin'">
 
 	       Fin
@@ -42,6 +32,11 @@
 	 	</div>
       </div>
       
+      <div class="list-group-item list-group-item-home media nextQuiz">
+				<button class="btn btn-primary" ng-click="nextQuiz($event)" ng-disabled="myQuiz.$invalid" ng-class="{'btn-success': myQuiz.$valid,'btn-danger': myQuiz.$invalid}">Next</button>
+				</div>
+			</form>
+	 	</div>
     </div>
 
   </div>

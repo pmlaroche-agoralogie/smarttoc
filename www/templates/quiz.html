@@ -1,44 +1,50 @@
 <div class="scrollable">  
   <div class="scrollable-content">
 
-    <div class="list-group text-center">
-      <div class="list-group-item list-group-item-home titre_journal">
-        	<div class="fille"></div>
-        	<div class="postit"><div class="question">
-        		<h1 ng-bind-html="toTrustedHTML(quiz.groupes[0].question)"></h1>
-        	</div></div>
-      </div>
-      <div class="list-group-item list-group-item-home media">
+    
+   
+      
 
         
-		<div ng-if="quiz.actif == true">
-			<form name="myQuiz" novalidate>
+		<div ng-if="quiz.actif == true" class="list-group text-center">
+
+		<form name="myQuiz" novalidate>
+			<div class="list-group-item list-group-item-home titre_journal">
+	        	<div class="fille"></div>
+	        	<div class="postit"><div class="question">
+	        		<h1 ng-bind-html="toTrustedHTML(quiz.groupes[0].question)"></h1>
+	        	</div></div>
+	      </div>
+	      <div class="list-group-item list-group-item-home media">
+		
+			
 		       <groupe ng-repeat="groupe in quiz.groupes" data="groupe">
 				  <!-- Include template dyn -->	
 				  
 				</groupe>
-				<button class="btn btn-primary" ng-click="nextQuiz($event)" ng-disabled="myQuiz.$invalid" ng-class="{'btn-success': myQuiz.$valid,'btn-danger': myQuiz.$invalid}">Next</button>
-			</form>
-	 	</div>
-	 	
-	 	
-	 	 <div ng-if="quiz.actif == 'getID'">
-	 	 	getID
-	 	 	<groupe ng-repeat="groupe in quiz.groupes" data="groupe">
-			  <!-- Include template dyn -->	
-			  toto
-			</groupe>
-		 	
-		 	  <button class="btn btn-primary" ng-click="goToStartQuiz($event)">Go to Start</button>
-		 	  <button class="btn btn-primary" ng-click="sendQuiz($event)">send reuslts</button>
-	 	 </div>
-	 	<div ng-if="quiz.actif == 'fin'">
-
-	       Fin
-			<button class="btn btn-primary" ng-click="finQuiz($event)">Fin</button>
+				
+			</div>
 			
+	 	 <div class="list-group-item list-group-item-home media nextQuiz">
+	 	<button class="btn btn-primary " ng-click="nextQuiz($event)" ng-disabled="myQuiz.$invalid" ng-class="{'btn-success': myQuiz.$valid,'btn-danger': myQuiz.$invalid}">Suite</button>
+			</div>
+			</form>
+
+			</div>
+
+	 	<div class="list-group text-center height100" ng-if="quiz.actif == 'fin'">
+	 		<div class="list-group-item list-group-item-home media height100 padding0">
+	 		<div class="merci">
+				<div class="bulleg"><p>&nbsp;<br/>Vous avez terminé !<br/>&nbsp;</p></div>
+				<div class="fille"></div>
+				<div class="clear"></div>
+				</div>
+			 <div class="list-group-item list-group-item-home media nextQuiz">
+			<button class="btn btn-primary" ng-click="finQuiz($event)">Retour Accueil</button>
+			</div>
+			</div>
+
 	 	</div>
-      </div>
       
     </div>
 

@@ -590,6 +590,7 @@ function sendReponses() {
             			var dataset2 = res2.rows.length;
                         if(dataset2>0)
                         {
+                        	aReponses = {};
                         	saveResHorairesID = res2.rows.item(0).idhoraire;
                         	aReponses["sid"] = res2.rows.item(0).sid;
                         	aReponses["timestamp"] = res2.rows.item(0).tsreponse;

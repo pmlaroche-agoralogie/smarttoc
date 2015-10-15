@@ -162,6 +162,12 @@ input.scrollable-header {
 /****AJOUT*****/
 
 .clear {clear:both}
+.scrollable-content {background:white;position:relative;}
+.height100{height:100%}
+.padding0{padding:0}
+
+.startButton, .nextQuiz{position:absolute;bottom:0;width:100%;}
+.list-group-item{border:none;}
 
 /*HEADER*/
 div.titre_journal {
@@ -197,7 +203,7 @@ padding: 0 14%;
 div.titre_journal div.question h1{margin:0;padding:0;}
 div.titre_journal div.question h1 p{margin:0;padding:0;}
 div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repeat transparent;width:12%;
-	background-size:100%;height:100%;/*max-width:50px;*/position:absolute;z-index:10;top:60px;left:5px;}
+	background-size:100%;height:100%;/*max-width:50px;*/position:absolute;z-index:10;top:60px;left:5px;z-index:2}
 
 
 /*CONTENU*/
@@ -521,6 +527,17 @@ input:checked+label:after{opacity:1}*/
 .question.genre input+label {opacity:0.5}
 .question.genre input:checked+label {opacity:1}
 
+
+/*evolution*/
+.question.radio_evol input{display:none}
+.question.radio_evol .answers {display:inline-block;}
+.question.radio_evol label {display:inline-block;margin:0 20px 40px;}
+.question.radio_evol .answers:nth-child(1) label {background: url('../img/moins.png') left center no-repeat transparent;width:64px;height:64px;}
+.question.radio_evol .answers:nth-child(2) label {background: url('../img/egale.png') left center no-repeat transparent;width:64px;height:64px;}
+.question.radio_evol .answers:nth-child(3) label {background: url('../img/plus.png') left center no-repeat transparent;width:64px;height:64px;}
+.question.radio_evol input+label {opacity:0.5}
+.question.radio_evol input:checked+label {opacity:1}
+
 /*RANGE*/
 .left {float:left;font-size:20px;}
 .left.bulle {background-image:url(../img/bulle_gauche.jpg);background-repeat:no-repeat;width:141px;height:105px;text-align:center;padding-top:28px;font-size:20px;}
@@ -530,7 +547,7 @@ input:checked+label:after{opacity:1}*/
 .right.bulle.une_ligne{height:67px;padding-top:38px;}
 .clear {clear:both;}
 
-input[type=range] {height:20px;width: 90%;}
+input[type=range] {height:20px;width: 90%;z-index:10;position: relative;}
 input[type=range] {
   -webkit-appearance: none;margin:20px 5% 50px;}
 input[type=range]:focus {
@@ -570,3 +587,16 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	background: -moz-linear-gradient(right, red , yellow, green); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(to right, red , yellow, green); /* Standard syntax */
 }
+
+input[type=range].heure::-webkit-slider-runnable-track{
+	background: lightgrey;
+}
+
+input[type=range].heure:focus::-webkit-slider-runnable-track {
+  background: lightgrey;
+}
+
+/*FIN*/
+.merci{background:url('../img/bgfin.png') top center no-repeat transparent;background-size:100%;padding-top: 120px;position:relative}
+.merci .bulleg{width:90%;}
+.merci .fille{background:url('../img/fille1.png') top center no-repeat transparent;background-size:100%;position: absolute;top: 300px;left: 20px;padding-bottom: 35%;width:12%;}

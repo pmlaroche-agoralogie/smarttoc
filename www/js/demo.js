@@ -271,6 +271,19 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 					});//Transaction*/		
 
 		}//FIN BUTTON NEXT Quiz
+	
+	$scope.changetoHour  = function(string){
+		if (string !== undefined)
+		{
+			var h = Math.floor(parseInt(string)/2) + "h";
+			var m = (parseInt(string)%2==1?"30min":"00");
+			return h+m;
+		}
+		else
+		{
+			return "0h00";
+		}
+	}
 
 	$scope.finQuiz = function(clickEvent){
 		$location.path('/'); 
@@ -515,15 +528,47 @@ app.directive("groupe", function() {
 	        		return "templates/tpl_radio.tpl.html";
 	        	if ($scope.groupe.config.tpl == "sl1")
 		        	return "templates/tpl_sl1.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl2")
+		        	return "templates/tpl_sl2.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl3")
+		        	return "templates/tpl_sl3.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl4")
+		        	return "templates/tpl_sl4.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl5")
+		        	return "templates/tpl_sl5.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl6")
+		        	return "templates/tpl_sl6.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl7")
+		        	return "templates/tpl_sl7.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl10")
+		        	return "templates/tpl_sl10.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl11")
+		        	return "templates/tpl_sl11.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl12")
+		        	return "templates/tpl_sl12.tpl.html";
+	        	if ($scope.groupe.config.tpl == "sl13")
+		        	return "templates/tpl_sl13.tpl.html";
 	        	if ($scope.groupe.config.tpl == "texte")
 			        return "templates/tpl_text.tpl.html";
 	        }
-	        if ($scope.groupe.qtype == "L")
+	        else if ($scope.groupe.qtype == "L")
 	        {
 	        	if ($scope.groupe.config.tpl == "radio_demo_genre")
 	        		return "templates/tpl_radio_demo_genre.tpl.html";
 	        	if ($scope.groupe.config.tpl == "radio")
 	        		return "templates/tpl_radio.tpl.html";
+	        	if ($scope.groupe.config.tpl == "radio2")
+	        		return "templates/tpl_radio2.tpl.html";
+	        }
+	        else if ($scope.groupe.qtype == "S")
+	        {
+	        	if ($scope.groupe.config.tpl == "uid")
+	        		console.log('save uid');
+	        		$scope.nextQuiz();
+	        }
+	        else
+	        {
+	        	return "templates/tpl_radio.tpl.html";
 	        }
 	      }
 	    }
