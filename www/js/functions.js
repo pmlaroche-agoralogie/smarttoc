@@ -212,9 +212,10 @@ function getQuestionsBySID($scope,sid,current,callback)
 {
 	if (debug)
 		alert('getQuestionsBySID');
+	console.log('*******getQuestionsBySID******');
 	db.transaction(function(tx) {
-		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+(current-1)+','+current+';');
-		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+(current-1)+',1;', [], function(tx, res) {
+		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+current+',1;');
+		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+current+',1;', [], function(tx, res) {
 			if (debug)
 				alert('getQuestionsBySID');
 			if (debug) alert('scope getQuestionsByGroupe1');
@@ -225,8 +226,11 @@ function getQuestionsBySID($scope,sid,current,callback)
 			if (res.rows.length < 1)
 			{
 				console.log('fin');
+				$scope.quiz.groupes ={};
+				$scope.quiz.next =0;
 				$scope.quiz.actif = 'fin';
 				callback(null,'fin');
+				
 			}
 			else
 				
@@ -237,7 +241,7 @@ function getQuestionsBySID($scope,sid,current,callback)
 				groupe.config = getQuestionConfig(res.rows.item(0)['qhelp-question_config']);
 				groupe.reponses = JSON.parse(decodeURI(res.rows.item(0).answers));
 				groupes[0] = groupe;
-				next = current + 1;
+				next = parseInt(current) + 1;
 				$scope.quiz.groupes = groupes;
 				$scope.quiz.next = next;
 				$scope.quiz.actif = true;
@@ -341,17 +345,44 @@ function saveReponses(quiz,callback)
 				reponse = $('.question[monID="'+groupe.qid+'"] input').val();
 				
 			}
-			if ((groupe.config.tpl == 'radio') || (groupe.config.tpl == 'radio_demo_genre'))
+			else if ((groupe.config.tpl == 'radio') 
+					|| (groupe.config.tpl == 'radio2')
+					|| (groupe.config.tpl == 'radio_demo_genre'))
 			{
 				
 				console.log('save radio');
 				reponse = $('.question[monID="'+groupe.qid+'"] input:checked').val();
 			}
-			if (groupe.config.tpl == 'slider')
+			else if ((groupe.config.tpl == 'sl1') 
+					|| (groupe.config.tpl == 'sl2')
+					|| (groupe.config.tpl == 'sl3')
+					|| (groupe.config.tpl == 'sl4')
+					|| (groupe.config.tpl == 'sl5')
+					|| (groupe.config.tpl == 'sl6')
+					|| (groupe.config.tpl == 'sl7')
+					|| (groupe.config.tpl == 'sl8')
+					|| (groupe.config.tpl == 'sl9')
+					|| (groupe.config.tpl == 'sl10')
+					|| (groupe.config.tpl == 'sl11')
+					|| (groupe.config.tpl == 'sl12')
+					|| (groupe.config.tpl == 'sl13')
+				)
 			{
 				console.log('save slider');
 				reponse = $('.question[monID="'+groupe.qid+'"] input').val();
 			}
+			else if (groupe.config.tpl == 'uid') 
+			{
+				console.log('save uid');
+				reponse = quiz.deviceID
+			}
+			else
+			{
+				
+				console.log('save radio');
+				reponse = $('.question[monID="'+groupe.qid+'"] input:checked').val();
+			}
+			
 			//sql ='INSERT INTO "reponses" (idhoraire,sid, gid,qid, reponse, tsreponse_deb,tsreponse_fin) '+
 			sql ='INSERT INTO "reponses" (idhoraire,sid, gid,qid, reponse,tsreponse) '+
 			
@@ -479,6 +510,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 						console.log('MC_ProfileOk:true');
 						//Change path
 						$location.path('/'); 
+						sendReponses();
 						$scope.menu = true;
 						$route.reload();
 						//callback(null,"MC_UseOk_true");
@@ -495,6 +527,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 		if (callback)
 			callback(null,"no_MC_ProfileOk");
 		$location.path('/'); 
+		sendReponses();
 		$scope.menu = true;
 	}
 }
@@ -568,15 +601,35 @@ function getQuestionConfig(qhelp)
 	return config;
 }
 
+
+function createDeviceID(callback,$scope){
+	if ($scope.quiz === undefined)
+		$scope.quiz ={};
+	if (isMobile)
+		$scope.quiz.deviceID = md5(device.uuid);
+	else
+		$scope.quiz.deviceID = "monDeviceUid";
+	callback(null,'deviceID')
+}
+
+//UUID
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+};
+
 //ENVOI REPONSES
-function sendReponses() {
+function sendReponses($scope) {
 	console.log('send');
 	var aReponses ={};
 	db.transaction(function(tx) {
 
-		tx.executeSql('SELECT * FROM "horaires" WHERE fait = 1;', [], function(tx, resHoraires) {
-
-		//tx.executeSql('SELECT DISTINCT idhoraire FROM "reponses" WHERE envoi = 0', [], function(tx, resHoraires) {
+		tx.executeSql('SELECT DISTINCT idhoraire FROM "reponses" WHERE envoi = 0', [], function(tx, resHoraires) {
 			
 			var dataset = resHoraires.rows.length;
 			console.log(resHoraires);
@@ -586,6 +639,7 @@ function sendReponses() {
             		alert("session à  envoi");
             	for(var i=0;i<dataset;i++)
                 {
+                	
             		tx.executeSql('SELECT * FROM "reponses" WHERE envoi = 0  AND idhoraire = "'+resHoraires.rows.item(i).idhoraire+'";', [], function(tx, res2) {
             			var dataset2 = res2.rows.length;
                         if(dataset2>0)
@@ -602,14 +656,11 @@ function sendReponses() {
                                 var jsonkey = res2.rows.item(j).sid +"X"+res2.rows.item(j).gid+"X"+res2.rows.item(j).qid;
                         		aReponses[jsonkey]=res2.rows.item(j).reponse;
                             }
-                        	console.log("essai envoi"+JSON.stringify(aReponses));
-                        	if (debug)
-                        		alert("essai envoi"+JSON.stringify(aReponses));
+
                         	xhr_object = new XMLHttpRequest(); 
-                        	xhr_object.open("GET", "http://mcp.ocd-dbs-france.org/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false);                	
+                        	xhr_object.open("GET", "http://mcp.ocd-dbs-france.org/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false);                 	
                         	xhr_object.send(null); 
                         	console.log("send rep");
-                        	console.log(xhr_object);
                         	console.log(JSON.stringify(aReponses));
                         	if(xhr_object.readyState == 4) 
                         	{
@@ -635,11 +686,3 @@ function sendReponses() {
 		});
 	});
 };
-
-function createDeviceID(callback,$scope){
-	if (isMobile)
-		$scope.deviceID = md5(device.uuid);
-	else
-		$scope.deviceID = "monDeviceUid";
-	callback(null,'deviceID')
-}

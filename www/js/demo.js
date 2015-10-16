@@ -159,7 +159,10 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_profile)
 				$scope.quiz.sid = quiz_profile;
 			$scope.quiz.actif = true;
-			displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
+			
+			//temp remplace horaire
+			$scope.quiz.uuid = generateUUID();
+			displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,0);
 			//Change path
 			$location.path('/quizProfile'); 
 			$scope.menu = false;
@@ -172,6 +175,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		else if ($scope.profileok == "page6")
 		{
 			$location.path('/'); 
+			sendReponses();
 			$scope.menu = true;
 			$route.reload();
 		}
@@ -219,7 +223,10 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$scope.quiz.actif = true;
 		console.log('startQuoti');
 		console.log($scope);
-		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
+		
+		//temp remplace horaire
+		$scope.quiz.uuid = generateUUID();
+		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,0);
 		//Change path
 		$location.path('/quiz'); 
 		$scope.menu = false;
@@ -237,7 +244,9 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_hebdo)
 			$scope.quiz.sid = quiz_hebdo;
 		
-		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,1);
+		//temp remplace horaire
+		$scope.quiz.uuid = generateUUID();
+		displayQuestionTemplate($route,$location,$scope,$scope.quiz.sid,0);
 		//Change path
 		$location.path('/quiz'); 
 		$scope.menu = false;
@@ -287,6 +296,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 
 	$scope.finQuiz = function(clickEvent){
 		$location.path('/'); 
+		sendReponses();
 		$scope.menu = true;
 		$route.reload();
 	}
