@@ -62,8 +62,7 @@
     <gap:plugin name="de.appplant.cordova.plugin.local-notification-ios9-fix" />
     <gap:plugin name="org.apache.cordova.file" />
     
-    <!--gap:plugin name="org.apache.cordova.file-transfer" /-->
-    <gap:plugin name="com.coconutcenter.file-transfer" />
+    <gap:plugin name="org.apache.cordova.file-transfer" />
     
     <gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
     <gap:plugin name="org.apache.cordova.dialogs" />
