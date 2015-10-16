@@ -67,7 +67,8 @@
     
     <gap:plugin name="org.apache.cordova.dialogs" />
  
-     <gap:plugin name="org.apache.cordova.core.inappbrowser" />
+     <!--  gap:plugin name="org.apache.cordova.core.inappbrowser" /-->
+     <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
     
     <!--
         <gap:plugin name="Example" />
