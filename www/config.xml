@@ -53,7 +53,7 @@
    lighter whithout gps ?
    -->
    
-    <gap:plugin name="com.millerjames01.sqlite-plugin" />
+    <gap:plugin name="com.millerjames01.sqlite-plugin"  source="npm"/>
     <!--gap:plugin name="com.millerjames01.sqlite-plugin" version="1.0.1" /-->
     <!-- use phonegap plugin add https://github.com/brodysoft/Cordova-SQLitePlugin  -->
     
