@@ -61,7 +61,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		               	
 	              	//create db content
 	              	function(callback){createQuestionnairesSuccess(callback);},
-	              	function(callback){createHorairesSuccess(callback);},
+	              	//function(callback){createHorairesSuccess(callback);},
 	              	//TODO : horaires
 	              	
 	              	//create deviceID

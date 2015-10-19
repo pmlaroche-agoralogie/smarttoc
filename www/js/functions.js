@@ -91,7 +91,7 @@ function createQuestionnairesSuccess(callback){
 			}
 			else
 			{
-				console.log("Erreur pendant le chargement de la page.\n");
+				console.log("Erreur pendant le chargement de la page.\n Ou cas Iphone");
 				if (debug || debug_loadDB)
 					alertDebug("Erreur pendant le chargement de la page.\n Ou cas Iphone")
 				if(isMobile)
@@ -427,6 +427,7 @@ function after_init(){
 /////////////////////////////////////////////////////////////////////
 
 function do_MC_UseOk(callback,$location,$route,$scope){
+	console.log('do_MC_UseOk');
 	if (MC_UseOk)
 	{
 		console.log('MC_UseOk');
@@ -603,12 +604,17 @@ function getQuestionConfig(qhelp)
 
 
 function createDeviceID(callback,$scope){
+	console.log('createDeviceID');
 	if ($scope.quiz === undefined)
 		$scope.quiz ={};
+
+	console.log(JSON.stringify(window.device));
 	if (isMobile)
 		$scope.quiz.deviceID = md5(device.uuid);
 	else
+
 		$scope.quiz.deviceID = "monDeviceUid";
+	
 	callback(null,'deviceID')
 }
 
