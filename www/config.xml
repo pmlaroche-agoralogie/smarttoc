@@ -72,7 +72,7 @@
      <!--  gap:plugin name="org.apache.cordova.core.inappbrowser" /-->
      <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
      
-     <gap:plugin name="org.apache.cordova.device.Device" source="npm" />
+     <gap:plugin name="org.apache.cordova.device" source="npm" />
     
     <!--
         <gap:plugin name="Example" />
