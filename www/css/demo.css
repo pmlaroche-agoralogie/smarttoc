@@ -165,8 +165,9 @@ input.scrollable-header {
 .scrollable-content {background:white;position:relative;}
 .height100{height:100%}
 .padding0{padding:0}
+.paddingbottom60{padding-bottom:60px}
 
-.startButton, .nextQuiz{position:absolute;bottom:0;width:100%;}
+.startButton, .nextQuiz{position:absolute;bottom:0;width:100%;background-color:rgba(255,255,255,0.5)}
 .list-group-item{border:none;}
 
 /*HEADER*/
@@ -306,9 +307,10 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 	
 /*bulle gauche*/
 .bulleg {
-	min-width:200px;
+	box-sizing:border-box;
+	min-width:150px;
   position:relative;
-  padding:20px 40px;
+  padding:10px 20px;
   margin:1em auto 60px;
   border:1px solid #333;
   text-align:center;
@@ -404,9 +406,10 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 .bulleg p{margin:0;padding:0;}
 /*bulle droite*/
 .bulled {
-  min-width: 200px;
+  box-sizing:border-box;
+  min-width: 150px;
   position:relative;
-  padding:20px 40px;
+  padding:10px 20px;
   margin:1em auto 60px;
   border:1px solid #333;
   text-align:center;

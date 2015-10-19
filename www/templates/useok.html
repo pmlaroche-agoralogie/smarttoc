@@ -1,11 +1,14 @@
-<div class="scrollable">  
-  <div class="scrollable-content">
+
 
     <div class="list-group text-center">
     <form name="myUse" novalidate>
+          <div class="scrollable">  
+  <div class="scrollable-content">
       <div class="list-group-item list-group-item-home titre_journal">
         <h1>Smart'TOC</h1>
       </div>
+      
+
       <div class="list-group-item list-group-item-home media">
         <div class="media-body">
 	        <div class="bulle">
@@ -40,12 +43,13 @@
 			
         </div>
       </div>
-      
+      <div class="paddingbottom60"></div>
+        </div>
+</div>
     
     <div class="list-group-item list-group-item-home media startButton">
 				<button class="btn" ng-click="useClick($event)" ng-disabled="myUse.$invalid" ng-class="{'btn-success': myUse.$valid,'btn-danger': myUse.$invalid}">Suivant</button>
 				</div>	
     </form>    
 </div>
-  </div>
-</div>
+

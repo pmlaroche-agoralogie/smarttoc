@@ -1,9 +1,11 @@
-<div class="scrollable">  
-  <div class="scrollable-content">
+
 
     <div class="list-group text-center">
     <div ng-if="quiz.actif == true">
 			<form name="myQuiz" novalidate>
+			
+			<div class="scrollable">  
+  <div class="scrollable-content">
       <div class="list-group-item list-group-item-home titre_journal">
      	 <div ng-if="profileok == 'quiz'">
         	<div class="fille"></div>
@@ -22,15 +24,10 @@
 				</groupe>
 				
 	 	
-	 	
-
-	 	<div ng-if="quiz.actif == 'fin'">
-
-	       Fin
-			<button class="btn btn-primary" ng-click="finQuiz($event)">Fin</button>
-			
-	 	</div>
       </div>
+      <div class="paddingbottom60"></div>
+        </div>
+</div>
       
       <div class="list-group-item list-group-item-home media nextQuiz">
 				<button class="btn btn-primary" ng-click="nextQuiz($event)" ng-disabled="myQuiz.$invalid" ng-class="{'btn-success': myQuiz.$valid,'btn-danger': myQuiz.$invalid}">Next</button>
@@ -39,5 +36,4 @@
 	 	</div>
     </div>
 
-  </div>
-</div>
+
