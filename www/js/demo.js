@@ -43,6 +43,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/results',     	{templateUrl: 'templates/results.html', reloadOnSearch: false});
   $routeProvider.when('/journal',     	{templateUrl: 'templates/journal.html', reloadOnSearch: false});
   $routeProvider.when('/notif',     	{templateUrl: 'templates/notif.html', reloadOnSearch: false});
+  $routeProvider.when('/sendResults',    {templateUrl: 'templates/sendresults.html', reloadOnSearch: false});
   $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
 });
 
@@ -303,6 +304,59 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$scope.menu = true;
 		$route.reload();
 	}
+	
+	/////////////
+	//BUTTON ENVOYER MAIL
+	$scope.sendMail= function(clickEvent){
+		if(isMobile)
+		{
+		var fileTransfer = new FileTransfer();
+		var fileURL = cordova.file.dataDirectory+"montest.pdf";
+		//test android seulement :
+		var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
+		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
+		var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
+			
+		fileTransfer.download(
+			    uri,
+			    fileURL,
+			    function(entry) {
+			        console.log("download complete: " + entry.toURL());
+			        //envoi mail
+			       alert("download complete: " + entry.toURL());
+			        cordova.plugins.email.isAvailable(function(result){ 
+			        	if (result) //mail dispo
+			        	{
+			        		cordova.plugins.email.open({
+			        			subject: 'rapport données',
+			        		    attachments: entry.toURL() //=> res/drawable/icon (Android)
+			        		});
+			        	}
+			        });
+			    },
+			    function(error) {
+			    	//alert("download error source " + error.source);
+			    	//alert("download error target " + error.target);
+			    	//alert("upload error code" + error.code);
+			        //console.log("download error source " + error.source);
+			        //console.log("download error target " + error.target);
+			        //console.log("upload error code" + error.code);
+			    },
+			    false,
+			    {
+			        headers: {
+			            "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+			        }
+			    }
+			);
+	}
+		else
+			console.log("emailMe");
+		/*$location.path('/'); 
+		sendReponses();
+		$scope.menu = true;
+		$route.reload();*/
+	}//FIN BUTTON ENVOYER MAIL
 
 }); // fin MainController
 

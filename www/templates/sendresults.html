@@ -7,20 +7,16 @@
       <div class="list-group-item list-group-item-home media">
 
         Votre idendifiant Smart'Toc : {{quiz.deviceID}}
-		<br/><br/>
-		<a class="btn btn-primary"  onClick="window.open('http://restitution.altotoc.fr/?sid=916553&curs=2015-01-01', '_blank', 'location=yes,closebuttoncaption=Fermer')">Visualiser mes résultats</a>
-		<br/><br/>
-		<a class="btn btn-primary" href="#/sendResults">Envoyer mes résultats par mail</a>
-		
+
 	
-	 	
+	 	<button class="btn btn-primary" ng-click="sendMail($event)">Envoyer</button>
       </div>
       <div class="paddingbottom60"></div>
         </div>
 </div>
       
       <div class="list-group-item list-group-item-home media nextQuiz">
-				<a class="btn btn-primary" href="#/">Retour accueil</a>
+				<a class="btn btn-primary" href="#/results">Retour</a>
 				</div>
 
     </div>
