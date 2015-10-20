@@ -38,8 +38,11 @@ app.config(function($routeProvider) {
   $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});*/
   $routeProvider.when('/useok',      	{templateUrl: 'templates/useok.html', reloadOnSearch: false});
   $routeProvider.when('/profileok',     {templateUrl: 'templates/profileok.html', reloadOnSearch: false});
-  $routeProvider.when('/quizProfile',    {templateUrl: 'templates/quizprofile.html', reloadOnSearch: false});
+  $routeProvider.when('/quizProfile',   {templateUrl: 'templates/quizprofile.html', reloadOnSearch: false});
   $routeProvider.when('/quiz',     		{templateUrl: 'templates/quiz.html', reloadOnSearch: false});
+  $routeProvider.when('/results',     	{templateUrl: 'templates/results.html', reloadOnSearch: false});
+  $routeProvider.when('/journal',     	{templateUrl: 'templates/journal.html', reloadOnSearch: false});
+  $routeProvider.when('/notif',     	{templateUrl: 'templates/notif.html', reloadOnSearch: false});
   $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
 });
 
