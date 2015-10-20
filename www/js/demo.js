@@ -327,11 +327,14 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			        cordova.plugins.email.isAvailable(function(result){ 
 			        	if (result) //mail dispo
 			        	{
+			        		alert('dispo');
 			        		cordova.plugins.email.open({
 			        			subject: 'rapport données',
 			        		    attachments: entry.toURL() //=> res/drawable/icon (Android)
 			        		});
 			        	}
+			        	else
+			        		alert('pb dispo');
 			        });
 			    },
 			    function(error) {
