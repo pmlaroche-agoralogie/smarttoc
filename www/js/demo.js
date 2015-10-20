@@ -27,15 +27,6 @@ var app = angular.module('MobileAngularUiExamples', [
 // 
 app.config(function($routeProvider) {
   $routeProvider.when('/',              {templateUrl: 'templates/home.html', reloadOnSearch: false});
- /* $routeProvider.when('/scroll',        {templateUrl: 'templates/scroll.html', reloadOnSearch: false}); 
-  $routeProvider.when('/toggle',        {templateUrl: 'templates/toggle.html', reloadOnSearch: false}); 
-  $routeProvider.when('/tabs',          {templateUrl: 'templates/tabs.html', reloadOnSearch: false}); 
-  $routeProvider.when('/accordion',     {templateUrl: 'templates/accordion.html', reloadOnSearch: false}); 
-  $routeProvider.when('/overlay',       {templateUrl: 'templates/overlay.html', reloadOnSearch: false}); 
-  $routeProvider.when('/forms',         {templateUrl: 'templates/forms.html', reloadOnSearch: false});
-  $routeProvider.when('/dropdown',      {templateUrl: 'templates/dropdown.html', reloadOnSearch: false});
-  $routeProvider.when('/drag',          {templateUrl: 'templates/drag.html', reloadOnSearch: false});
-  $routeProvider.when('/carousel',      {templateUrl: 'templates/carousel.html', reloadOnSearch: false});*/
   $routeProvider.when('/useok',      	{templateUrl: 'templates/useok.html', reloadOnSearch: false});
   $routeProvider.when('/profileok',     {templateUrl: 'templates/profileok.html', reloadOnSearch: false});
   $routeProvider.when('/quizProfile',   {templateUrl: 'templates/quizprofile.html', reloadOnSearch: false});
@@ -44,7 +35,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/journal',     	{templateUrl: 'templates/journal.html', reloadOnSearch: false});
   $routeProvider.when('/notif',     	{templateUrl: 'templates/notif.html', reloadOnSearch: false});
   $routeProvider.when('/sendResults',    {templateUrl: 'templates/sendresults.html', reloadOnSearch: false});
-  $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});
+ /* $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});*/
 });
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce){
@@ -360,12 +351,12 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$scope.menu = true;
 		$route.reload();*/
 	}//FIN BUTTON ENVOYER MAIL
-
+	
 }); // fin MainController
 
 
 //CHARTS
-app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
+/*app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 
 	//current date
 	var MyDate = new Date();
@@ -386,25 +377,11 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
  		console.log('openUrl');
  		//var iabRef = window.open('http://icm.kpy.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
  		var iabRef = window.open('http://restitution.altotoc.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
- 		/*iabRef.insertCSS({
-            code: "body { background: #ffff00; }"
-        }, function() {
-            alert("Styles Altered");
-        });*/
+
  		//iabRef.toolbar.barStyle = UIBarStyleDefault;
  	};
 	
-	/*  $scope.$on('mobile-angular-ui.state.changed.activeTab', function(e, newVal, oldVal) {
-		  
-		  if (newVal == 1) {
-			   period = "1-month";
-		  } 
-		  else  if (newVal == 2) {
-			   period = "2-month";
-		  }
-		  else  if (newVal == 3) {
-			   period = "3-month";
-		  }*/
+
 
 	var grid = [],
 		labels = [];
@@ -568,7 +545,7 @@ app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
 	});
 	
 	 // });// $scope.$on
-});
+});*/
 
 
 //DYN TEMPLATE

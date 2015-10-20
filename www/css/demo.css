@@ -167,7 +167,7 @@ input.scrollable-header {
 .padding0{padding:0}
 .paddingbottom60{padding-bottom:60px}
 
-.startButton, .nextQuiz{position:absolute;bottom:0;width:100%;background-color:rgba(255,255,255,0.5)}
+.startButton, .nextQuiz{position:absolute;bottom:0;width:100%;background-color:rgba(255,255,255,0.5);z-index:1000}
 .list-group-item{border:none;}
 
 /*HEADER*/
@@ -550,7 +550,7 @@ input:checked+label:after{opacity:1}*/
 .right.bulle.une_ligne{height:67px;padding-top:38px;}
 .clear {clear:both;}
 
-input[type=range] {height:20px;width: 90%;z-index:10;position: relative;}
+input[type=range] {height:20px;width: 90%;z-index:100;position: relative;}
 input[type=range] {
   -webkit-appearance: none;margin:20px 5% 50px;}
 input[type=range]:focus {
