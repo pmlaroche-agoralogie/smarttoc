@@ -510,8 +510,10 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 .usequestion input {display:none;}
 .usequestion label{width:100%;min-height:40px;}
 .usequestion label{display:flex;}
-.usequestion label .icon{flex:1;width:40px;flex-basis: auto;}
-.usequestion label .txt{flex:10;padding:20px;}
+.usequestion label .icon{width:40px; min-height: 40px;flex:1;flex-basis: auto;display: inline-block;
+    vertical-align: middle;}
+.usequestion label .txt{flex:10;padding:20px;display: inline-block;
+    vertical-align: middle;}
 .usequestion label[for="useok"] .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
 .usequestion label[for="useko"] .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
 .usequestion input+label .icon{opacity:0.5}
