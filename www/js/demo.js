@@ -201,7 +201,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
         	{
         		cordova.plugins.email.open({
         			subject: "Votre identifiant Smart'TOC",
-        			body:     'Votre idendifiant : '+$scope.deviceID //=> res/drawable/icon (Android)
+        			body:     'Votre idendifiant : '+$scope.quiz.deviceID //=> res/drawable/icon (Android)
         		});
         	}
         });
