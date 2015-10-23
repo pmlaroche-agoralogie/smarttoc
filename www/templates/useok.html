@@ -27,7 +27,7 @@
 			<div class="fille1"></div>
 			
 				<div class="usequestion">
-					<input type="radio" name="useanswer" value="useOK" id="useok" ng-required="true" ng-model="reponse">
+				<!--  	<input type="radio" name="useanswer" value="useOK" id="useok" ng-required="true" ng-model="reponse">
 					<label for="useok">
 						<div class="icon"></div>
 						<div class="txt">Je suis d'accord et je souhaite installer Smart’TOC</div>
@@ -36,7 +36,24 @@
 					<label for="useko">
 						<div class="icon"></div>
 						<div class="txt">Je ne souhaite pas installer Smart’TOC</div>
-					</label>
+					</label>-->
+					<input type="radio" name="useanswer" value="useOK" id="useok" ng-required="true" ng-model="reponse">
+					<div class="useok mylabel">
+						<label for="useok" class="icon">
+						</label>
+						<label for="useok" class="txt">
+							Je suis d'accord et je souhaite installer Smart’TOC
+						</label>
+					</div>
+					<input type="radio" name="useanswer" value="useKO" id="useko" ng-required="true" ng-model="reponse">
+					<div class="useko mylabel">
+						<label for="useko" class="icon">
+						</label>
+						<label for="useko" class="txt">
+							Je ne souhaite pas installer Smart’TOC
+						</label>
+					</div>
+
 					
 				</div>
 				<div class="clear"></div>
@@ -44,6 +61,7 @@
 			
         </div>
       </div>
+
       <div class="paddingbottom60"></div>
         </div>
 </div>

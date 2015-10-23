@@ -508,16 +508,25 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 /*USE*/
 .usequestion {float:left;text-align:left;width:70%;}
 .usequestion input {display:none;}
+.usequestion .mylabel{width:100%}
+.usequestion .mylabel .icon{width:40px; min-height: 40px;display: inline-block; vertical-align: middle;}
+.usequestion .useok .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
+.usequestion .useko .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
+.usequestion .mylabel .txt{padding:20px;display: inline-block; vertical-align: middle;width:70%;}
+.usequestion input+.mylabel .icon{opacity:0.5}
+.usequestion input:checked+.mylabel .icon{opacity:1}
+   
+/*.usequestion input {}
 .usequestion label{width:100%;min-height:40px;}
-.usequestion label{display:flex;}
-.usequestion label .icon{width:40px; min-height: 40px;flex:1;flex-basis: auto;display: inline-block;
+.usequestion label{}
+.usequestion label .icon{width:40px; min-height: 40px;display: inline-block;
     vertical-align: middle;}
-.usequestion label .txt{flex:10;padding:20px;display: inline-block;
-    vertical-align: middle;}
+.usequestion label .txt{padding:20px;display: inline-block;
+    vertical-align: middle;width:70%;}
 .usequestion label[for="useok"] .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
 .usequestion label[for="useko"] .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
 .usequestion input+label .icon{opacity:0.5}
-.usequestion input:checked+label .icon{opacity:1}
+.usequestion input:checked+label .icon{opacity:1}*/
 /*input+label:after{opacity:0.75}
 input:checked+label:after{opacity:1}*/
 

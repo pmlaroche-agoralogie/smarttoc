@@ -445,10 +445,10 @@ function do_MC_UseOk(callback,$location,$route,$scope){
 						//Change path
 						$location.path('/useok'); 
 						$scope.menu = false;
-						callback(null,"MC_UseOk_false");
 						$route.reload();
+						$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
 						
-						
+						//callback(true,"MC_UseOk_false");
 						//return false;
 					}
 					else
