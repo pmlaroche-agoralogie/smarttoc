@@ -22,7 +22,7 @@ quiz_hebdo = 313524;
 //plage de désactivation
 
 window.onerror = function (errorMsg, url, lineNumber) {
-	console.log('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
-    alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
+	console.log('ERROR: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
+    alert('ERROR: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
     
 }
