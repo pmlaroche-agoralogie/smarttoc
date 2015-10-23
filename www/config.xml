@@ -60,7 +60,7 @@
     <!--gap:plugin name="com.jcjee.plugins.emailcomposer" version="1.4.6" /-->
     <gap:plugin name="de.appplant.cordova.plugin.email-composer" />
     
-    <gap:plugin name="org.apache.cordova.local-notification" source="npm"/>
+    <gap:plugin name="de.appplant.cordova.plugin.local-notification" source="npm"/>
     <!--gap:plugin name="de.appplant.cordova.plugin.local-notification" /-->
     <!--gap:plugin name="de.appplant.cordova.plugin.local-notification-ios9-fix" /-->
     
