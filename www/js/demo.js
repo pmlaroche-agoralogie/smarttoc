@@ -56,6 +56,9 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		               	
 	              	//create db content
 	              	function(callback){createQuestionnairesSuccess(callback);},
+	              	function(callback){getQuestionList($scope,quiz_quotidien,callback);},
+	              	function(callback){getQuestionList($scope,quiz_hebdo,callback);},
+	              	
 	              	//function(callback){createHorairesSuccess(callback);},
 	              	//TODO : horaires
 	              	
@@ -66,7 +69,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	              	function(callback){do_MC_UseOk(callback,$location,$route,$scope);},
 	        ],	   				 
 			function(err, results ){
-		
+					//getQuestionList($scope,quiz_quotidien);
 					console.log(results);
 			}
 		);//fin  async.series*/
@@ -295,6 +298,15 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$scope.menu = true;
 		$route.reload();
 	}
+	/////////////
+	//FONCTION getQuestionList
+	$scope.getQuestionList = function(){
+		console.log('getQuestionList');
+		getQuestionList($scope,quiz_quotidien);
+		return $scope.questionslist;
+		//return true;
+		
+	}//FIN FONCTION getQuestionList
 	
 	/////////////
 	//BUTTON ENVOYER MAIL
@@ -306,7 +318,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//test android seulement :
 		var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
 		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
-		var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
+		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
+		var uri = "http://icm.kpy.fr/pdf?sid=916553,313524&curs=2015-10-13&period=m&uid=be1290631d9c03b81b642470e2cc86dc";
 			
 		fileTransfer.download(
 			    uri,

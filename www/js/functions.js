@@ -273,6 +273,29 @@ function getQuestionsBySID($scope,sid,current,callback)
 	
 }
 
+function getQuestionList($scope,sid,callback){
+	//questionslist
+	if ($scope.questionslist === undefined)
+		$scope.questionslist = [];
+	db.transaction(function(tx) {
+		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+';');
+		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+';', [], function(tx, res) {
+			console.log(res);
+			console.log(res.rows.length);
+			for (var i = 0; i < res.rows.length; i++) {
+				$scope.questionslist[$scope.questionslist.length]=res.rows.item(i);
+				if (i == (res.rows.length-1))
+				{
+					console.log('fin');
+					callback(null,'questionList '+sid);
+				}
+			}
+		});//FIN SELECT
+	});//FIN transaction
+	console.log('toto');
+	console.log($scope.questionslist);
+}
+
 function displayQuestionTemplate($route,$location,$scope,sid,current){
 	console.log('displayQuestionTemplate');
 	console.log($scope.quiz);

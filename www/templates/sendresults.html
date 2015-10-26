@@ -8,8 +8,19 @@
 
         Votre idendifiant Smart'Toc : {{quiz.deviceID}}
 
-	
+	liste question
+		<form id="sendResultsMail">
+		<div ng-repeat="(keyrep, valuerep) in questionslist" class="questions"> 
+			<div ng-if="valuerep.question!='systemuid'">
+				<input type="checkbox" name="sendResultRadios[{{valuerep.qid}}]" value="{{valuerep.qid}}" id="{{valuerep.qid}}"  ng-model="valuerep.reponse"  ng-init="valuerep.reponse=true">
+				<label class="btn" for="{{valuerep.qid}}" ng-bind-html="toTrustedHTML(valuerep.question)" ng-class="{'btn-success': valuerep.reponse,'btn-danger': !valuerep.reponse}"></label>
+				
+			</div>
+				<!-- <input type="radio" name="{{groupe.qid}}" value="{{keyrep}}" id="{{groupe.qid}}_{{keyrep}}" ng-model="groupe.reponse" ng-required="true">
+				<label for="{{groupe.qid}}_{{keyrep}}"></label> -->
+		</div>
 	 	<button class="btn btn-primary" ng-click="sendMail($event)">Envoyer</button>
+	 	</form>
       </div>
       <div class="paddingbottom60"></div>
         </div>
