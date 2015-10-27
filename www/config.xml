@@ -64,7 +64,7 @@
     <!--gap:plugin name="de.appplant.cordova.plugin.local-notification" /-->
     <!--gap:plugin name="de.appplant.cordova.plugin.local-notification-ios9-fix" /-->
     
-    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.file" source="npm"/>
     
     <!--gap:plugin name="org.apache.cordova.file-transfer" /-->
     <gap:plugin name="org.apache.cordova.file-transfer" source="npm"/> 
