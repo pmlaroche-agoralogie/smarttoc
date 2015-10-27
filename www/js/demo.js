@@ -35,7 +35,6 @@ app.config(function($routeProvider) {
   $routeProvider.when('/journal',     	{templateUrl: 'templates/journal.html', reloadOnSearch: false});
   $routeProvider.when('/notif',     	{templateUrl: 'templates/notif.html', reloadOnSearch: false});
   $routeProvider.when('/sendResults',    {templateUrl: 'templates/sendresults.html', reloadOnSearch: false});
- /* $routeProvider.when('/tab-charts',    {templateUrl: 'templates/tab-charts.html', reloadOnSearch: false});*/
 });
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce){
@@ -70,7 +69,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	        ],	   				 
 			function(err, results ){
 					//getQuestionList($scope,quiz_quotidien);
-					console.log(results);
+					//console.log(results);
 			}
 		);//fin  async.series*/
 	 
@@ -177,17 +176,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			$scope.menu = true;
 			$route.reload();
 		}
-		/*else if ($scope.profileok = "quiz")
-		{
-			if ($scope.quiz === undefined)
-				$scope.quiz ={};
-			console.log("quiz");
-			if ($scope.quiz.sid === undefined || $scope.quiz.sid != quiz_profile)
-				$scope.quiz.sid = quiz_profile;
-			console.log('SCOPE2');
-			console.log(JSON.stringify($scope.quiz));
 
-		}*/
 		if (debug) alert(JSON.stringify($scope.quiz));
 		console.log('SCOPE');
 		console.log(JSON.stringify($scope.quiz));
@@ -268,15 +257,6 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
    			 			console.log(results);
    		         }
    		 );//fin  async.series
-			/*console.log($("input[name="+res.rows.item(current).qid+"]:checked").attr("value"));
-			rep = $("input[name="+res.rows.item(current).qid+"]:checked").attr("value");*/
-		//	var timestamp = Math.round(new Date().getTime() / 1000);
-		/*	db.transaction(function(tx) 
-					{
-							//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
-							tx.executeSql('INSERT INTO "reponses" (sid, gid,qid, reponse,tsreponse) VALUES ("'+res.rows.item(current).sid+'","'+res.rows.item(current).gid+'","'+res.rows.item(current).qid+'","'+rep+'","'+timestamp+'");', [], function(tx, res) {});//insert
-					});//Transaction*/		
-
 		}//FIN BUTTON NEXT Quiz
 	
 	$scope.changetoHour  = function(string){
@@ -298,6 +278,12 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$scope.menu = true;
 		$route.reload();
 	}
+	
+	$scope.openResult = function(){
+		currentDate = new Date();
+		window.open("https://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+(parseInt(currentDate.getMonth())+1)+"-"+currentDate.getDate()+"&period=m&uid="+$scope.quiz.deviceID, '_blank', 'location=no,closebuttoncaption=Fermer');
+	}//FIN FONCTION openResult
+	
 	/////////////
 	//FONCTION getQuestionList
 	$scope.getQuestionList = function(){
@@ -308,18 +294,45 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		
 	}//FIN FONCTION getQuestionList
 	
+	
+	$scope.disabledSendMail = function(){
+		//$scope.selectedOptions=true;
+		var invalid = true;
+		$( "#sendResultsMail input:checked").each(function( index ) {
+			invalid = false
+			});
+		//console.log('valid');
+		//console.log($scope.questionslist);
+		return invalid;
+		
+		//return true;
+		
+	}//FIN FONCTION change
+	
 	/////////////
 	//BUTTON ENVOYER MAIL
 	$scope.sendMail= function(clickEvent){
+		console.log('sendmail');
+		var myquestionList = "";
+		$( "#sendResultsMail input:checked").each(function( index ) {
+			  //console.log( index + ": " + $( this ).attr('id') );
+			  myquestionList += $( this ).attr('id') +",";
+			});
+		if (myquestionList != "")
+			myquestionList = myquestionList.substring(0,myquestionList.length-1);
+		//console.log("myquestionList");
+		//console.log(myquestionList);
 		if(isMobile)
 		{
+			
 		var fileTransfer = new FileTransfer();
 		var fileURL = cordova.file.dataDirectory+"montest.pdf";
 		//test android seulement :
 		var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
 		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
 		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
-		var uri = "http://icm.kpy.fr/pdf?sid=916553,313524&curs=2015-10-13&period=m&uid=be1290631d9c03b81b642470e2cc86dc";
+		currentDate = new Date();
+		var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+(parseInt(currentDate.getMonth())+1)+"-"+currentDate.getDate()+"&period=m&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			
 		fileTransfer.download(
 			    uri,
@@ -331,14 +344,20 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			        cordova.plugins.email.isAvailable(function(result){ 
 			        	if (result) //mail dispo
 			        	{
-			        		alert('dispo');
 			        		cordova.plugins.email.open({
 			        			subject: 'rapport données',
 			        		    attachments: entry.toURL() //=> res/drawable/icon (Android)
 			        		});
 			        	}
 			        	else
-			        		alert('pb dispo');
+			        	{
+			        		navigator.notification.alert(
+			        				'Veuillez renseigner un compte dans Mail pour pouvoir envoyer vos résultats',  // message
+			        			    function(){},         // callback
+			        			    'Erreur',            // title
+			        			    'Ok'                  // buttonName
+			        			);
+			        	}
 			        });
 			    },
 			    function(error) {
@@ -366,199 +385,6 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	}//FIN BUTTON ENVOYER MAIL
 	
 }); // fin MainController
-
-
-//CHARTS
-/*app.controller('ChartsCtrl', function($scope, $filter, Questions, Charts) {
-
-	//current date
-	var MyDate = new Date();
-	var MyDateString;
-	MyDate.setDate(MyDate.getDate() + 20);
-	MyDateString =  MyDate.getFullYear() + '-'
-    + ('0' + (MyDate.getMonth()+1)).slice(-2) + '-'
-    + ('0' + MyDate.getDate()).slice(-2);
-	
-	
-	var sid = 236551;
-	moment.locale('fr');
-	var curs = moment(MyDateString);
-	var curs = moment('2015-01-01');
-     period = "1-month";
-     
-     $scope.openResultUrl = function(clickEvent){
- 		console.log('openUrl');
- 		//var iabRef = window.open('http://icm.kpy.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
- 		var iabRef = window.open('http://restitution.altotoc.fr/?sid=236551&curs=2015-01-01&period=m', '_blank', 'location=no,closebuttoncaption=Fermer');
-
- 		//iabRef.toolbar.barStyle = UIBarStyleDefault;
- 	};
-	
-
-
-	var grid = [],
-		labels = [];
-	if (period == 'weeks') {
-		var _in = moment(curs).startOf('isoWeek');
-		var _out = moment(curs).endOf('isoWeek');
-		var d = moment(_in);
-		labels = ['L','M','Me','J','V','S','D'];
-		while(d.unix() < _out.unix()) {
-			grid.push(d.format('YYYY-MM-DD'));
-			d = d.add(1, 'days');
-		}
-	} else if (period == '1-month') {
-		var _in = moment(curs).startOf('month');
-		var _out = moment(curs).endOf('month');
-		var d = moment(_in);
-		while(d.unix() < _out.unix()) {
-			grid.push(d.format('YYYY-MM-DD'));
-			labels.push((d.format('e')=='0')?d.format('dd D MMM'):'');
-			d = d.add(1, 'days');
-		}
-	} else if (period == '2-month') {
-		var _in = moment(curs).startOf('month').subtract('months',1);
-		var _out = moment(curs).endOf('month');
-		var d = moment(_in);
-		while(d.unix() < _out.unix()) {
-			grid.push(d.format('YYYY-MM-DD'));
-			labels.push((d.format('e')=='0')?d.format('dd D MMM'):'');
-			d = d.add(1, 'days');
-		}
-	} else if (period == '3-month') {
-		var _in = moment(curs).startOf('month').subtract('months',2);
-		var _out = moment(curs).endOf('month');
-		var d = moment(_in);
-		while(d.unix() < _out.unix()) {
-			grid.push(d.format('YYYY-MM-DD'));
-			labels.push((d.format('e')=='0')?d.format('dd D MMM'):'');
-			d = d.add(1, 'days');
-		}
-	}
-	
-	console.log('Questions');
-	console.log(Questions);
-	
-	Questions.all({sid:sid}).then(function(response) {
-		var q = [];
-		angular.forEach(response.data, function(row) {
-			if (row.question != "systemuid") {
-				q.push({
-					label: row.question.replace(/(<([^>]+)>)/ig,"").replace(/\&nbsp;/ig," ").trim(),
-					key: sid+'X'+row.gid+'X'+row.qid
-				});
-			}
-		});
-		q.push(q.shift()); // first and second at the end (demo)
-		q.push(q.shift());
-		$scope.questions = q;
-		console.log('$scope.questions');
-		console.log($scope.questions);
-		//Chart.defaults.global = {
-		//responsive: false,
-	 //   maintainAspectRatio: true
-//}
-		
-		Charts.all({sid:sid,in:_in.format('YYYY-MM-DD'),out:_out.format('YYYY-MM-DD')}).then(function(response) {
-			q.forEach(function(question,i) {
-				var el = document.getElementById('chart-'+question.key);
-				if (el) {
-					var data = {};
-					grid.forEach(function(date) {
-						data[date] = null;
-					});
-					angular.forEach(response.data, function(row) {
-					//response.data.forEach(function(row) {
-						if (row[question.key]) {
-							data[row['submitdate'].substr(0,10)] = row[question.key];
-						}
-					});;
-					var strokeColor = "#FFFFFF";
-					if (period == '1-month')
-						strokeColor = "#157EFB";
-					new Chart(el.getContext("2d")).Bar({
-						labels: labels,
-						datasets: [
-							{
-								fillColor: "#157EFB",
-								strokeColor: strokeColor,
-								barStrokeWidth: 1,
-								barShowStroke : false,
-								barValueSpacing : 1,
-								data:data
-							}
-						]
-					}, {
-						animation:(i<3)
-					});
-				}
-			});
-			
-			//$scope.charts = response.data;
-		});
-		
-		
-		
-		$scope.emailMe = function(clickEvent){
-		var questionList = "";
-		$( "input:checked").each(function( index ) {
-			  console.log( index + ": " + $( this ).attr('id') );
-			 // console.log($("input:checked"));
-			  var str = $( this ).attr('id');
-			  var res = str.split("X");
-			  console.log(res);
-			  var res2 = res[2];
-			  console.log(res2);
-			  questionList += res[2]+",";
-			});
-		console.log(questionList);
-			if(isMobile)
-			{
-			var fileTransfer = new FileTransfer();
-			var fileURL = cordova.file.dataDirectory+"montest.pdf";
-			//test android seulement :
-			var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
-			var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
-			fileTransfer.download(
-				    uri,
-				    fileURL,
-				    function(entry) {
-				        console.log("download complete: " + entry.toURL());
-				        //envoi mail
-				       alert("download complete: " + entry.toURL());
-				        cordova.plugins.email.isAvailable(function(result){ 
-				        	if (result) //mail dispo
-				        	{
-				        		cordova.plugins.email.open({
-				        			subject: 'rapport données',
-				        		    attachments: entry.toURL() //=> res/drawable/icon (Android)
-				        		});
-				        	}
-				        });
-				    },
-				    function(error) {
-				    	//alert("download error source " + error.source);
-				    	//alert("download error target " + error.target);
-				    	//alert("upload error code" + error.code);
-				        //console.log("download error source " + error.source);
-				        //console.log("download error target " + error.target);
-				        //console.log("upload error code" + error.code);
-				    },
-				    false,
-				    {
-				        headers: {
-				            "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
-				        }
-				    }
-				);
-		}
-			else
-				console.log("emailMe");
-		}
-	});
-	
-	 // });// $scope.$on
-});*/
 
 
 //DYN TEMPLATE

@@ -117,7 +117,7 @@ function createHorairesSuccess(callback)
 	//"uidquestionnaire" VARCHAR, "tsdebut" INTEGER, "dureevalidite" INTEGER, "notification" INTEGER, "fait" INTEGER);');      
 	xhr_object = new XMLHttpRequest(); 
 	xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
-	xhr_object.open("GET", "http://restitution.altotoc.fr/horaires_smarttocv1.php", true);  
+	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php", true);  
 	xhr_object.send(null); 
 	xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
 	xhr_object.onreadystatechange = function () {
@@ -280,20 +280,20 @@ function getQuestionList($scope,sid,callback){
 	db.transaction(function(tx) {
 		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+';');
 		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+';', [], function(tx, res) {
-			console.log(res);
-			console.log(res.rows.length);
+			//console.log(res);
+			//console.log(res.rows.length);
 			for (var i = 0; i < res.rows.length; i++) {
 				$scope.questionslist[$scope.questionslist.length]=res.rows.item(i);
 				if (i == (res.rows.length-1))
 				{
-					console.log('fin');
+					//console.log('fin');
 					callback(null,'questionList '+sid);
 				}
 			}
 		});//FIN SELECT
 	});//FIN transaction
-	console.log('toto');
-	console.log($scope.questionslist);
+	//console.log('toto');
+	//console.log($scope.questionslist);
 }
 
 function displayQuestionTemplate($route,$location,$scope,sid,current){
@@ -450,16 +450,16 @@ function after_init(){
 /////////////////////////////////////////////////////////////////////
 
 function do_MC_UseOk(callback,$location,$route,$scope){
-	console.log('do_MC_UseOk');
+	//console.log('do_MC_UseOk');
 	if (MC_UseOk)
 	{
-		console.log('MC_UseOk');
+		//console.log('MC_UseOk');
 		db.transaction(function(tx) 
 		{
 			(function ($location,$scope) { 
 				//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
 				tx.executeSql('SELECT * FROM "reponses" where sid = "useOK" AND reponse = "ok";', [], function(tx, res) {
-					console.log(res);
+					//console.log(res);
 					var dataset = res.rows.length;
 		            if(dataset<1)
 					//if (res.rows.item(0).cnt < 1)
@@ -509,13 +509,13 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 //function MC_ProfileOk($location,$route){
 	if (MC_ProfileOk)
 	{
-		console.log('MC_ProfileOk');
+		//console.log('MC_ProfileOk');
 		db.transaction(function(tx) 
 		{
 			(function ($location,$scope) { 
 				//tx.executeSql('INSERT INTO "reponses" (sid, reponse) VALUES ("useOK","'+resultForm+'");
 				tx.executeSql('SELECT * FROM "reponses" where sid = "'+quiz_profile+'" AND reponse = "done";', [], function(tx, res) {
-					console.log(res);
+					//console.log(res);
 					var dataset = res.rows.length;
 		            if(dataset<1)
 					//if (res.rows.item(0).cnt < 1)
