@@ -639,6 +639,18 @@ function createDeviceID(callback,$scope){
 
 		$scope.quiz.deviceID = "monDeviceUid";
 	
+	//largeur /hauteur pour test
+	if (document.body)
+	{
+		$scope.larg = (document.body.clientWidth);
+		$scope.haut = (document.body.clientHeight);
+	}
+	else
+	{
+		$scope.larg = (window.innerWidth);
+		$scope.haut = (window.innerHeight);
+	}
+	
 	callback(null,'deviceID')
 }
 

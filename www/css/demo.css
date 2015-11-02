@@ -618,3 +618,7 @@ input[type=range].heure:focus::-webkit-slider-runnable-track {
 .merci{background:url('../img/bgfin.png') top center no-repeat transparent;background-size:100%;padding-top: 120px;position:relative}
 .merci .bulleg{width:90%;}
 .merci .fille{background:url('../img/fille1.png') top center no-repeat transparent;background-size:100%;position: absolute;top: 300px;left: 20px;padding-bottom: 35%;width:12%;}
+
+@media (max-width: 400px) {
+	.postit h1{font-size:18px;}
+}
