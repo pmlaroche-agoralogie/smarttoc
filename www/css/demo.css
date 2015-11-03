@@ -180,10 +180,13 @@ div.titre_journal {
     /*height: 40px;*/
     background-color: lightgrey;
     font-size: 30px;
-    padding-top: 60px;
+    padding-top: 80px;
     position: relative;
     z-index: 1;
+    font-family:Papyrus,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+
+div.titre_journal h1{ font-family:Papyrus,"Helvetica Neue",Helvetica,Arial,sans-serif;}
 
 div.titre_journal div.postit{
 background-image: url('../img/postit_01.png'), url('../img/postit_03.png');
@@ -204,7 +207,7 @@ padding: 0 14%;
 div.titre_journal div.question h1{margin:0;padding:0;}
 div.titre_journal div.question h1 p{margin:0;padding:0;}
 div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repeat transparent;width:12%;
-	background-size:100%;height:100%;/*max-width:50px;*/position:absolute;z-index:10;top:60px;left:5px;z-index:2}
+	background-size:100%;height:100%;/*max-width:50px;*/position:absolute;z-index:10;top:80px;left:5px;z-index:2}
 
 
 /*CONTENU*/
@@ -619,6 +622,27 @@ input[type=range].heure:focus::-webkit-slider-runnable-track {
 .merci .bulleg{width:90%;}
 .merci .fille{background:url('../img/fille1.png') top center no-repeat transparent;background-size:100%;position: absolute;top: 300px;left: 20px;padding-bottom: 35%;width:12%;}
 
-@media (max-width: 400px) {
+/** NO QUESTION/QUESTION**/
+.noquestion {background:url('../img/bgrien.png') bottom center no-repeat transparent;background-size:100%;padding-bottom:70%}
+
+.withquestion{background:url('../img/fille1.png') top left no-repeat transparent;padding-bottom:40%;background-size:20%;background-position: 10% 100%}
+.withquestion .bulleg{font-size: 20px;
+    display: inline-block;}
+
+@media (max-width: 500px) {
 	.postit h1{font-size:18px;}
+}
+
+@media (max-width: 320px) {
+	body{font-size:13px}
+	.bulle{ padding: 5% 3%;}
+	.titre_journal h1{font-size:25px;}
+	.postit h1{font-size:18px;}
+	.fille1 {padding-bottom: 60%;}
+	.usequestion .mylabel .txt {padding-right:0}
+	
+	.question.genre .answers:nth-child(2) label,.question.genre .answers:nth-child(3) label{width:60px;height: 150px;
+    background-size: contain;}
+    
+    .buttonmailid{max-width:60%;white-space: normal;}
 }

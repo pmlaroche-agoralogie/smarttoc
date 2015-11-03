@@ -34,7 +34,8 @@ app.config(function($routeProvider) {
   $routeProvider.when('/results',     	{templateUrl: 'templates/results.html', reloadOnSearch: false});
   $routeProvider.when('/journal',     	{templateUrl: 'templates/journal.html', reloadOnSearch: false});
   $routeProvider.when('/notif',     	{templateUrl: 'templates/notif.html', reloadOnSearch: false});
-  $routeProvider.when('/sendResults',    {templateUrl: 'templates/sendresults.html', reloadOnSearch: false});
+  $routeProvider.when('/sendResults',   {templateUrl: 'templates/sendresults.html', reloadOnSearch: false});
+  $routeProvider.when('/apropos',    	{templateUrl: 'templates/apropos.html', reloadOnSearch: false});
 });
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce){
