@@ -76,6 +76,8 @@ function createTableReponses(callback)
 
 
 function createQuestionnairesSuccess(callback){
+	if (debug || debug_loadDB)
+		alertDebug("createQuestionnairesSuccess");
 	var req = new XMLHttpRequest();
 	req.open('GET', '../www/db/questionnaires.txt', true);
 
