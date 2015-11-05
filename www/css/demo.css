@@ -555,6 +555,15 @@ input:checked+label:after{opacity:1}*/
 .question.radio_evol input+label {opacity:0.5}
 .question.radio_evol input:checked+label {opacity:1}
 
+/*ok/ko*/
+.question.radio_ok input{display:none}
+.question.radio_ok .answers {display:inline-block;}
+.question.radio_ok label {display:inline-block;margin:0 20px 40px;}
+.question.radio_ok .answers:nth-child(1) label {background: url('../img/ok.png') left center no-repeat transparent;width:64px;height:64px;}
+.question.radio_ok .answers:nth-child(2) label {background: url('../img/ko.png') left center no-repeat transparent;width:64px;height:64px;}
+.question.radio_ok input+label {opacity:0.5}
+.question.radio_ok input:checked+label {opacity:1}
+
 /*RANGE*/
 .left {float:left;font-size:20px;}
 .left.bulle {background-image:url(../img/bulle_gauche.jpg);background-repeat:no-repeat;width:141px;height:105px;text-align:center;padding-top:28px;font-size:20px;}

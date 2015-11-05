@@ -1,0 +1,22 @@
+<div class="question radio_ok" monID="{{groupe.qid}}">
+	
+	<div ng-if="profileok == 'quiz'">
+	<div ng-bind-html="toTrustedHTML(groupe.question)"></div>
+	</div>
+	
+
+	
+	<div ng-repeat="(keyrep, valuerep) in groupe.reponses" class="answers"> 
+			<input type="radio" name="{{groupe.qid}}" value="{{keyrep}}" id="{{groupe.qid}}_{{keyrep}}" ng-model="groupe.reponse" ng-required="true">
+			<label for="{{groupe.qid}}_{{keyrep}}"></label>
+	</div>
+</div>
+
+
+<!--  {{groupe.title}}
+<reponse ng-repeat="reponse in groupe.reponses" data="reponse">
+	  	{{reponse.title}}
+</reponse>
+RADIO
+{{groupe.qid}}
+-->

@@ -451,16 +451,28 @@ app.directive("groupe", function() {
 	        {
 	        	if ($scope.groupe.config.tpl == "radio_demo_genre")
 	        		return "templates/tpl_radio_demo_genre.tpl.html";
-	        	if ($scope.groupe.config.tpl == "radio")
-	        		return "templates/tpl_radio.tpl.html";
 	        	if ($scope.groupe.config.tpl == "radio2")
 	        		return "templates/tpl_radio2.tpl.html";
+	        	if ($scope.groupe.config.tpl == "radio")
+	        		return "templates/tpl_radio.tpl.html";
+	        	
 	        }
 	        else if ($scope.groupe.qtype == "S")
 	        {
 	        	if ($scope.groupe.config.tpl == "uid")
 	        		console.log('save uid');
 	        		$scope.nextQuiz();
+	        }
+	        else if ($scope.groupe.qtype == "!")
+	        {
+	        	if ($scope.groupe.config.tpl == "radio2")
+	        		return "templates/tpl_radio2.tpl.html";
+	        	if ($scope.groupe.config.tpl == "radio")
+	        		return "templates/tpl_radio.tpl.html";
+	        	if ($scope.groupe.config.tpl == "radio3")
+	        		return "templates/tpl_radio3.tpl.html";
+	        	if ($scope.groupe.config.tpl == "radio_demo_genre")
+	        		return "templates/tpl_radio_demo_genre.tpl.html";
 	        }
 	        else
 	        {
