@@ -1,7 +1,7 @@
 <div class="question" monID="{{groupe.qid}}">
 	<!--<div ng-bind-html="groupe.question"></div>-->
 	<div> Vous avez : </div>
-	<input id ="userID" type="text" name="{{groupe.qid}}" ng-model="mytext" ng-required="true" 
+	<input id ="userID" type="number" min="10" max="120" name="{{groupe.qid}}" ng-model="mytext" ng-required="true" 
 		class="form-control ng-pristine ng-valid needsclick ng-valid-email ng-touched" > ans
 </div>
 
