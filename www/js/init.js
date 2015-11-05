@@ -1,6 +1,6 @@
 //debug choisir part ou global
-debug = false;
-debug_loadDB = false;
+debug = true;
+debug_loadDB = true;
 
 //test si chrome
 var isMobile = true;
