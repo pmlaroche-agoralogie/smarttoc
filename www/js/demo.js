@@ -41,6 +41,8 @@ app.config(function($routeProvider) {
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval){
 	
 	$scope.test ="test";
+	$scope.larg = "0";
+	$scope.haut = "0";
 	$scope.menu = false;
 	if ($scope.quiz === undefined)
 		$scope.quiz ={};
