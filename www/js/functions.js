@@ -118,6 +118,8 @@ function createQuestionnairesSuccess(callback){
 
 function createHorairesSuccess(callback,$interval,$scope)
 {
+	if (debug || debug_loadDB)
+		alertDebug("function createHorairesSuccess");
 	console.log('createHorairesSuccess');
 	//tx.executeSql('CREATE TABLE IF NOT EXISTS "horaires" ("id" INTEGER PRIMARY KEY AUTOINCREMENT ,
 	//"uidquestionnaire" VARCHAR, "tsdebut" INTEGER, "dureevalidite" INTEGER, "notification" INTEGER, "fait" INTEGER);');      
@@ -169,6 +171,8 @@ function createQuestionnairesError(tx, error) {
 }
 
 function readQuestionnairesSuccess(fileEntry,callback) {
+	if (debug || debug_loadDB)
+		alertDebug("function readQuestionnairesSuccess");
 	fileEntry.file(function(file) {
 		var reader = new FileReader();
 		reader.onloadend = function(e) {
@@ -186,6 +190,8 @@ function readQuestionnairesFail(e) {
 }
 
 function insertQuestionnaire(res,callback){
+	if (debug || debug_loadDB)
+		alertDebug("function insertQuestionnaire");
 	db.transaction(function(tx) {
 		var line = res.split("\n");
 		for (var linekey in line)
@@ -217,7 +223,7 @@ function insertQuestionnaire(res,callback){
 function getQuestionsBySID($scope,sid,current,callback)
 {
 	if (debug)
-		alert('getQuestionsBySID');
+		alertDebug("function getQuestionsBySID");
 	console.log('*******getQuestionsBySID******');
 	db.transaction(function(tx) {
 		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+' LIMIT '+current+',1;');
@@ -287,6 +293,8 @@ function getQuestionsBySID($scope,sid,current,callback)
 }
 
 function getQuestionList($scope,sid,callback){
+	if (debug)
+		alertDebug("function getQuestionList");
 	//questionslist
 	if ($scope.questionslist === undefined)
 		$scope.questionslist = [];
@@ -310,6 +318,8 @@ function getQuestionList($scope,sid,callback){
 }
 
 function displayQuestionTemplate($route,$location,$scope,sid,current){
+	if (debug)
+		alertDebug("function displayQuestionTemplate");
 	console.log('displayQuestionTemplate');
 	console.log($scope.quiz);
 		console.log(current);
@@ -355,6 +365,8 @@ function displayQuestionTemplate($route,$location,$scope,sid,current){
 
 function getCurrentSID($scope)
 {
+	if (debug)
+		alertDebug("function getCurrentSID");
 	//console.log('getCurrentSID');
 	//console.log($scope);
 	/*$scope.currentSID = "none";
@@ -385,6 +397,8 @@ function getCurrentSID($scope)
 
 function saveReponses(quiz,callback)
 {
+	if (debug)
+		alertDebug("function saveReponses");
 	console.log('save');
 	console.log(quiz);
 	var timestamp = Math.round(new Date().getTime() / 1000);
@@ -499,6 +513,8 @@ function after_init(){
 /////////////////////////////////////////////////////////////////////
 
 function do_MC_UseOk(callback,$location,$route,$scope){
+	if (debug)
+		alertDebug("function do_MC_UseOk");
 	//console.log('do_MC_UseOk');
 	if (MC_UseOk)
 	{
@@ -555,6 +571,8 @@ function save_MC_UseOk()
 //Functions MC_ProfileOk
 /////////////////////////////////////////////////////////////////////
 function MC_ProfileOk(callback,$location,$route,$scope){
+	if (debug)
+		alertDebug("function MC_ProfileOk");
 //function MC_ProfileOk($location,$route){
 	if (MC_ProfileOk)
 	{
@@ -677,6 +695,8 @@ function getQuestionConfig(qhelp)
 
 
 function createDeviceID(callback,$scope){
+	if (debug)
+		alertDebug("function createDeviceID");
 	console.log('createDeviceID');
 	if ($scope.quiz === undefined)
 		$scope.quiz ={};
@@ -705,6 +725,8 @@ function createDeviceID(callback,$scope){
 
 //UUID
 function generateUUID() {
+	if (debug)
+		alertDebug("function generateUUID");
     var d = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = (d + Math.random()*16)%16 | 0;
