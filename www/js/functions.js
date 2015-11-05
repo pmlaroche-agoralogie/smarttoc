@@ -15,6 +15,8 @@ function successHandler(tx, result) {
 // DB init
 function init_DB(callback)
 {
+	if (debug || debug_loadDB)
+		alertDebug("function init_DB");
 	//init base
 	if(isMobile)
     	db = window.sqlitePlugin.openDatabase("Database_SmartToc", "1.0", "Demo", -1);
@@ -25,6 +27,8 @@ function init_DB(callback)
 
 function createTableQuestionnaires(callback)
 {
+	if (debug || debug_loadDB)
+		alertDebug("function createTableQuestionnaires");
 	db.transaction(function(tx) 
 			{  
 				
@@ -77,7 +81,7 @@ function createTableReponses(callback)
 
 function createQuestionnairesSuccess(callback){
 	if (debug || debug_loadDB)
-		alertDebug("createQuestionnairesSuccess");
+		alertDebug("function createQuestionnairesSuccess");
 	var req = new XMLHttpRequest();
 	req.open('GET', '../www/db/questionnaires.txt', true);
 
