@@ -38,12 +38,20 @@ app.config(function($routeProvider) {
   $routeProvider.when('/apropos',    	{templateUrl: 'templates/apropos.html', reloadOnSearch: false});
 });
 
-app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce){
+app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval){
 	
 	$scope.test ="test";
 	$scope.menu = false;
+	if ($scope.quiz === undefined)
+		$scope.quiz ={};
+	$scope.quiz.currentSID = "none";
+	$scope.quiz.currentHoraire = "none";
+	$scope.quizQuoti = quiz_quotidien;
+	$scope.quizHebdo = quiz_hebdo;
 	
-	
+	/*$interval(function () {
+	    console.log("Interval occurred");
+	}, 5000);*/
 	//Séquence d'initialisation
 	async.series([	
 	              	function(callback){ cordovaReady(callback);},
@@ -59,11 +67,12 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	              	function(callback){getQuestionList($scope,quiz_quotidien,callback);},
 	              	function(callback){getQuestionList($scope,quiz_hebdo,callback);},
 	              	
-	              	//function(callback){createHorairesSuccess(callback);},
-	              	//TODO : horaires
-	              	
 	              	//create deviceID
 	              	function(callback){createDeviceID(callback,$scope);},
+	              	
+	              	function(callback){createHorairesSuccess(callback,$interval,$scope);},
+	              	
+	              	
 	              	
 	              	//test useOk
 	              	function(callback){do_MC_UseOk(callback,$location,$route,$scope);},
@@ -333,7 +342,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
 		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
 		currentDate = new Date();
-		var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+(parseInt(currentDate.getMonth())+1)+"-"+currentDate.getDate()+"&period=m&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
+		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+(parseInt(currentDate.getMonth())+1)+"-"+currentDate.getDate()+"&period=m&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			
 		fileTransfer.download(
 			    uri,

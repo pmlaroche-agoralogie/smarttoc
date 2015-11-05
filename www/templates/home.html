@@ -6,15 +6,25 @@
         <h1>Smart'TOC
         </h1>
       </div>
-       <!--  <div class="list-group-item list-group-item-home noquestion"> -->
-       <div class="list-group-item list-group-item-home withquestion">
-       <div class="bulleg"><p>Vous avez un<br/>questionnaire à<br/>remplir.<br/>{{larg}} * {{haut}}</p></div>
-
-     </div>
+      <div ng-if="quiz.currentSID=='none'">
+       	<div class="list-group-item list-group-item-home noquestion"></div>
+       		Pas de questionnaire à remplir.<br/>{{larg}} * {{haut}}
+       </div>
+       <div ng-if="quiz.currentSID!='none'">
+       	<div class="list-group-item list-group-item-home withquestion">
+       		<div class="bulleg"><p>Vous avez un<br/>questionnaire à<br/>remplir.<br/>{{larg}} * {{haut}}</p></div>
+     	</div>
+     	</div>
+     	<div ng-if="quiz.currentSID!='none'">
 	 <div class="list-group-item list-group-item-home media startButton">		
+	 	<div ng-if="quiz.currentSID==quizQuoti">
 			<button class="btn btn-primary" ng-click="startQuoti($event)">Questionnaire quotidien</button>
+		</div>
+		<div ng-if="quiz.currentSID==quizHebdo">
 			<button class="btn btn-primary" ng-click="startHebdo($event)">Questionnaire hebdo</button>
+		</div>
       </div>
+       </div>
 
     </div>
 

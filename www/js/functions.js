@@ -110,14 +110,14 @@ function createQuestionnairesSuccess(callback){
 		alertDebug("createQuestionnairesSuccess");
 };
 
-function createHorairesSuccess(callback)
+function createHorairesSuccess(callback,$interval,$scope)
 {
 	console.log('createHorairesSuccess');
 	//tx.executeSql('CREATE TABLE IF NOT EXISTS "horaires" ("id" INTEGER PRIMARY KEY AUTOINCREMENT ,
 	//"uidquestionnaire" VARCHAR, "tsdebut" INTEGER, "dureevalidite" INTEGER, "notification" INTEGER, "fait" INTEGER);');      
 	xhr_object = new XMLHttpRequest(); 
 	xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
-	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php", true);  
+	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, true);  
 	xhr_object.send(null); 
 	xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
 	xhr_object.onreadystatechange = function () {
@@ -133,20 +133,20 @@ function createHorairesSuccess(callback)
 			{  
 				for(var k in MyHoraires) {
 					   console.log(k, MyHoraires[k]);
-					   console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = "'+MyHoraires[k].ts+'"');
+					   console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+'');
 					   (function (value) { 
-					   tx.executeSql('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = "'+MyHoraires[k].ts+'";', [], function(tx, res) {
+					   tx.executeSql('SELECT COUNT("id") as cnt  FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+';', [], function(tx, res) {
 						   if (res.rows.item(0).cnt < 1)
 						   {
-							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut) VALUES("'+
+							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut,fait) VALUES("'+
 									   value.sid+'","'+
-									   value.ts+'");',[], successHandler, errorHandler);
+									   value.ts+'",0);',[], successHandler, errorHandler);
 						   }
 					   },createQuestionnairesError); //SELECT COUNT
 					   })(MyHoraires[k]);
 					   
 				}
-			},function(tx){callback(true,'setHorairesError')},function(tx){callback(null,'setHorairesSuccess')});
+			},function(tx){callback(true,'setHorairesError')},function(tx){callback(null,'setHorairesSuccess');getCurrentSID($scope); $interval(function(){ getCurrentSID($scope);}, 60000);});
 			//});//DB TRANSACTION
 			/*$scope.userId = xhr_object.response;
 			$scope.encours = false;
@@ -225,10 +225,17 @@ function getQuestionsBySID($scope,sid,current,callback)
 			//if (res.rows.item(0).cnt < 1)
 			if (res.rows.length < 1)
 			{
+				//var currentSID = ;
+				//var currentHoraire = 
+				console.log('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
+				tx.executeSql('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
 				console.log('fin');
 				$scope.quiz.groupes ={};
 				$scope.quiz.next =0;
 				$scope.quiz.actif = 'fin';
+				getCurrentSID($scope);
+				//$scope.quiz.currentSID = "none";
+				//$scope.quiz.currentHoraire = "none";
 				callback(null,'fin');
 				
 			}
@@ -340,6 +347,36 @@ function displayQuestionTemplate($route,$location,$scope,sid,current){
 
 }
 
+function getCurrentSID($scope)
+{
+	//console.log('getCurrentSID');
+	//console.log($scope);
+	/*$scope.currentSID = "none";
+	$scope.currentHoraire = "none";*/
+	var mycurrentDate = new Date();
+	var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
+	var timestamp2 = timestamp1 + 86400;
+	//console.log(timestamp1);
+	//console.log(timestamp2);
+	
+	db.transaction(function(tx) {
+		//console.log('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+';');
+		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
+			if (res.rows.length > 0)
+			{
+				$scope.quiz.currentSID = res.rows.item(0).uidquestionnaire;
+				$scope.quiz.currentHoraire = res.rows.item(0).tsdebut;		
+				$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+			}
+			else
+			{
+				$scope.quiz.currentSID = "none";
+				$scope.quiz.currentHoraire = "none";	
+			}
+		});//FIN SELECT
+	});//FIN transaction
+}
+
 function saveReponses(quiz,callback)
 {
 	console.log('save');
@@ -406,11 +443,17 @@ function saveReponses(quiz,callback)
 				reponse = $('.question[monID="'+groupe.qid+'"] input:checked').val();
 			}
 			
+			if (groupe.sid == quiz_profile)
+				var horaire = "profile";
+			else
+				var horaire = quiz.currentHoraire;
+			
 			//sql ='INSERT INTO "reponses" (idhoraire,sid, gid,qid, reponse, tsreponse_deb,tsreponse_fin) '+
 			sql ='INSERT INTO "reponses" (idhoraire,sid, gid,qid, reponse,tsreponse) '+
 			
 			'VALUES('+
-			'"'+quiz.uuid+'",'+ //uuid
+			//'"'+quiz.uuid+'",'+ //uuid
+			'"'+horaire+'",'+ //idHoraire
 			'"'+groupe.sid+'",'+ // sid
 			'"'+groupe.gid+'",'+ //gid
 			'"'+groupe.qid+'",'+ //qid
@@ -700,7 +743,9 @@ function sendReponses($scope) {
                             }
 
                         	xhr_object = new XMLHttpRequest(); 
-                        	xhr_object.open("GET", "http://mcp.ocd-dbs-france.org/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false);                 	
+                        	//xhr_object.open("GET", "http://mcp.ocd-dbs-france.org/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false);   
+                        	xhr_object.open("GET", "https://restitution.altotoc.fr/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false); 
+         
                         	xhr_object.send(null); 
                         	console.log("send rep");
                         	console.log(JSON.stringify(aReponses));
