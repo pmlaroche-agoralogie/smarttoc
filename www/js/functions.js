@@ -622,14 +622,14 @@ function save_MC_ProfileOk()
 //Function affichage debug
 function alertDebug(message)
 {
-	if (isMobile)
+	/*if (isMobile)
 	navigator.notification.alert(
 			message,  // message
 		    function(){},         // callback
 		    'Debug',            // title
 		    'Ok'                  // buttonName
 		);
-	else
+	else*/
 		alert(message);
 }
 
