@@ -395,7 +395,6 @@ function getCurrentSID($scope)
 	$scope.currentHoraire = "none";*/
 	var mycurrentDate = new Date();
 	console.log('getCurrentSID');
-	alert(parseInt(mycurrentDate.getHours() ));
 	if (parseInt(mycurrentDate.getHours() )> 5)
 	{
 		var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
@@ -408,12 +407,14 @@ function getCurrentSID($scope)
 			tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
 				if (res.rows.length > 0)
 				{
+					alert('current');
 					$scope.quiz.currentSID = res.rows.item(0).uidquestionnaire;
 					$scope.quiz.currentHoraire = res.rows.item(0).tsdebut;		
 					$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
 				}
 				else
 				{
+					alert('no current');
 					$scope.quiz.currentSID = "none";
 					$scope.quiz.currentHoraire = "none";	
 				}
@@ -422,6 +423,7 @@ function getCurrentSID($scope)
 	}
 	else
 	{
+		alert('no current 2');
 		$scope.quiz.currentSID = "none";
 		$scope.quiz.currentHoraire = "none";	
 	}
