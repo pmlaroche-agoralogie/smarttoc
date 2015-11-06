@@ -141,8 +141,8 @@ function createHorairesSuccess(callback,$interval,$scope)
 			console.log('Id récupéré !');
 			console.log(xhr_object);
 			console.log(xhr_object.response);
-			f (debug || debug_loadDB)
-			alertDebug(xhr_object.status);
+			if (debug || debug_loadDB)
+				alertDebug(xhr_object.status);
 			if (debug || debug_loadDB)
 				alertDebug( JSON.stringify(xhr_object));
 			if (debug || debug_loadDB)
@@ -155,18 +155,18 @@ function createHorairesSuccess(callback,$interval,$scope)
 				if (debug || debug_loadDB)
 					alertDebug("transaction");
 				for(var k in MyHoraires) {
-						if (debug || debug_loadDB)
-							alertDebug("for");
+					/*	if (debug || debug_loadDB)
+							alertDebug("for");*/
 					   console.log(k, MyHoraires[k]);
 					   console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+'');
 					   (function (value) { 
 					   tx.executeSql('SELECT COUNT("id") as cnt  FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+';', [], function(tx, res) {
-						   if (debug || debug_loadDB)
-								alertDebug("SELECT");
+						  /* if (debug || debug_loadDB)
+								alertDebug("SELECT");*/
 						   if (res.rows.item(0).cnt < 1)
 						   {
-							   if (debug || debug_loadDB)
-								alertDebug("if SELECT");
+							  /* if (debug || debug_loadDB)
+								alertDebug("if SELECT");*/
 							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut,fait) VALUES("'+
 									   value.sid+'","'+
 									   value.ts+'",0);',[], successHandler, errorHandler);
