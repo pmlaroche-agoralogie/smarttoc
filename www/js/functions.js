@@ -123,15 +123,18 @@ function createHorairesSuccess(callback,$interval,$scope)
 	console.log('createHorairesSuccess');
 	//tx.executeSql('CREATE TABLE IF NOT EXISTS "horaires" ("id" INTEGER PRIMARY KEY AUTOINCREMENT ,
 	//"uidquestionnaire" VARCHAR, "tsdebut" INTEGER, "dureevalidite" INTEGER, "notification" INTEGER, "fait" INTEGER);');      
+	if (debug || debug_loadDB)
+		alertDebug("avt XMLHttpRequest");
 	xhr_object = new XMLHttpRequest(); 
 	xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
-	xhr_object.open("GET", "http://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, true);  
+	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, true);  
 	xhr_object.send(null); 
 	xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
 	xhr_object.onreadystatechange = function () {
 		if(xhr_object.readyState == 4) 
 		{
-			
+			if (debug || debug_loadDB)
+				alertDebug("readyState == 4");
 			//setTimeout(function() {
 			console.log('Id récupéré !');
 			console.log(xhr_object);
