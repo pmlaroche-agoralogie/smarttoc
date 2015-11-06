@@ -126,11 +126,13 @@ function createHorairesSuccess(callback,$interval,$scope)
 	if (debug || debug_loadDB)
 		alertDebug("avt XMLHttpRequest");
 	xhr_object = new XMLHttpRequest(); 
-	xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
-	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, true);  
+	//xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
+	if (debug || debug_loadDB)
+		alertDebug("https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
+	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false);  
 	xhr_object.send(null); 
-	xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
-	xhr_object.onreadystatechange = function () {
+	//xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
+	//xhr_object.onreadystatechange = function () {
 		if(xhr_object.readyState == 4) 
 		{
 			if (debug || debug_loadDB)
@@ -177,7 +179,7 @@ function createHorairesSuccess(callback,$interval,$scope)
 			callback(null,'idok');*/
 			//},1250);
 		}
-	}
+	//}
 }
 
 
