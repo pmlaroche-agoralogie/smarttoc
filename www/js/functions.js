@@ -141,8 +141,12 @@ function createHorairesSuccess(callback,$interval,$scope)
 			console.log('Id récupéré !');
 			console.log(xhr_object);
 			console.log(xhr_object.response);
+			f (debug || debug_loadDB)
+			alertDebug(xhr_object.status);
 			if (debug || debug_loadDB)
-				alertDebug(xhr_object.response);
+				alertDebug( JSON.stringify(xhr_object));
+			if (debug || debug_loadDB)
+				alertDebug(JSON.stringify(xhr_object.response));
 			var MyHoraires = JSON.parse(xhr_object.response);
 			if (debug || debug_loadDB)
 				alertDebug("var MyHoraires");
