@@ -384,6 +384,7 @@ function displayQuestionTemplate($route,$location,$scope,sid,current){
 
 }
 
+// CURRENT SURVEY
 function getCurrentSID($scope)
 {
 	if (debug)
@@ -393,27 +394,36 @@ function getCurrentSID($scope)
 	/*$scope.currentSID = "none";
 	$scope.currentHoraire = "none";*/
 	var mycurrentDate = new Date();
-	var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
-	var timestamp2 = timestamp1 + 86400;
-	//console.log(timestamp1);
-	//console.log(timestamp2);
 	
-	db.transaction(function(tx) {
-		//console.log('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+';');
-		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
-			if (res.rows.length > 0)
-			{
-				$scope.quiz.currentSID = res.rows.item(0).uidquestionnaire;
-				$scope.quiz.currentHoraire = res.rows.item(0).tsdebut;		
-				$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
-			}
-			else
-			{
-				$scope.quiz.currentSID = "none";
-				$scope.quiz.currentHoraire = "none";	
-			}
-		});//FIN SELECT
-	});//FIN transaction
+	if (parseInt(mycurrentDate.getHours() > 5))
+	{
+		var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
+		var timestamp2 = timestamp1 + 86400;
+		//console.log(timestamp1);
+		//console.log(timestamp2);
+		
+		db.transaction(function(tx) {
+			//console.log('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+';');
+			tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
+				if (res.rows.length > 0)
+				{
+					$scope.quiz.currentSID = res.rows.item(0).uidquestionnaire;
+					$scope.quiz.currentHoraire = res.rows.item(0).tsdebut;		
+					$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+				}
+				else
+				{
+					$scope.quiz.currentSID = "none";
+					$scope.quiz.currentHoraire = "none";	
+				}
+			});//FIN SELECT
+		});//FIN transaction
+	}
+	else
+	{
+		$scope.quiz.currentSID = "none";
+		$scope.quiz.currentHoraire = "none";	
+	}
 }
 
 function saveReponses(quiz,callback)
@@ -715,6 +725,7 @@ function getQuestionConfig(qhelp)
 }
 
 
+// DEVICE ID
 function createDeviceID(callback,$scope){
 	if (debug)
 		alertDebug("function createDeviceID");
