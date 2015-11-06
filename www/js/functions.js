@@ -406,7 +406,7 @@ function getCurrentSID($scope)
 			//alert('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;');
 			//tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
 			tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
-					
+			alert(res.rows.item(0).fait);		
 				var dataset = res.rows.length;
 				if (dataset > 0)
 				{
