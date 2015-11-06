@@ -157,7 +157,7 @@ function createHorairesSuccess(callback,$interval,$scope)
 								alertDebug("SELECT");
 						   if (res.rows.item(0).cnt < 1)
 						   {
-							   f (debug || debug_loadDB)
+							   if (debug || debug_loadDB)
 								alertDebug("if SELECT");
 							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut,fait) VALUES("'+
 									   value.sid+'","'+
