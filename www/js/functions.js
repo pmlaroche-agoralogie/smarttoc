@@ -128,7 +128,7 @@ function createHorairesSuccess(callback,$interval,$scope)
 	xhr_object = new XMLHttpRequest(); 
 	//xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
 	if (debug || debug_loadDB)
-		alertDebug("https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
+		alertDebug("http://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
 	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false);  
 	xhr_object.send(null); 
 	//xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
