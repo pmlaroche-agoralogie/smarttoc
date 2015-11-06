@@ -395,6 +395,7 @@ function getCurrentSID($scope)
 	$scope.currentHoraire = "none";*/
 	var mycurrentDate = new Date();
 	console.log('getCurrentSID');
+	alert(parseInt(mycurrentDate.getHours() ));
 	if (parseInt(mycurrentDate.getHours() )> 5)
 	{
 		var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
