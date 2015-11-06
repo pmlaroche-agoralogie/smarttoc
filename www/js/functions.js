@@ -881,7 +881,7 @@ function setNotif($scope)
                 {
             		console.log('')
             		//console.log(resnotif.rows.item(0).id+'+'+resnotif.rows.item(0).tsdebut+'>'+timestampNow);
-					_timestampSessionNotif = new Date(resnotif.rows.item(0).tsdebut*1000);
+					_timestampSessionNotif = new Date(resnotif.rows.item(i).tsdebut*1000);
 					//var monId = String(resnotif.rows.item(0).id);
 					var monId = parseInt(resnotif.rows.item(i).id,10);
 					tx.executeSql('UPDATE "horaires" SET notification = 1 WHERE id = '+monId+';');
@@ -921,7 +921,7 @@ function deleteNotif($scope)
                 {
             		console.log('')
             		//console.log(resnotif.rows.item(0).id+'+'+resnotif.rows.item(0).tsdebut+'>'+timestampNow);
-					_timestampSessionNotif = new Date(resnotif.rows.item(0).tsdebut*1000);
+					//_timestampSessionNotif = new Date(resnotif.rows.item(0).tsdebut*1000);
 					//var monId = String(resnotif.rows.item(0).id);
 					var monId = parseInt(resnotif.rows.item(i).id,10);
 					tx.executeSql('UPDATE "horaires" SET notification = 0 WHERE id = '+monId+';');
