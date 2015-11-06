@@ -854,8 +854,8 @@ function checkNotif(callback,$scope)
             }
             else
             {
-            	tx.executeSql('INSERT INTO "reponses" (sid, reponse,envoi) VALUES ("notif","0",1)');
-            	$scope.notif=false;
+            	tx.executeSql('INSERT INTO "reponses" (sid, reponse,envoi) VALUES ("notif","1",1)');
+            	$scope.notif=true;
             }
 		});// FIN SELECT
 	},function(tx){callback(true,'errCheckNotif')},function(tx){callback(null,'CheckNotif')}); //FIN transaction

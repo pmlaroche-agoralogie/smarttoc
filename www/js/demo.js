@@ -50,7 +50,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.quiz.currentHoraire = "none";
 	$scope.quizQuoti = quiz_quotidien;
 	$scope.quizHebdo = quiz_hebdo;
-	$scope.notif=false;
+	$scope.notif=true;
 	
 	/*$interval(function () {
 	    console.log("Interval occurred");
