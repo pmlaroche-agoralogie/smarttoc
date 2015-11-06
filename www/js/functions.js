@@ -260,8 +260,11 @@ function getQuestionsBySID($scope,sid,current,callback)
 			{
 				//var currentSID = ;
 				//var currentHoraire = 
-				console.log('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
-				tx.executeSql('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
+				if ($scope.quiz.sid != quiz_profile)
+				{
+					console.log('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
+					tx.executeSql('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
+				}
 				console.log('fin');
 				$scope.quiz.groupes ={};
 				$scope.quiz.next =0;
@@ -405,19 +408,19 @@ function getCurrentSID($scope)
 		db.transaction(function(tx) {
 			//alert('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;');
 			//tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
-			tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
-			alert(res.rows.item(0).fait);		
+			tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
+			//alert(res.rows.item(0).fait);		
 				var dataset = res.rows.length;
 				if (dataset > 0)
 				{
-					alert('current');
+					//alert('current');
 					$scope.quiz.currentSID = res.rows.item(0).uidquestionnaire;
 					$scope.quiz.currentHoraire = res.rows.item(0).tsdebut;		
 					$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
 				}
 				else
 				{
-					alert('no current');
+					//alert('no current');
 					$scope.quiz.currentSID = "none";
 					$scope.quiz.currentHoraire = "none";	
 				}
@@ -426,7 +429,7 @@ function getCurrentSID($scope)
 	}
 	else
 	{
-		alert('no current 2');
+		//alert('no current 2');
 		$scope.quiz.currentSID = "none";
 		$scope.quiz.currentHoraire = "none";	
 	}
@@ -744,7 +747,7 @@ function createDeviceID(callback,$scope){
 		$scope.quiz.deviceID = md5(device.uuid);
 	else
 
-		$scope.quiz.deviceID = "monDeviceUid";
+		$scope.quiz.deviceID = "monDeviceUid3";
 	
 	//largeur /hauteur pour test
 	if (document.body)
