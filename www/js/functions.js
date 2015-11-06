@@ -167,15 +167,15 @@ function createHorairesSuccess(callback,$interval,$scope)
 						   {
 							  /* if (debug || debug_loadDB)
 								alertDebug("if SELECT");*/
-							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut,fait) VALUES("'+
+							   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut,notification,fait) VALUES("'+
 									   value.sid+'","'+
-									   value.ts+'",0);',[], successHandler, errorHandler);
+									   value.ts+'",0,0);',[], successHandler, errorHandler);
 						   }
 					   },createQuestionnairesError); //SELECT COUNT
 					   })(MyHoraires[k]);
 					   
 				}
-			},function(tx){callback(true,'setHorairesError')},function(tx){callback(null,'setHorairesSuccess');getCurrentSID($scope); $interval(function(){ getCurrentSID($scope);}, 60000);});
+			},function(tx){callback(true,'setHorairesError')},function(tx){callback(null,'setHorairesSuccess');getCurrentSID($scope); $interval(function(){ getCurrentSID($scope);}, 60000); if ($scope.notif) setNotif($scope);});
 			//});//DB TRANSACTION
 			/*$scope.userId = xhr_object.response;
 			$scope.encours = false;
@@ -822,3 +822,109 @@ function sendReponses($scope) {
 		});
 	});
 };
+
+//NOTIFICATIONS
+function checkNotif(callback,$scope)
+{
+	/*db.transaction(function(tx) 
+			{
+				tx.executeSql('INSERT INTO "reponses" (sid, reponse,envoi) VALUES ("notif",1,1)');
+			}); //fin db.transaction
+*/
+	db.transaction(function(tx) {
+		tx.executeSql('SELECT * FROM "reponses" WHERE sid = "notif";', [], function(tx, resnotif) {
+			var dataset = resnotif.rows.length;
+            if(dataset>0)
+            {     	
+            	if (resnotif.rows.item(0).reponse == "1")
+            		$scope.notif=true;
+            	else
+            		$scope.notif=false;
+            }
+            else
+            {
+            	tx.executeSql('INSERT INTO "reponses" (sid, reponse,envoi) VALUES ("notif","0",1)');
+            	$scope.notif=false;
+            }
+		});// FIN SELECT
+	},function(tx){callback(true,'errCheckNotif')},function(tx){callback(null,'CheckNotif')}); //FIN transaction
+            	
+
+}
+
+function setNotif($scope)
+{
+	console.log('function setNotif');
+	var timestamp = Math.round(new Date().getTime() / 1000);
+	console.log(timestamp);
+	
+	db.transaction(function(tx) {
+		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut > '+timestamp+' AND notification = 0 AND fait = 0 ORDER BY tsdebut ASC;', [], function(tx, resnotif) {
+			var dataset = resnotif.rows.length;
+            if(dataset>0)
+            {     	
+            	$scope.notif=true;
+            	tx.executeSql('UPDATE "reponses" SET reponse = "1" WHERE sid="notif";');
+            	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+            	for(var i=0;i<dataset;i++)
+                {
+            		console.log('')
+            		//console.log(resnotif.rows.item(0).id+'+'+resnotif.rows.item(0).tsdebut+'>'+timestampNow);
+					_timestampSessionNotif = new Date(resnotif.rows.item(0).tsdebut*1000);
+					//var monId = String(resnotif.rows.item(0).id);
+					var monId = parseInt(resnotif.rows.item(i).id,10);
+					tx.executeSql('UPDATE "horaires" SET notification = 1 WHERE id = '+monId+';');
+					if (isMobile)
+					{
+					 window.plugin.notification.local.add({
+                           id:      monId,
+                           title:   "Smart'TOC",
+                           //message: 'test '+resnotif.rows.item(0).id+': Merci de répondre au questionnaire de l application de suivi.',
+                           message: "Merci de répondre au questionnaire de l application Smart'TOC.",
+                           date:    _timestampSessionNotif
+                           });
+					}
+					else
+						console.log('notification : '+monId);
+                }
+            }
+		});//FIN SELECT
+	});//FIN transaction
+}
+
+function deleteNotif($scope)
+{
+	console.log('function deleteNotif');
+	var timestamp = Math.round(new Date().getTime() / 1000);
+	console.log(timestamp);
+	
+	db.transaction(function(tx) {
+		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut > '+timestamp+' AND notification = 1 AND fait = 0 ORDER BY tsdebut ASC;', [], function(tx, resnotif) {
+			var dataset = resnotif.rows.length;
+            if(dataset>0)
+            {     	
+            	$scope.notif=false;
+            	tx.executeSql('UPDATE "reponses" SET reponse = "0" WHERE sid="notif";');
+            	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+            	for(var i=0;i<dataset;i++)
+                {
+            		console.log('')
+            		//console.log(resnotif.rows.item(0).id+'+'+resnotif.rows.item(0).tsdebut+'>'+timestampNow);
+					_timestampSessionNotif = new Date(resnotif.rows.item(0).tsdebut*1000);
+					//var monId = String(resnotif.rows.item(0).id);
+					var monId = parseInt(resnotif.rows.item(i).id,10);
+					tx.executeSql('UPDATE "horaires" SET notification = 0 WHERE id = '+monId+';');
+					if (isMobile)
+					{
+						window.plugin.notification.local.cancel(monId, function () {
+            			    // The notification has been canceled
+            				console.log('cancel'+ monId);
+            			});
+					}
+					else
+						console.log('notification sup : '+monId);
+                }
+            }
+		});//FIN SELECT
+	});//FIN transaction
+}

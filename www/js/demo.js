@@ -50,6 +50,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.quiz.currentHoraire = "none";
 	$scope.quizQuoti = quiz_quotidien;
 	$scope.quizHebdo = quiz_hebdo;
+	$scope.notif=false;
 	
 	/*$interval(function () {
 	    console.log("Interval occurred");
@@ -72,9 +73,10 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	              	//create deviceID
 	              	function(callback){createDeviceID(callback,$scope);},
 	              	
+	              	//horaires
+	              	function(callback){checkNotif(callback,$scope);},
 	              	function(callback){createHorairesSuccess(callback,$interval,$scope);},
-	              	
-	              	
+
 	              	
 	              	//test useOk
 	              	function(callback){do_MC_UseOk(callback,$location,$route,$scope);},
@@ -395,6 +397,15 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		$scope.menu = true;
 		$route.reload();*/
 	}//FIN BUTTON ENVOYER MAIL
+	
+	$scope.notifMe = function(notifMeModel){
+		console.log('notifMe');
+		if (notifMeModel)
+			setNotif($scope);
+		else
+			deleteNotif($scope);
+		console.log(notifMeModel);
+	}//FIN fonction notifMe
 	
 }); // fin MainController
 

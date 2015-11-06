@@ -626,6 +626,13 @@ input[type=range].heure:focus::-webkit-slider-runnable-track {
 #sendResultsMail input[type=checkbox] {display:none;}
 .btn-label {white-space: normal;width:100%;margin-bottom:2%;}
 
+/****NOTIF***/
+.switchNotif {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5%;
+}
+
 /*FIN*/
 .merci{background:url('../img/bgfin.png') top center no-repeat transparent;background-size:100%;padding-top: 120px;position:relative}
 .merci .bulleg{width:90%;}
