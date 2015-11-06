@@ -76,7 +76,7 @@
      
      <gap:plugin name="org.apache.cordova.device" source="npm" />
      
-     <gap:plugin name="org.apache.cordova.whitelist" source="npm" />
+     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
    
     
     <!--
