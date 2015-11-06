@@ -1,5 +1,5 @@
 //debug choisir part ou global
-debug = true;
+debug = false;
 debug_loadDB = false;
 
 //test si chrome
