@@ -403,9 +403,10 @@ function getCurrentSID($scope)
 		//console.log(timestamp2);
 		
 		db.transaction(function(tx) {
-			//console.log('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+';');
+			alert('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;');
 			tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut >= '+timestamp1+' AND tsdebut < '+timestamp2+' AND fait = 0 ORDER BY tsdebut ASC LIMIT 0,1;', [], function(tx, res) {
-				if (res.rows.length > 0)
+				var dataset = res.rows.length;
+				if (dataset > 0)
 				{
 					alert('current');
 					$scope.quiz.currentSID = res.rows.item(0).uidquestionnaire;
