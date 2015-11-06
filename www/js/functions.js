@@ -389,13 +389,13 @@ function getCurrentSID($scope)
 {
 	if (debug)
 		alertDebug("function getCurrentSID");
-	//console.log('getCurrentSID');
+	console.log('getCurrentSID');
 	//console.log($scope);
 	/*$scope.currentSID = "none";
 	$scope.currentHoraire = "none";*/
 	var mycurrentDate = new Date();
-	
-	if (parseInt(mycurrentDate.getHours() > 5))
+	console.log('getCurrentSID');
+	if (parseInt(mycurrentDate.getHours() )> 5)
 	{
 		var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
 		var timestamp2 = timestamp1 + 86400;
