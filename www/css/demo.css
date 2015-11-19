@@ -311,7 +311,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 /*bulle gauche*/
 .bulleg {
 	box-sizing:border-box;
-	min-width:150px;
+	min-width:130px;
   position:relative;
   padding:10px 20px;
   margin:1em auto 60px;
@@ -361,7 +361,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
   content:"";
   position:absolute;
   z-index:2;
-  bottom:-30px;
+  bottom:-29px;
   right:50%;
   width:20px;
   height:31px;
@@ -410,7 +410,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 /*bulle droite*/
 .bulled {
   box-sizing:border-box;
-  min-width: 150px;
+  min-width: 130px;
   position:relative;
   padding:10px 20px;
   margin:1em auto 60px;
@@ -460,7 +460,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
   content:"";
   position:absolute;
   z-index:2;
-  bottom:-30px;
+  bottom:-29px;
   left:50%;
   width:20px;
   height:31px;
@@ -516,7 +516,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 .usequestion .useok .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
 .usequestion .useko .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
 .usequestion .mylabel .txt{padding:20px;display: inline-block; vertical-align: middle;width:70%;}
-.usequestion input+.mylabel .icon{opacity:0.5}
+.usequestion input+.mylabel .icon{opacity:0.3}
 .usequestion input:checked+.mylabel .icon{opacity:1}
    
 /*.usequestion input {}
@@ -565,10 +565,10 @@ input:checked+label:after{opacity:1}*/
 .question.radio_ok input:checked+label {opacity:1}
 
 /*RANGE*/
-.left {float:left;font-size:20px;}
+.left {float:left;font-size:16px;}
 .left.bulle {background-image:url(../img/bulle_gauche.jpg);background-repeat:no-repeat;width:141px;height:105px;text-align:center;padding-top:28px;font-size:20px;}
 .left.bulle.une_ligne{height:67px;padding-top:38px;}
-.right {float:right;font-size:20px;}
+.right {float:right;font-size:16px;}
 .right.bulle {background-image:url(../img/bulle_droit.jpg);background-repeat:no-repeat;width:141px;height:105px;text-align:center;padding-top:28px;font-size:20px;}
 .right.bulle.une_ligne{height:67px;padding-top:38px;}
 .clear {clear:both;}
