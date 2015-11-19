@@ -549,7 +549,7 @@ input:checked+label:after{opacity:1}*/
 /*evolution*/
 .question.radio_evol input{display:none}
 .question.radio_evol .answers {display:inline-block;}
-.question.radio_evol label {display:inline-block;margin:0 20px 40px;}
+.question.radio_evol label {display:inline-block;margin:0 10px 40px;}
 .question.radio_evol .answers:nth-child(1) label {background: url('../img/moins.png') left center no-repeat transparent;width:64px;height:64px;}
 .question.radio_evol .answers:nth-child(2) label {background: url('../img/egale.png') left center no-repeat transparent;width:64px;height:64px;}
 .question.radio_evol .answers:nth-child(3) label {background: url('../img/plus.png') left center no-repeat transparent;width:64px;height:64px;}
