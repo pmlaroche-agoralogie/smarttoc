@@ -516,7 +516,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 .usequestion .useok .icon{background: url('../img/ok.png') left center no-repeat transparent;background-size:40px;}
 .usequestion .useko .icon{background: url('../img/ko.png') left center no-repeat transparent;background-size:40px;}
 .usequestion .mylabel .txt{padding:20px;display: inline-block; vertical-align: middle;width:70%;}
-.usequestion input+.mylabel .icon{opacity:0.3}
+.usequestion input+.mylabel .icon{opacity:0.2}
 .usequestion input:checked+.mylabel .icon{opacity:1}
    
 /*.usequestion input {}
@@ -534,6 +534,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 input:checked+label:after{opacity:1}*/
 
 /*RADIO*/
+.radio_left{text-align:left;margin-let:15px;}
 
 /*genre*/
 .question.genre input{display:none}
@@ -552,7 +553,7 @@ input:checked+label:after{opacity:1}*/
 .question.radio_evol .answers:nth-child(1) label {background: url('../img/moins.png') left center no-repeat transparent;width:64px;height:64px;}
 .question.radio_evol .answers:nth-child(2) label {background: url('../img/egale.png') left center no-repeat transparent;width:64px;height:64px;}
 .question.radio_evol .answers:nth-child(3) label {background: url('../img/plus.png') left center no-repeat transparent;width:64px;height:64px;}
-.question.radio_evol input+label {opacity:0.5}
+.question.radio_evol input+label {opacity:0.2}
 .question.radio_evol input:checked+label {opacity:1}
 
 /*ok/ko*/
@@ -561,7 +562,7 @@ input:checked+label:after{opacity:1}*/
 .question.radio_ok label {display:inline-block;margin:0 20px 40px;}
 .question.radio_ok .answers:nth-child(1) label {background: url('../img/ok.png') left center no-repeat transparent;width:64px;height:64px;}
 .question.radio_ok .answers:nth-child(2) label {background: url('../img/ko.png') left center no-repeat transparent;width:64px;height:64px;}
-.question.radio_ok input+label {opacity:0.5}
+.question.radio_ok input+label {opacity:0.2}
 .question.radio_ok input:checked+label {opacity:1}
 
 /*RANGE*/
