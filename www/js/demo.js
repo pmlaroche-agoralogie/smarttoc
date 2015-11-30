@@ -507,32 +507,53 @@ angular.module('Cordova', [])
     	  {
     		  console.log('test notif');
         	  mynewDate = new Date(new Date().getTime() + 60*1000);
-        	  window.cordova.plugins.notification.local.schedule({
+        	 /* window.cordova.plugins.notification.local.schedule({
     			    id: 1111231,
     			    title: "Smart TOC",
     			    text: "1 Merci de répondre au questionnaire de l application Smart TOC test 1.",
     			    //at:    date object
     			    at:mynewDate
     			});
-        	  console.log('test notif');
+        	  console.log('test notif');*/
         	  mynewDate3 = new Date(new Date().getTime() + 120*1000);
-        	  cordova.plugins.notification.local.schedule({
+        	/*  cordova.plugins.notification.local.schedule({
     			    id: 111132,
     			    title: "Smart TOC",
     			    text: "2 Merci de répondre au questionnaire de l application Smart TOC test 2.",
     			    //at:    date object
     			    at:mynewDate3
     			});
-    	  console.log('test notif2');
+    	  console.log('test notif2');*/
     	  mynewDate2 = new Date(new Date().getTime() + 180*1000);
-    	  window.cordova.plugins.notification.local.schedule({
+    	 /* window.cordova.plugins.notification.local.schedule({
 			    id: 111122,
 			    title: "Smart'TOC",
 			    text: "3 Merci de répondre au questionnaire de l application Smart'TOC test 3.",
 			    //at:    date object
 			    at:mynewDate2
 			});
+    	  */
+    	  window.cordova.plugins.notification.local.schedule([{
+			    id: 1111231,
+			    title: "Smart TOC",
+			    text: "1 Merci de répondre au questionnaire de l application Smart TOC test 1.",
+			    //at:    date object
+			    at:mynewDate
+			},{
+			    id: 111132,
+			    title: "Smart TOC",
+			    text: "2 Merci de répondre au questionnaire de l application Smart TOC test 2.",
+			    //at:    date object
+			    at:mynewDate3
+			},{
+			    id: 111122,
+			    title: "Smart'TOC",
+			    text: "3 Merci de répondre au questionnaire de l application Smart'TOC test 3.",
+			    //at:    date object
+			    at:mynewDate2
+			}]);
     	  }
+    	  
        // done();
     	  done(null,'cordoveaok');
       }, false);
