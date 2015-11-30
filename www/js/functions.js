@@ -895,27 +895,33 @@ function setNotif($scope)
             	$scope.notif=true;
             	tx.executeSql('UPDATE "reponses" SET reponse = "1" WHERE sid="notif";');
             	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+            	var aNotif = [];
             	for(var i=0;i<dataset;i++)
                 {
             		console.log('')
             		//console.log(resnotif.rows.item(0).id+'+'+resnotif.rows.item(0).tsdebut+'>'+timestampNow);
 					_timestampSessionNotif = new Date(resnotif.rows.item(i).tsdebut*1000);
-					//var monId = String(resnotif.rows.item(0).id);
 					var monId = parseInt(resnotif.rows.item(i).id,10);
 					tx.executeSql('UPDATE "horaires" SET notification = 1 WHERE id = '+monId+';');
-					if (isMobile)
-					{
-					 window.plugin.notification.local.add({
-                           id:      monId,
-                           title:   "Smart'TOC",
-                           //message: 'test '+resnotif.rows.item(0).id+': Merci de répondre au questionnaire de l application de suivi.',
-                           message: "Merci de répondre au questionnaire de l application Smart'TOC.",
-                           date:    _timestampSessionNotif
-                           });
-					}
-					else
-						console.log('notification : '+monId);
+					aNotif[i] = {
+	                           id:      monId,
+	                           title:   "Smart'TOC",
+	                           //message: 'test '+resnotif.rows.item(0).id+': Merci de répondre au questionnaire de l application de suivi.',
+	                           text: "Merci de répondre au questionnaire de l application Smart'TOC.",
+	                           at:    _timestampSessionNotif
+	                           };
                 }
+            	if (isMobile) //envoi notif
+				{
+            		window.cordova.plugins.notification.local.schedule(aNotif);
+            		console.log('notification : ');
+					console.log(aNotif);
+				}
+				else //log notif
+				{
+					console.log('notification : ');
+					console.log(aNotif);
+				}
             }
 		});//FIN SELECT
 	});//FIN transaction
@@ -924,35 +930,22 @@ function setNotif($scope)
 function deleteNotif($scope)
 {
 	console.log('function deleteNotif');
-	var timestamp = Math.round(new Date().getTime() / 1000);
-	console.log(timestamp);
+	var canceltimestamp = Math.round(new Date().getTime() / 1000);
+	console.log(canceltimestamp);
 	
 	db.transaction(function(tx) {
-		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut > '+timestamp+' AND notification = 1 AND fait = 0 ORDER BY tsdebut ASC;', [], function(tx, resnotif) {
+		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut > '+canceltimestamp+' AND notification = 1 AND fait = 0 ORDER BY tsdebut ASC;', [], function(tx, resnotif) {
 			var dataset = resnotif.rows.length;
             if(dataset>0)
             {     	
             	$scope.notif=false;
             	tx.executeSql('UPDATE "reponses" SET reponse = "0" WHERE sid="notif";');
             	$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
-            	for(var i=0;i<dataset;i++)
-                {
-            		console.log('')
-            		//console.log(resnotif.rows.item(0).id+'+'+resnotif.rows.item(0).tsdebut+'>'+timestampNow);
-					//_timestampSessionNotif = new Date(resnotif.rows.item(0).tsdebut*1000);
-					//var monId = String(resnotif.rows.item(0).id);
-					var monId = parseInt(resnotif.rows.item(i).id,10);
-					tx.executeSql('UPDATE "horaires" SET notification = 0 WHERE id = '+monId+';');
-					if (isMobile)
-					{
-						window.plugin.notification.local.cancel(monId, function () {
-            			    // The notification has been canceled
-            				console.log('cancel'+ monId);
-            			});
-					}
-					else
-						console.log('notification sup : '+monId);
-                }
+            	if (isMobile)
+            		window.cordova.plugins.notification.local.cancelAll();
+            	else
+            		console.log('notification sup');
+            	tx.executeSql('UPDATE "horaires" SET notification = 0 WHERE tsdebut > '+canceltimestamp+' AND notification = 1 AND fait = 0;');
             }
 		});//FIN SELECT
 	});//FIN transaction
