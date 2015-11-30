@@ -503,14 +503,27 @@ angular.module('Cordova', [])
     if (typeof window.cordova === 'object') {
       document.addEventListener('deviceready', function () {
     	  console.log('cordovaready');
-    	  mynewDate = new Date(new Date().getTime() + 60*1000)
+    	  if (isMobile)
+    	  {
+    		  console.log('test notif');
+        	  mynewDate = new Date(new Date().getTime() + 30*1000);
+        	  window.cordova.plugins.notification.local.schedule({
+    			    id: 11111,
+    			    title: "Smart TOC",
+    			    text: "Merci de répondre au questionnaire de l application Smart TOC test.",
+    			    //at:    date object
+    			    at:mynewDate
+    			});
+    	  console.log('test notif2');
+    	  mynewDate2 = new Date(new Date().getTime() + 60*1000);
     	  window.cordova.plugins.notification.local.schedule({
-			    id: 11111,
+			    id: 11112,
 			    title: "Smart'TOC",
 			    text: "Merci de répondre au questionnaire de l application Smart'TOC test.",
 			    //at:    date object
-			    at:mynewDate
+			    at:mynewDate2
 			});
+    	  }
        // done();
     	  done(null,'cordoveaok');
       }, false);
