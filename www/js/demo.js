@@ -503,6 +503,14 @@ angular.module('Cordova', [])
     if (typeof window.cordova === 'object') {
       document.addEventListener('deviceready', function () {
     	  console.log('cordovaready');
+    	  mynewDate = new Date(new Date().getTime() + 60*1000)
+    	  window.cordova.plugins.notification.local.schedule({
+			    id: 11111,
+			    title: "Smart'TOC",
+			    text: "Merci de répondre au questionnaire de l application Smart'TOC test.",
+			    //at:    date object
+			    at:mynewDate
+			});
        // done();
     	  done(null,'cordoveaok');
       }, false);
