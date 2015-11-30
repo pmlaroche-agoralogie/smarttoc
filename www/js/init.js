@@ -14,7 +14,7 @@ MC_UseOk = true;
 MC_ProfileOk = true;
 
 //sid questionnaires
-quiz_profile = 544467;
+quiz_profile = 442575;
 quiz_quotidien = 916553;
 quiz_hebdo = 313524;
 
