@@ -77,6 +77,9 @@
      <gap:plugin name="org.apache.cordova.device" source="npm" />
      
      <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+     
+     <!-- Disable shake gesture ios -->
+     <gap:plugin name="com.jchalan.cordova.ios.disableshaketoundo" source="pgb" />
    
     
     <!--
