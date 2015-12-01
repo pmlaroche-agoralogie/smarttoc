@@ -51,6 +51,9 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.quizQuoti = quiz_quotidien;
 	$scope.quizHebdo = quiz_hebdo;
 	$scope.notif=true;
+	$scope.noconnexion = false;
+	//remise à false tout les 1h...
+	$interval(function(){ $scope.noconnexion = false;}, 3600000);
 	
 	/*$interval(function () {
 	    console.log("Interval occurred");
@@ -186,7 +189,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		else if ($scope.profileok == "page6")
 		{
 			$location.path('/'); 
-			sendReponses();
+			sendReponses($scope);
 			$scope.menu = true;
 			$route.reload();
 		}
@@ -288,7 +291,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 
 	$scope.finQuiz = function(clickEvent){
 		$location.path('/'); 
-		sendReponses();
+		sendReponses($scope);
 		$scope.menu = true;
 		$route.reload();
 	}
@@ -393,7 +396,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		else
 			console.log("emailMe");
 		/*$location.path('/'); 
-		sendReponses();
+		sendReponses($scope);
 		$scope.menu = true;
 		$route.reload();*/
 	}//FIN BUTTON ENVOYER MAIL

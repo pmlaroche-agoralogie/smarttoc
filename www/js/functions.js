@@ -130,11 +130,22 @@ function createHorairesSuccess(callback,$interval,$scope)
 	if (debug || debug_loadDB)
 		alertDebug("https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
 	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false);  
-	xhr_object.send(null); 
+	//catch exception no connection
+	try {
+		xhr_object.send(null);
+    } catch(z) {
+       // alertNotif("Pas de connexion!\nCertaines fonctions ne seront pas accessibles.")
+        callback(null,'noConnexionHoraires');
+        getCurrentSID($scope); 
+        $interval(function(){ getCurrentSID($scope);}, 60000);
+        //$scope.noconnexion = true;
+        return;
+    }
 	//xhr_object.ontimeout = function () { console.log('timeout');$scope.encours = false;callback(null,'idko');}
 	//xhr_object.onreadystatechange = function () {
 		if(xhr_object.readyState == 4) 
 		{
+			$scope.noconnexion = false;
 			if (debug || debug_loadDB)
 				alertDebug("readyState == 4");
 			//setTimeout(function() {
@@ -184,6 +195,82 @@ function createHorairesSuccess(callback,$interval,$scope)
 			//},1250);
 		}
 	//}
+}
+
+function createNewHoraires($scope)
+{
+	
+	if (debug || debug_loadDB)
+		alertDebug("function createNewHoraires");
+	console.log('createNewHoraires'); 
+	console.log($scope);
+	if (debug || debug_loadDB)
+		alertDebug("avt XMLHttpRequest createNewHoraires");
+	//test si horraires en base
+	db.transaction(function(tx) 
+	{
+		var timestamp = Math.round(new Date().getTime() / 1000);
+		tx.executeSql('SELECT COUNT("id") as cnt FROM "horaires" WHERE tsdebut > '+timestamp+' AND fait = 0;', [], function(tx, reshor) 
+		{
+			if (reshor.rows.item(0).cnt < 1)
+			{
+				xhr_object = new XMLHttpRequest(); 
+				if (debug || debug_loadDB)
+					alertDebug("https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
+				xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false);  
+				//catch exception no connection
+				try {
+					xhr_object.send(null);
+			    } catch(z) {
+			    	if ($scope.noconnexion != true)
+			    		alertNotif("Pas de connexion!\nCertaines fonctions ne seront pas accessibles.");
+			        $scope.noconnexion = true;
+			        return;
+			    }
+				if(xhr_object.readyState == 4) 
+				{
+					$scope.noconnexion = false;
+					if (debug || debug_loadDB)
+						alertDebug("readyState == 4");
+					//setTimeout(function() {
+					console.log('Id récupéré !');
+					console.log(xhr_object);
+					console.log(xhr_object.response);
+					if (debug || debug_loadDB)
+						alertDebug(xhr_object.status);
+					if (debug || debug_loadDB)
+						alertDebug( JSON.stringify(xhr_object));
+					if (debug || debug_loadDB)
+						alertDebug(JSON.stringify(xhr_object.response));
+					var MyHoraires = JSON.parse(xhr_object.response);
+					if (debug || debug_loadDB)
+						alertDebug("var MyHoraires");
+					if (debug || debug_loadDB)
+						alertDebug("transaction");
+					for(var k in MyHoraires) {
+						   console.log(k, MyHoraires[k]);
+						   console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+'');
+						   (function (value) { 
+							   tx.executeSql('SELECT COUNT("id") as cnt  FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+';', [], function(tx, res) {
+								   if (res.rows.item(0).cnt < 1)
+								   {
+									   tx.executeSql('INSERT INTO "horaires" (uidquestionnaire, tsdebut,notification,fait) VALUES("'+
+											   value.sid+'","'+
+											   value.ts+'",0,0);',[], successHandler, errorHandler);
+								   }
+							   },createQuestionnairesError); //SELECT COUNT
+						   })(MyHoraires[k]);
+						   
+					}		
+				}
+			}
+			else
+			{
+				console.log('reste hor');
+			}
+			//FIN if no horaires
+		});//FIN SELECT
+	});//FIN TRABSACTION
 }
 
 
@@ -390,14 +477,15 @@ function displayQuestionTemplate($route,$location,$scope,sid,current){
 // CURRENT SURVEY
 function getCurrentSID($scope)
 {
+	
 	if (debug)
 		alertDebug("function getCurrentSID");
-	console.log('getCurrentSID');
+	console.log('getCurrentSID1');
 	//console.log($scope);
 	/*$scope.currentSID = "none";
 	$scope.currentHoraire = "none";*/
 	var mycurrentDate = new Date();
-	console.log('getCurrentSID');
+	console.log('getCurrentSID2');
 	if (parseInt(mycurrentDate.getHours() )> 5)
 	{
 		var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
@@ -442,6 +530,7 @@ function getCurrentSID($scope)
 		$scope.quiz.currentSID = "none";
 		$scope.quiz.currentHoraire = "forbidden";	
 	}
+	createNewHoraires($scope);
 }
 
 function saveReponses(quiz,callback)
@@ -651,7 +740,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 						console.log('MC_ProfileOk:true');
 						//Change path
 						$location.path('/'); 
-						sendReponses();
+						sendReponses($scope);
 						$scope.menu = true;
 						$route.reload();
 						//callback(null,"MC_UseOk_true");
@@ -668,7 +757,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 		if (callback)
 			callback(null,"no_MC_ProfileOk");
 		$location.path('/'); 
-		sendReponses();
+		sendReponses($scope);
 		$scope.menu = true;
 	}
 }
@@ -681,6 +770,23 @@ function save_MC_ProfileOk()
 	}); //fin db.transaction
 }
 
+/////////////////////////////////////////////////////////////////////
+//Functions Notif
+/////////////////////////////////////////////////////////////////////
+
+//Function affichage notif
+function alertNotif(message)
+{
+	if (isMobile)
+	navigator.notification.alert(
+			message,  // message
+		    function(){},         // callback
+		    "Smart'TOC",            // title
+		    'Ok'                  // buttonName
+		);
+	else
+		alert(message);
+}
 
 /////////////////////////////////////////////////////////////////////
 //Functions Debug
@@ -689,14 +795,14 @@ function save_MC_ProfileOk()
 //Function affichage debug
 function alertDebug(message)
 {
-	/*if (isMobile)
+	if (isMobile)
 	navigator.notification.alert(
 			message,  // message
 		    function(){},         // callback
 		    'Debug',            // title
 		    'Ok'                  // buttonName
 		);
-	else*/
+	else
 		alert(message);
 }
 
@@ -789,6 +895,7 @@ function generateUUID() {
 //ENVOI REPONSES
 function sendReponses($scope) {
 	console.log('send');
+	console.log($scope);
 	var aReponses ={};
 	db.transaction(function(tx) {
 
@@ -824,11 +931,21 @@ function sendReponses($scope) {
                         	//xhr_object.open("GET", "http://mcp.ocd-dbs-france.org/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false);   
                         	xhr_object.open("GET", "https://restitution.altotoc.fr/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false); 
          
-                        	xhr_object.send(null); 
+                        	//xhr_object.send(null); 
+                        	//exception connection
+                        	try {
+                        		xhr_object.send(null);
+                            } catch(z) {
+                            	if ($scope.noconnexion != true)
+                            		alertNotif("Pas de connexion!\nPas d'envoi des réponses.");
+                                $scope.noconnexion = true;
+                                return;
+                            }
                         	console.log("send rep");
                         	console.log(JSON.stringify(aReponses));
                         	if(xhr_object.readyState == 4) 
                         	{
+                        		$scope.noconnexion = false;
                         		console.log('Requête effectuée !');
                         		//if(!isMobile) 
                         		//	alert("Requête effectuée !"); 
