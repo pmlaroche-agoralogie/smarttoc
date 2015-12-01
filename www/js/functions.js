@@ -349,8 +349,26 @@ function getQuestionsBySID($scope,sid,current,callback)
 				//var currentHoraire = 
 				if ($scope.quiz.sid != quiz_profile)
 				{
-					console.log('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
-					tx.executeSql('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+$scope.quiz.currentSID+'" AND tsdebut = '+$scope.quiz.currentHoraire+';');
+					var currentSID = $scope.quiz.currentSID;
+					var currentHoraire = $scope.quiz.currentHoraire;
+					console.log('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+currentSID+'" AND tsdebut = '+currentHoraire+';');
+					tx.executeSql('UPDATE "horaires" SET fait = 1 WHERE uidquestionnaire ="'+currentSID+'" AND tsdebut = '+currentHoraire+';');
+					
+					//unset notif if timestamp pas passé
+					var timestamp = Math.round(new Date().getTime() / 1000);
+					console.log('timestamp');
+					console.log(timestamp);
+					console.log(currentHoraire);
+					if (currentHoraire > timestamp)
+					{
+						console.log('notif active');
+						tx.executeSql('SELECT * FROM "horaires" WHERE uidquestionnaire ="'+currentSID+'" AND tsdebut = '+currentHoraire+';', [], function(tx, resnotifsup) {
+							console.log('notif desactive');
+							console.log(resnotifsup.rows.item(0).id);
+							if (isMobile)
+								window.cordova.plugins.notification.local.cancel(resnotifsup.rows.item(0).id);
+						});//fin SELECT
+					}
 				}
 				console.log('fin');
 				$scope.quiz.groupes ={};
