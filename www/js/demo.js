@@ -15,6 +15,8 @@ var app = angular.module('MobileAngularUiExamples', [
   // final pourpose to integrate gestures into default ui interactions like 
   // opening sidebars, turning switches on/off ..
   'mobile-angular-ui.gestures',
+  'monospaced.elastic',
+  'luegg.directives',
   'starter.services'
   
 ]);
@@ -412,6 +414,64 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	
 }); // fin MainController
 
+//form scroll
+app.directive('noteList', function ($window) {
+
+    return {
+        restrict: 'C',
+
+        link: function (scope, elem, attrs) {
+
+            var winHeight = $window.innerHeight;
+
+            var headerHeight = attrs.banner ? attrs.banner : 0;
+            
+            var elemHeight = $(window).height() - $('.titre_journal').outerHeight() - $('.noteForm').outerHeight() - $('.navbar').outerHeight() ;
+
+            elem.css('height', elemHeight + 'px');
+            console.log('ttt');
+        }
+    };
+});
+
+app.directive( 'noteFormHeightChange', function($window) {
+    return {
+    	 restrict: 'C',
+        link: function( scope, elem, attrs ) {
+        	 console.log('rrr');
+           /* scope.$watch( '__height', function( newHeight, oldHeight ) {
+                elem.attr( 'style', 'margin-top: ' + (58 + newHeight) + 'px' );
+            } );*/
+        	 scope.$watch
+        	 (
+        			 
+        	  function () {console.log(elem);
+        	   return {
+        	    //w:linkElement.width(),
+        	    //h:elem.height()
+        	    h:elem[0].offsetHeight
+        	   };
+        	  },
+        	  function (newValue, oldValue) {
+        	  // if (newValue.w != oldValue.w || newValue.h != oldValue.h) {
+        		  if (newValue.h != oldValue.h) {
+        	    // Do something ...
+        	    console.log(newValue);
+        	    console.log('toto');
+        	    var winHeight = $window.innerHeight;      
+                var scrollHeight = $(window).height() - $('.titre_journal').outerHeight() - $('.noteForm').outerHeight() - $('.navbar').outerHeight() ;
+
+                $('.noteList').css('height', scrollHeight + 'px');
+        	   /* scope.$apply(function(){
+                    //do something to update current scope based on the new innerWidth and let angular update the view.
+                 });*/
+        	   }
+        	  },
+        	  true
+        	 );
+        }
+    }
+} );
 
 //DYN TEMPLATE
 /**GESTION TEMPLATE DYN **/
