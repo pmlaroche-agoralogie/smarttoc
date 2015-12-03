@@ -298,7 +298,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	
 	$scope.openResult = function(){
 		currentDate = new Date();
-		window.open("https://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+(parseInt(currentDate.getMonth())+1)+"-"+currentDate.getDate()+"&period=m&uid="+$scope.quiz.deviceID, '_blank', 'location=no,closebuttoncaption=Fermer');
+		window.open("https://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period=m&uid="+$scope.quiz.deviceID, '_blank', 'location=no,closebuttoncaption=Fermer');
 	}//FIN FONCTION openResult
 	
 	/////////////
