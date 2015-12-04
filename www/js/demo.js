@@ -56,7 +56,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.quizHebdo = quiz_hebdo;
 	$scope.notif=true;
 	$scope.noconnexion = false;
-	$scope.notes = "none";
+	$scope.notes = [];
 	//$scope.mynote = "test";
 	
 	//remise à false tout les 1h...

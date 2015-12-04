@@ -8,23 +8,15 @@
  	 <div class="scrollable-content" scroll-glue>
       <div class="list-group-item list-group-item-home media">
 
-        
-		{{larg}} * {{haut}}
-		<br/>
-		{{body}}
-		<br/>
-		{{cas}}
-		<br/>
-
-<div class="myNotes" data="notes">
- 	<div ng-if="notes!='none'">
+<div class="myNotes">
+ 	<div ng-if="notes.length!= 0">
 		<div ng-repeat="(keyrep, valuerep) in notes track by $index" class="noteBloc"> 
 			<div class="noteDate">{{tsToDate(valuerep.date)}}</div>
 			<div class="noteTexte">{{valuerep.texte}}</div>
 	
 		</div>
 	</div>
-	<div ng-if="notes=='none'">
+	<div ng-if="notes.length==0">
 		Pas de notes.
 	</div>
 </div>

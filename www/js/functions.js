@@ -694,7 +694,7 @@ function saveNote($scope)
 function getNotes($scope)
 {
 	if ($scope.$parent.notes === undefined)
-		$scope.$parent.notes = "none";	
+		$scope.$parent.notes = [];	
 	db.transaction(function(tx) {
 		tx.executeSql('SELECT * FROM "notes" ORDER BY date ASC;', [], function(tx, res) {	
 			var dataset = res.rows.length;
@@ -711,7 +711,8 @@ function getNotes($scope)
 			}
 			else
 			{
-				$scope.$parent.notes = "none";	
+				$scope.$parent.notes = [];
+				//$scope.$parent.notes = "none";	
 			}
 		});//FIN SELECT
 	},function(tx){$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});},function(tx){$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});});// DB TRANSACTION
