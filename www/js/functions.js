@@ -719,6 +719,16 @@ function getNotes($scope)
 	//});//FIN transaction
 }
 
+function getNotesHTML($scope)
+{
+	var notesHTML = "";
+	for (var i = 0; i < $scope.notes.length; i++) {
+		notesHTML += '<div style="padding-bottom:10px;text-align:left;"><div style="font-weight:bold">'+convertTsToDate($scope.notes[i].date)+'</div><div style="padding:10px;">'+$scope.notes[i].texte+'</div></div>';
+	}
+	console.log(notesHTML);
+	return notesHTML;
+}
+
 
 ////////////////////
 //Functions after_init

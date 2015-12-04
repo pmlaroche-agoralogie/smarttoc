@@ -431,6 +431,35 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		return convertTsToDate(ts);
 	}
 	
+	$scope.sendMyNotes = function(clickEvent){
+		console.log("sendMyNotes");
+		//$scope.mynote = ""
+		//saveNote($scope);
+		if(isMobile)
+		{
+			cordova.plugins.email.isAvailable(function(result){ 
+	        	if (result) //mail dispo
+	        	{
+	        		cordova.plugins.email.open({
+	        			subject: "[Smart'TOC] Mes notes",
+	        			body:      getNotesHTML($scope), // email body (for HTML, set isHtml to true)
+	        		    isHtml:    true, // indicats if the body is HTML or plain text
+	        		});
+	        	}
+	        	else
+	        	{
+	        		navigator.notification.alert(
+	        				'Veuillez renseigner un compte dans Mail pour pouvoir envoyer vos résultats',  // message
+	        			    function(){},         // callback
+	        			    'Erreur',            // title
+	        			    'Ok'                  // buttonName
+	        			);
+	        	}
+	        });
+		}
+		else
+			 getNotesHTML($scope);
+	}
 	
 }); // fin MainController
 
