@@ -45,6 +45,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.test ="test";
 	$scope.larg = "0";
 	$scope.haut = "0";
+	$scope.body = "0";
+	$scope.cas = "0";
 	$scope.menu = false;
 	if ($scope.quiz === undefined)
 		$scope.quiz ={};
@@ -54,6 +56,9 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.quizHebdo = quiz_hebdo;
 	$scope.notif=true;
 	$scope.noconnexion = false;
+	$scope.notes = "none";
+	//$scope.mynote = "test";
+	
 	//remise à false tout les 1h...
 	$interval(function(){ $scope.noconnexion = false;}, 3600000);
 	
@@ -69,6 +74,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	              	function(callback){createTableQuestionnaires(callback);},
 	              	function(callback){createTableHoraires(callback);},
 	              	function(callback){createTableReponses(callback);},
+	              	function(callback){createTableNotes(callback);},
+	              	
 		               	
 	              	//create db content
 	              	function(callback){createQuestionnairesSuccess(callback);},
@@ -412,6 +419,19 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		console.log(notifMeModel);
 	}//FIN fonction notifMe
 	
+	//NOTES///////////////////
+	//Enregistrer note
+	$scope.saveMyNote = function(clickEvent){
+		//$scope.mynote = ""
+		saveNote($scope);
+	}
+	
+	$scope.tsToDate = function(ts){
+		//$scope.mynote = ""
+		return convertTsToDate(ts);
+	}
+	
+	
 }); // fin MainController
 
 //form scroll
@@ -430,6 +450,30 @@ app.directive('noteList', function ($window) {
 
             elem.css('height', elemHeight + 'px');
             console.log('ttt');
+        }
+    };
+});
+
+app.directive('myNotes', function ($window) {
+
+    return {
+        restrict: 'C',
+        //scope: false,
+       // require: '^ngController', // controller parent
+
+
+        link: function ($scope, elem, attrs) {
+        	console.log('mynotes');
+        	getNotes($scope);
+
+           /* var winHeight = $window.innerHeight;
+
+            var headerHeight = attrs.banner ? attrs.banner : 0;
+            
+            var elemHeight = $(window).height() - $('.titre_journal').outerHeight() - $('.noteForm').outerHeight() - $('.navbar').outerHeight() ;
+
+            elem.css('height', elemHeight + 'px');
+            console.log('ttt');*/
         }
     };
 });

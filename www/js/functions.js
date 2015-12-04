@@ -78,6 +78,15 @@ function createTableReponses(callback)
 	},function(tx){callback(true,'createReponsesError')},function(tx){callback(null,'createReponsesSuccess')});
 }
 
+function createTableNotes(callback)
+{
+	db.transaction(function(tx) 
+	{  		
+		//tx.executeSql('DROP TABLE IF EXISTS "reponses"');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS "notes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT , "texte" TEXT, "date" INTEGER);');
+	},function(tx){callback(true,'createNotesError')},function(tx){callback(null,'createNotesSuccess')});
+}
+
 
 function createQuestionnairesSuccess(callback){
 	if (debug || debug_loadDB)
@@ -652,6 +661,63 @@ function saveReponses(quiz,callback)
 	//});// DB TRANSACTION
 }
 
+/////////////////////////////////////////////////////////////////////
+//Functions Notes
+/////////////////////////////////////////////////////////////////////
+
+function saveNote($scope)
+{
+	var date = Math.round(new Date().getTime() / 1000);
+	sql ='INSERT INTO "notes" (texte,date) '+
+	'VALUES('+
+	'"'+$scope.mynote+'",'+ //idHoraire
+	''+date+''+ //timestamp note
+	');';
+	console.log($scope.notes.length);
+	$scope.notes[$scope.notes.length] = {"date":date, "texte":$scope.mynote};
+	//$scope.notes[$scope.notes.length].date = date;
+	//$scope.notes[$scope.notes.length].texte = $scope.mynote;
+	console.log($scope);
+	console.log(sql);
+	if (sql != "")
+	{
+
+		db.transaction(function(tx) {
+			(function (reqSql) { 
+				tx.executeSql(reqSql,[], function(tx, result){successHandler(tx, result);$scope.mynote = "";$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});}, errorHandler);// requête
+			})(sql);
+		});
+	
+	}
+}
+
+function getNotes($scope)
+{
+	if ($scope.$parent.notes === undefined)
+		$scope.$parent.notes = "none";	
+	db.transaction(function(tx) {
+		tx.executeSql('SELECT * FROM "notes" ORDER BY date ASC;', [], function(tx, res) {	
+			var dataset = res.rows.length;
+			if (dataset > 0)
+			{
+				$scope.$parent.notes = [];
+				for (var i = 0; i < res.rows.length; i++) {
+					$scope.$parent.notes[i]=res.rows.item(i);
+				}
+				//$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});
+				console.log($scope);
+				console.log("notes");
+				
+			}
+			else
+			{
+				$scope.$parent.notes = "none";	
+			}
+		});//FIN SELECT
+	},function(tx){$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});},function(tx){$scope.$apply(function(){return true;  if (debug) alert('$scope.$apply');});});// DB TRANSACTION
+	//});//FIN transaction
+}
+
 
 ////////////////////
 //Functions after_init
@@ -866,6 +932,27 @@ function getQuestionConfig(qhelp)
 	return config;
 }
 
+function convertTsToDate(ts){
+	console.log('lllll    '+ts)
+	currentDate = new Date(ts*1000);
+	date = convertToStrDay(currentDate.getDay())+" "+currentDate.getDate()+" "+convertToStrMonth(currentDate.getMonth())+" "+currentDate.getFullYear()+" à "+('0' + currentDate.getHours()).slice(-2)+":"+('0' + currentDate.getMinutes()).slice(-2);
+
+	
+	return date;
+}
+
+function convertToStrDay(day){
+	var jours = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+	return jours[day];
+	
+}
+
+function convertToStrMonth(month){
+	var mois = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+	return mois[month];
+	
+}
+
 
 // DEVICE ID
 function createDeviceID(callback,$scope){
@@ -887,11 +974,14 @@ function createDeviceID(callback,$scope){
 	{
 		$scope.larg = (document.body.clientWidth);
 		$scope.haut = (document.body.clientHeight);
+		$scope.body = $('body').height();
+		$scope.cas = 'document.body';
 	}
 	else
 	{
 		$scope.larg = (window.innerWidth);
 		$scope.haut = (window.innerHeight);
+		$scope.cas = 'window';
 	}
 	
 	callback(null,'deviceID')

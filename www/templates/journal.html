@@ -9,17 +9,27 @@
       <div class="list-group-item list-group-item-home media">
 
         
-		
-		      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel felis eu lectus lacinia mollis. Quisque vel orci ornare, tristique eros et, egestas neque. Ut posuere tellus nulla, ac pharetra libero tristique ut. Fusce feugiat, urna sit amet posuere consectetur, nisi ante consectetur diam, non posuere quam orci id leo. Mauris et est rhoncus, semper turpis a, tempor ante. Morbi cursus purus ut hendrerit luctus. Vestibulum elementum et arcu sit amet molestie. Ut sed molestie ligula. Duis vulputate sit amet mauris eget vestibulum. Proin congue sem a odio volutpat fringilla. Nunc egestas justo sapien, sed blandit magna rhoncus tristique. Nam in justo et augue scelerisque tincidunt. Nulla mauris justo, egestas in mollis quis, vulputate quis nibh. Curabitur vitae leo luctus justo finibus vestibulum non vitae arcu.
+		{{larg}} * {{haut}}
+		<br/>
+		{{body}}
+		<br/>
+		{{cas}}
+		<br/>
 
-Suspendisse elementum neque at risus congue accumsan. Duis consequat velit quis mauris elementum mattis. In malesuada vel quam vitae elementum. Curabitur pretium venenatis mi, blandit pulvinar nibh finibus a. Nunc accumsan est nisl, in condimentum elit fringilla a. Duis ut rhoncus risus. Mauris mollis dictum faucibus. Nunc sodales erat eu ante aliquam, sed ultricies mauris ultricies. Nulla mattis est odio, posuere consequat dolor ornare vitae.
-
-Vestibulum ac ex euismod, imperdiet est sed, dapibus diam. Vestibulum et libero eu metus feugiat scelerisque eget non ligula. Nam lacinia congue lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus finibus ac eros nec placerat. In condimentum, nisl vitae rutrum maximus, augue mauris finibus neque, eget commodo orci nulla eget nibh. Ut semper felis et lacus imperdiet, at eleifend dolor faucibus. Proin dictum at ante ac tempus. Curabitur tempus lacus eros, sed sodales mi elementum nec. Vestibulum tincidunt vitae ligula sit amet pretium.
-
-Ut odio massa, tristique vitae nisi eget, fringilla hendrerit magna. Donec ut elementum tortor. Integer condimentum ex non metus congue sollicitudin. Etiam gravida sit amet quam et ornare. Mauris tristique arcu eu dui imperdiet vehicula. Curabitur ullamcorper nisl lacus, eu sagittis urna aliquam quis. Suspendisse potenti. Mauris id massa facilisis, gravida quam a, pulvinar ex. Aliquam at iaculis felis. Nullam viverra odio eu commodo egestas. Sed tempus elit ut augue egestas pharetra. Aenean interdum lorem sed turpis egestas, eu lobortis tortor aliquam. Nam volutpat scelerisque sollicitudin.
-FIN
-
-				
+<div class="myNotes" data="notes">
+ 	<div ng-if="notes!='none'">
+		<div ng-repeat="(keyrep, valuerep) in notes track by $index" class="noteBloc"> 
+			<div class="noteDate">{{tsToDate(valuerep.date)}}</div>
+			<div class="noteTexte">{{valuerep.texte}}</div>
+	
+		</div>
+	</div>
+	<div ng-if="notes=='none'">
+		Pas de notes.
+	</div>
+</div>
+<!--  
+		-->		
 	 
       </div>
       </div>	 
@@ -30,8 +40,11 @@ FIN
       
       <div class="list-group-item list-group-item-home media nextQuiz noteForm noteFormHeightChange">
       ✏
-		       <div class="valignTop"><textarea class="msd-elastic writenote" placeholder="votre note" ng-model="foo"></textarea>
-		       <a class="btn btn-primary" href="#/">Enregistrer</a>
+		       <div class="valignTop">
+		       <form name="myQuiz" novalidate>
+			       <textarea class="msd-elastic writenote" placeholder="votre note" ng-model="$parent.mynote" ng-required="true"></textarea>
+			       <button class="btn" ng-click="saveMyNote($event)" ng-class="{'btn-primary': myQuiz.$valid,'btn-default': myQuiz.$invalid}">Enregistrer</button>
+		       </form>
 		       </div>
 		       <br/><br/>
 				<a class="btn btn-primary" href="#/">Envoyer par mail</a>&nbsp;<a class="btn btn-primary" href="#/">Retour accueil</a>
