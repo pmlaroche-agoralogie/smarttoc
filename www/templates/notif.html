@@ -9,7 +9,10 @@
 Nous vous proposons de vous envoyer chaque jour une notification pour vous aider à vous rappeler de remplir votre journal. 
 Si vous ne souhaitez pas les recevoir, vous pouvez désactiver cette option avec le bouton ci-dessous.
 		 <div class="form-group">
-          <label>Notifications&nbsp;: </label> <ui-switch class="switchNotif" ng-model='notifMeModel' ng-change="notifMe(notifMeModel)" ng-init="notifMeModel=notif;"></ui-switch>
+          <label>Notifications&nbsp;: </label> 
+          <input id="notifInput" type="checkbox" ng-model='notifMeModel' ng-init="notifMeModel=notif;" ng-change="notifMe(notifMeModel)">
+		 <label class="btn btn-label" for="notifInput" ng-class="{'btn-success': notifMeModel,'btn-danger': !notifMeModel}"><span ng-if="notifMeModel">Actif</span><span ng-if="!notifMeModel">Inactif</span></label>
+				
         </div>
 
 	 	

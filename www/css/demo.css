@@ -630,11 +630,12 @@ input[type=range].heure:focus::-webkit-slider-runnable-track {
 .btn-label {white-space: normal;width:100%;margin-bottom:2%;}
 
 /****NOTIF***/
-.switchNotif {
+#notifInput{display:none;}
+/*.switchNotif {
     display: inline-block;
     vertical-align: middle;
     margin-left: 5%;
-}
+}*/
 
 /***NOTES****/
 .scrollablenote{margin-top:143px;}
