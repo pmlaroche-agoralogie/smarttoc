@@ -536,6 +536,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 input:checked+label:after{opacity:1}*/
 
 /*RADIO*/
+.radio1 {display:inline-block;}
 .radio_left{text-align:left;margin-let:15px;}
 
 /*genre*/
