@@ -42,6 +42,8 @@ app.config(function($routeProvider) {
 
 app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval){
 	
+	
+	
 	$scope.test ="test";
 	$scope.larg = "0";
 	$scope.haut = "0";
@@ -639,6 +641,12 @@ angular.module('Cordova', [])
     if (typeof window.cordova === 'object') {
       document.addEventListener('deviceready', function () {
     	  console.log('cordovaready');
+    	  if (isMobile)
+    	  {
+    		  //Keyboard.shrinkView(true);
+    		  Keyboard.hideFormAccessoryBar(true);
+    	  }
+    		  
        // done();
     	  done(null,'cordoveaok');
       }, false);
