@@ -376,7 +376,7 @@ function getQuestionsBySID($scope,sid,current,callback)
 							console.log(resnotifsup.rows.item(0).id);
 							if (isMobile)
 							{
-								monID = parseInt(resnotif.rows.item(i).id,10);
+								monID = parseInt(resnotifsup.rows.item(0).id,10);
 								window.cordova.plugins.notification.local.cancel(monID);
 							}
 								
