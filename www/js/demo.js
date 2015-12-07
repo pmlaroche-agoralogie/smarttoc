@@ -645,6 +645,38 @@ angular.module('Cordova', [])
     	  {
     		  //Keyboard.shrinkView(true);
     		  Keyboard.hideFormAccessoryBar(true);
+    		  
+    		  //test notif cancel
+    		  var notiftimestamp = Math.round(new Date().getTime() / 1000) + 120; //3min
+    		  var canceltimestamp = notiftimestamp - 60; //2min
+    		  _timestampSessionNotifTest = new Date(notiftimestamp * 1000);
+    		  _timestampSessionNotifTest2 = new Date((notiftimestamp + 10) * 1000);
+    		  monIDCancel = 12345;
+    		  var aNotifTest = [];
+    		  aNotifTest[0] = {
+                      id:      monIDCancel,
+                      title:   "Smart'TOC",
+                      //message: 'test '+resnotif.rows.item(0).id+': Merci de répondre au questionnaire de l application de suivi.',
+                      text: "test cancel",
+                      at:    _timestampSessionNotifTest
+                      };
+    		  aNotifTest[1] = {
+                      id:      123456,
+                      title:   "Smart'TOC",
+                      //message: 'test '+resnotif.rows.item(0).id+': Merci de répondre au questionnaire de l application de suivi.',
+                      text: "test cancel no",
+                      at:    _timestampSessionNotifTest2
+                      };
+    		  window.cordova.plugins.notification.local.schedule(aNotifTest);
+    		  var delay=10000; //1 seconds
+
+    		  setTimeout(function(){
+    		    //your code to be executed after 1 seconds
+    			  window.cordova.plugins.notification.local.cancel(monIDCancel);
+    			  alert('cancel?');
+    		  }, delay); 
+
+
     	  }
     		  
        // done();
