@@ -670,6 +670,12 @@ max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
 
 @media (max-width: 500px) {
 	.postit h1{font-size:18px;}
+	.withquestion  {padding-bottom: 20%;}
+	.withquestion .bulleg{
+		font-size: 15px;
+		margin-top:0;}
+	/*.withquestion .bulleg:before {bottom:-14px;height:14px;width:30px;}
+	.withquestion .bulleg:after {bottom:-13px;height:15px;width:10px;}*/
 }
 
 @media (max-width: 320px) {
