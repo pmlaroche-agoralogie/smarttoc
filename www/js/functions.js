@@ -375,7 +375,11 @@ function getQuestionsBySID($scope,sid,current,callback)
 							console.log('notif desactive');
 							console.log(resnotifsup.rows.item(0).id);
 							if (isMobile)
-								window.cordova.plugins.notification.local.cancel(resnotifsup.rows.item(0).id);
+							{
+								monID = parseInt(resnotif.rows.item(i).id,10);
+								window.cordova.plugins.notification.local.cancel(monID);
+							}
+								
 						});//fin SELECT
 					}
 				}
