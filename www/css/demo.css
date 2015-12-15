@@ -692,3 +692,47 @@ max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
     
     .buttonmailid{max-width:60%;white-space: normal;}
 }
+
+
+.btn1 {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.btn-success1 {
+    color: #fff;
+    background-color: #4cd964;
+    border-color: #37d552;}
+    
+.btn-label1 {
+    white-space: normal;
+    width: 100%;
+    margin-bottom: 2%;
+}
+    
+.btn-danger1 {
+    color: #fff;
+    background-color: #ff3b30;
+    border-color: #ff2317;
+}
+
+/** correction probleme de selection ios **/
+label > * {
+pointer-events: none;
+}

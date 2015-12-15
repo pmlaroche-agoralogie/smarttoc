@@ -539,7 +539,6 @@ app.directive( 'noteFormHeightChange', function($window) {
         		  if (newValue.h != oldValue.h) {
         	    // Do something ...
         	    console.log(newValue);
-        	    console.log('toto');
         	    var winHeight = $window.innerHeight;      
                 var scrollHeight = $(window).height() - $('.titre_journal').outerHeight() - $('.noteForm').outerHeight() - $('.navbar').outerHeight() ;
 

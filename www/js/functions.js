@@ -129,7 +129,7 @@ function createHorairesSuccess(callback,$interval,$scope)
 {
 	if (debug || debug_loadDB)
 		alertDebug("function createHorairesSuccess");
-	console.log('createHorairesSuccess');
+//	console.log('createHorairesSuccess');
 	//tx.executeSql('CREATE TABLE IF NOT EXISTS "horaires" ("id" INTEGER PRIMARY KEY AUTOINCREMENT ,
 	//"uidquestionnaire" VARCHAR, "tsdebut" INTEGER, "dureevalidite" INTEGER, "notification" INTEGER, "fait" INTEGER);');      
 	if (debug || debug_loadDB)
@@ -158,9 +158,9 @@ function createHorairesSuccess(callback,$interval,$scope)
 			if (debug || debug_loadDB)
 				alertDebug("readyState == 4");
 			//setTimeout(function() {
-			console.log('Id récupéré !');
-			console.log(xhr_object);
-			console.log(xhr_object.response);
+			//console.log('Id récupéré !');
+			//console.log(xhr_object);
+			//console.log(xhr_object.response);
 			if (debug || debug_loadDB)
 				alertDebug(xhr_object.status);
 			if (debug || debug_loadDB)
@@ -177,8 +177,8 @@ function createHorairesSuccess(callback,$interval,$scope)
 				for(var k in MyHoraires) {
 					/*	if (debug || debug_loadDB)
 							alertDebug("for");*/
-					   console.log(k, MyHoraires[k]);
-					   console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+'');
+					   //console.log(k, MyHoraires[k]);
+					   //console.log('SELECT COUNT("id") as cnt FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+'');
 					   (function (value) { 
 					   tx.executeSql('SELECT COUNT("id") as cnt  FROM "horaires" WHERE uidquestionnaire = "'+MyHoraires[k].sid+'" AND tsdebut = '+MyHoraires[k].ts+';', [], function(tx, res) {
 						  /* if (debug || debug_loadDB)
@@ -211,8 +211,8 @@ function createNewHoraires($scope)
 	
 	if (debug || debug_loadDB)
 		alertDebug("function createNewHoraires");
-	console.log('createNewHoraires'); 
-	console.log($scope);
+//	console.log('createNewHoraires'); 
+//	console.log($scope);
 	if (debug || debug_loadDB)
 		alertDebug("avt XMLHttpRequest createNewHoraires");
 	//test si horraires en base
@@ -275,7 +275,7 @@ function createNewHoraires($scope)
 			}
 			else
 			{
-				console.log('reste hor');
+				//console.log('reste hor');
 			}
 			//FIN if no horaires
 		});//FIN SELECT
@@ -441,7 +441,7 @@ function getQuestionList($scope,sid,callback){
 	if ($scope.questionslist === undefined)
 		$scope.questionslist = [];
 	db.transaction(function(tx) {
-		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+';');
+//		console.log('SELECT * FROM "questionnaires" WHERE sid = '+sid+';');
 		tx.executeSql('SELECT * FROM "questionnaires" WHERE sid = '+sid+';', [], function(tx, res) {
 			//console.log(res);
 			//console.log(res.rows.length);
@@ -455,8 +455,6 @@ function getQuestionList($scope,sid,callback){
 			}
 		});//FIN SELECT
 	});//FIN transaction
-	//console.log('toto');
-	//console.log($scope.questionslist);
 }
 
 function displayQuestionTemplate($route,$location,$scope,sid,current){
@@ -511,12 +509,12 @@ function getCurrentSID($scope)
 	
 	if (debug)
 		alertDebug("function getCurrentSID");
-	console.log('getCurrentSID1');
+//	console.log('getCurrentSID1');
 	//console.log($scope);
 	/*$scope.currentSID = "none";
 	$scope.currentHoraire = "none";*/
 	var mycurrentDate = new Date();
-	console.log('getCurrentSID2');
+	//console.log('getCurrentSID2');
 	if (parseInt(mycurrentDate.getHours() )> 5)
 	{
 		var timestamp1 = Math.round(new Date(mycurrentDate.getFullYear(), mycurrentDate.getMonth(), mycurrentDate.getDate()).getTime() / 1000);
@@ -766,7 +764,7 @@ function do_MC_UseOk(callback,$location,$route,$scope){
 		            if(dataset<1)
 					//if (res.rows.item(0).cnt < 1)
 					{
-						console.log('MC_UseOk:false');
+						//console.log('MC_UseOk:false');
 						//Change path
 						$location.path('/useok'); 
 						$scope.menu = false;
@@ -778,7 +776,7 @@ function do_MC_UseOk(callback,$location,$route,$scope){
 					}
 					else
 					{
-						console.log('MC_UseOk:true');
+						//console.log('MC_UseOk:true');
 						//callback(null,"MC_UseOk_true");
 						MC_ProfileOk(callback,$location,$route,$scope);
 						//return true;
@@ -824,7 +822,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 		            if(dataset<1)
 					//if (res.rows.item(0).cnt < 1)
 					{
-						console.log('MC_ProfileOk:false');
+						//console.log('MC_ProfileOk:false');
 						//Change path
 						$location.path('/profileok'); 
 						$scope.menu = false;
@@ -836,7 +834,7 @@ function MC_ProfileOk(callback,$location,$route,$scope){
 					}
 					else
 					{
-						console.log('MC_ProfileOk:true');
+						//console.log('MC_ProfileOk:true');
 						//Change path
 						$location.path('/'); 
 						sendReponses($scope);
@@ -948,7 +946,6 @@ function getQuestionConfig(qhelp)
 }
 
 function convertTsToDate(ts){
-	console.log('lllll    '+ts)
 	currentDate = new Date(ts*1000);
 	date = convertToStrDay(currentDate.getDay())+" "+currentDate.getDate()+" "+convertToStrMonth(currentDate.getMonth())+" "+currentDate.getFullYear()+" à "+('0' + currentDate.getHours()).slice(-2)+":"+('0' + currentDate.getMinutes()).slice(-2);
 
@@ -979,11 +976,10 @@ function convertToStrMonth(month){
 function createDeviceID(callback,$scope){
 	if (debug)
 		alertDebug("function createDeviceID");
-	console.log('createDeviceID');
+//	console.log('createDeviceID');
 	if ($scope.quiz === undefined)
 		$scope.quiz ={};
 
-	console.log(JSON.stringify(window.device));
 	if (isMobile)
 		$scope.quiz.deviceID = md5(device.uuid);
 	else
@@ -1023,15 +1019,15 @@ function generateUUID() {
 
 //ENVOI REPONSES
 function sendReponses($scope) {
-	console.log('send');
-	console.log($scope);
+	//console.log('send');
+	//console.log($scope);
 	var aReponses ={};
 	db.transaction(function(tx) {
 
 		tx.executeSql('SELECT DISTINCT idhoraire FROM "reponses" WHERE envoi = 0', [], function(tx, resHoraires) {
 			
 			var dataset = resHoraires.rows.length;
-			console.log(resHoraires);
+			//console.log(resHoraires);
             if(dataset>0)
             {     	
             	if (debug)
@@ -1129,9 +1125,9 @@ function checkNotif(callback,$scope)
 
 function setNotif($scope)
 {
-	console.log('function setNotif');
+//	console.log('function setNotif');
 	var timestamp = Math.round(new Date().getTime() / 1000);
-	console.log(timestamp);
+	//console.log(timestamp);
 	
 	db.transaction(function(tx) {
 		tx.executeSql('SELECT * FROM "horaires" WHERE tsdebut > '+timestamp+' AND notification = 0 AND fait = 0 ORDER BY tsdebut ASC;', [], function(tx, resnotif) {
