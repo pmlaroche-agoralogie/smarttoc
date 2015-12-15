@@ -433,6 +433,13 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		return convertTsToDate(ts);
 	}
 	
+	$scope.textToDisplayText = function(text){
+		//$scope.mynote = ""
+		return convertTextToDisplayText(text);
+	}
+	
+	
+	
 	$scope.sendMyNotes = function(clickEvent){
 		console.log("sendMyNotes");
 		//$scope.mynote = ""

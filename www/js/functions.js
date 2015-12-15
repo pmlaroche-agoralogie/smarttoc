@@ -727,7 +727,7 @@ function getNotesHTML($scope)
 {
 	var notesHTML = "";
 	for (var i = 0; i < $scope.notes.length; i++) {
-		notesHTML += '<div style="padding-bottom:10px;text-align:left;"><div style="font-weight:bold">'+convertTsToDate($scope.notes[i].date)+'</div><div style="padding:10px;">'+$scope.notes[i].texte+'</div></div>';
+		notesHTML += '<div style="padding-bottom:10px;text-align:left;"><div style="font-weight:bold">'+convertTsToDate($scope.notes[i].date)+'</div><div style="padding:10px;">'+convertTextToDisplayText($scope.notes[i].texte)+'</div></div>';
 	}
 	console.log(notesHTML);
 	return notesHTML;
@@ -955,6 +955,12 @@ function convertTsToDate(ts){
 	
 	return date;
 }
+function convertTextToDisplayText(text){
+	//return text;
+	return text.replace("\n", "<br/>");
+}
+
+
 
 function convertToStrDay(day){
 	var jours = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];

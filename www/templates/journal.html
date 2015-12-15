@@ -12,7 +12,7 @@
  	<div ng-if="notes.length!= 0">
 		<div ng-repeat="(keyrep, valuerep) in notes track by $index" class="noteBloc"> 
 			<div class="noteDate">{{tsToDate(valuerep.date)}}</div>
-			<div class="noteTexte">{{valuerep.texte}}</div>
+			<div class="noteTexte" ng-bind-html="textToDisplayText(valuerep.texte)"></div>
 	
 		</div>
 	</div>
