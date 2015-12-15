@@ -36,18 +36,24 @@
 
 			</div>
 
-	 	<div class="list-group text-center height100" ng-if="quiz.actif == 'fin'">
-	 		<div class="list-group-item list-group-item-home media height100 padding0">
+	 	<div class="list-group text-center" ng-if="quiz.actif == 'fin'">
+	 		<div class="list-group-item list-group-item-home titre_journal">
+        			<h1>Smart'TOC
+        		</h1>
+     		 </div>
+	 		<div class="list-group-item list-group-item-home media padding0">
 	 		<div class="merci">
 				<div class="bulleg"><p>&nbsp;<br/>Vous avez terminé !<br/>&nbsp;</p></div>
 				<div class="fille"></div>
 				<div class="clear"></div>
 				</div>
-			 <div class="list-group-item list-group-item-home media nextQuiz">
+			<!--   <div class="list-group-item list-group-item-home media nextQuiz">
+			<button class="btn btn-primary" ng-click="finQuiz($event)">Retour Accueil</button>
+			</div>-->
+			</div>
+			<div class="list-group-item list-group-item-home media startButton">
 			<button class="btn btn-primary" ng-click="finQuiz($event)">Retour Accueil</button>
 			</div>
-			</div>
-
 	 	</div>
       
     </div>
