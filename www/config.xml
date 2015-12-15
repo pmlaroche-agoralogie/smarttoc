@@ -16,6 +16,7 @@
         Agoralogie
     </author>
 
+  <platform name="ios|android" />
     <!--
         Enable individual API permissions here.
         The "device" permission is required for the 'deviceready' event.
