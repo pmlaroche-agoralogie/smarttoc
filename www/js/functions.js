@@ -988,7 +988,7 @@ function createDeviceID(callback,$scope){
 		$scope.quiz.deviceID = md5(device.uuid);
 	else
 
-		$scope.quiz.deviceID = "monDeviceUid6";
+		$scope.quiz.deviceID = "monDeviceUid7";
 	
 	//largeur /hauteur pour test
 	if (document.body)
