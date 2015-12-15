@@ -53,7 +53,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	if ($scope.quiz === undefined)
 		$scope.quiz ={};
 	$scope.quiz.currentSID = "none";
-	$scope.quiz.currentHoraire = "none";
+	$scope.quiz.currentHoraire = "init";
 	$scope.quizQuoti = quiz_quotidien;
 	$scope.quizHebdo = quiz_hebdo;
 	$scope.notif=true;
