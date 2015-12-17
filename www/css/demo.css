@@ -683,7 +683,7 @@ max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
 	body{font-size:13px}
 	.bulle{ padding: 5% 3%;}
 	.titre_journal h1{font-size:25px;}
-	.postit h1{font-size:18px;}
+	.postit h1{font-size:17px;}
 	.fille1 {padding-bottom: 60%;}
 	.usequestion .mylabel .txt {padding-right:0}
 	
@@ -691,6 +691,7 @@ max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
     background-size: contain;}
     
     .buttonmailid{max-width:60%;white-space: normal;}
+    .merci .bulleg {margin-top: -25%}
 }
 
 
