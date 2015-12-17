@@ -642,7 +642,7 @@ input[type=range].heure:focus::-webkit-slider-runnable-track {
 .scrollablenote{margin-top:143px;}
 .noteBloc {padding-bottom:10px;text-align:left;}
 .noteDate {font-weight:bold}
-.noteTexte {padding:10px;}
+.noteTexte {padding:10px;word-wrap: break-word;}
 .valignTop {vertical-align:top;display:inline-block;width:90%;}
 .writenote {transition:height 50ms ease-in-out;
 max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
