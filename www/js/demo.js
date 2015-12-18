@@ -649,8 +649,8 @@ angular.module('Cordova', [])
     	  console.log('cordovaready');
     	  if (isMobile)
     	  {
-    		  //Keyboard.shrinkView(true);
-    		  //Keyboard.hideFormAccessoryBar(true);
+    		 // Keyboard.shrinkView(false);
+    		  Keyboard.hideFormAccessoryBar(true);
     	  }
     		  
        // done();
