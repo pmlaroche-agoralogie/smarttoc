@@ -20,6 +20,11 @@
 		<label class="btn1" for="idmois" ng-class="{'btn-primary1': mperiode=='m'}">Mois</label>
 		<input type="radio" name="periode" value="3m" id="idtrimestre" ng-model="mperiode"/>
 		<label class="btn1" for="idtrimestre" ng-class="{'btn-primary1': mperiode=='3m'}">Trimestre</label>
+		<!--  -->
+ 		<br/><br/>
+ 		<input id="mydate" type="date" style="display:inline-block;width:auto;" class="form-control" ng-model="dt" min="2015-12-01" max="{{dtinit}}"/>
+
+		<!--  -->
 		<hr/>
 		<div ng-repeat="(keyrep, valuerep) in questionslist" class="questions"> 
 			<div ng-if="valuerep.question!='systemuid'">

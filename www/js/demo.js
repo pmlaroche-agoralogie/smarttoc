@@ -6,6 +6,7 @@ var app = angular.module('MobileAngularUiExamples', [
   'Cordova',                                                   
   'ngRoute',
   'ngSanitize',
+  //'ngAnimate',
   'mobile-angular-ui',
   
   // touch/drag feature: this is from 'mobile-angular-ui.gestures.js'
@@ -16,8 +17,10 @@ var app = angular.module('MobileAngularUiExamples', [
   // opening sidebars, turning switches on/off ..
   'mobile-angular-ui.gestures',
   'monospaced.elastic',
+  //'ui.bootstrap',
   'luegg.directives',
-  'starter.services'
+  'starter.services',
+  
   
 ]);
 
@@ -351,6 +354,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			myquestionList = myquestionList.substring(0,myquestionList.length-1);
 		
 		myPeriod = $( "#sendResultsMail input[type=radio]:checked").attr('value');
+		
+		mydate = $( "#sendResultsMail input[type=date]").val();
 
 		//console.log("myquestionList");
 		//console.log(myquestionList);
@@ -363,8 +368,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
 		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
 		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
-		currentDate = new Date();
-		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
+		//currentDate = new Date();
+		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			
 		fileTransfer.download(
 			    uri,
@@ -473,6 +478,15 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		else
 			 getNotesHTML($scope);
 	}
+	
+	/**************=*/
+	
+	$scope.today = function() {
+	    $scope.dt = new Date();
+	    $scope.dtinit =  $scope.dt.getFullYear()+"-"+('0' + (parseInt($scope.dt.getMonth())+1)).slice(-2)+"-"+('0' + $scope.dt.getDate()).slice(-2);
+	  };
+	  $scope.today();
+
 	
 }); // fin MainController
 
