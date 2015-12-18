@@ -83,7 +83,7 @@
      <gap:plugin name="com.jchalan.cordova.ios.disableshaketoundo" source="pgb" />
      
      <!-- Disable toolbar keyboard ios -->
-     <gap:plugin name="cordova-plugin-keyboard" source="npm" />
+     <!--<gap:plugin name="cordova-plugin-keyboard" source="npm" />-->
      
    
     
