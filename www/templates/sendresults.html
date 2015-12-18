@@ -6,9 +6,21 @@
       </div>
       <div class="list-group-item list-group-item-home media">
 
-        Votre idendifiant Smart'Toc : {{quiz.deviceID}}
+        Votre idendifiant Smart'Toc : <span style="font-weight:bold">{{quiz.deviceID}}</span>
+        <br/>
+        Vous pouvez choisir la période pour laquelle une restitution pdf va être 
+        calculé et envoyé, puis vous pouvez exclure des questions dont vous ne désirez 
+        pas qu'elles soient présentes dans le document ; pour cela, il faut cliquer sur l'intitulé, le fond passera alors en <span class="btn-danger1">&nbsp;rouge&nbsp;</span>.
+        <hr/>
 
 		<form id="sendResultsMail">
+		<input type="radio" name="periode" value="w" id="idsemaine" ng-model="mperiode" ng-init="mperiode='w'"/>
+		<label class="btn1" for="idsemaine" ng-class="{'btn-primary1': mperiode=='w'}">Semaine</label>
+		<input type="radio" name="periode" value="m" id="idmois" ng-model="mperiode"/>
+		<label class="btn1" for="idmois" ng-class="{'btn-primary1': mperiode=='m'}">Mois</label>
+		<input type="radio" name="periode" value="3m" id="idtrimestre" ng-model="mperiode"/>
+		<label class="btn1" for="idtrimestre" ng-class="{'btn-primary1': mperiode=='3m'}">Trimestre</label>
+		<hr/>
 		<div ng-repeat="(keyrep, valuerep) in questionslist" class="questions"> 
 			<div ng-if="valuerep.question!='systemuid'">
 				<input type="checkbox" name="sendResultRadios[{{valuerep.qid}}]" value="{{valuerep.qid}}" id="id{{valuerep.qid}}"  ng-model="valuerep.reponse"  

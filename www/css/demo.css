@@ -627,6 +627,7 @@ input[type=range].heure:focus::-webkit-slider-runnable-track {
 }
 
 /***ENVOI RESULTS**/
+#sendResultsMail input[type=radio] {display:none;}
 #sendResultsMail input[type=checkbox] {display:none;}
 .btn-label {white-space: normal;width:100%;margin-bottom:2%;}
 
@@ -703,7 +704,7 @@ max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
     vertical-align: middle;
     cursor: pointer;
     background-image: none;
-    border: 1px solid transparent;
+    border: 1px solid lightgrey;
     white-space: nowrap;
     padding: 6px 12px;
     font-size: 14px;
@@ -731,6 +732,12 @@ max-height:100%;overflow:auto;width:80%;vertical-align:bottom;}
     color: #fff;
     background-color: #ff3b30;
     border-color: #ff2317;
+}
+
+.btn-primary1 {
+    color: #fff;
+    background-color: #007aff;
+    border-color: #006ee6;
 }
 
 /** correction probleme de selection ios **/

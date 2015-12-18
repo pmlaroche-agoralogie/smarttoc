@@ -342,12 +342,16 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 	$scope.sendMail= function(clickEvent){
 		console.log('sendmail');
 		var myquestionList = "";
-		$( "#sendResultsMail input:checked").each(function( index ) {
+		var myPeriod = "";
+		$( "#sendResultsMail input[type=checkbox]:checked").each(function( index ) {
 			  //console.log( index + ": " + $( this ).attr('id') );
-			  myquestionList += $( this ).attr('id') +",";
+			  myquestionList += $( this ).attr('value') +",";
 			});
 		if (myquestionList != "")
 			myquestionList = myquestionList.substring(0,myquestionList.length-1);
+		
+		myPeriod = $( "#sendResultsMail input[type=radio]:checked").attr('value');
+
 		//console.log("myquestionList");
 		//console.log(myquestionList);
 		if(isMobile)
@@ -360,7 +364,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
 		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
 		currentDate = new Date();
-		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period=m&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
+		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			
 		fileTransfer.download(
 			    uri,
