@@ -650,7 +650,7 @@ angular.module('Cordova', [])
     	  if (isMobile)
     	  {
     		  //Keyboard.shrinkView(true);
-    		  Keyboard.hideFormAccessoryBar(true);
+    		  //Keyboard.hideFormAccessoryBar(true);
     	  }
     		  
        // done();
