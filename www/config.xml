@@ -48,6 +48,9 @@
     <preference name="android-minSdkVersion"      value="7" />              <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 	<preference name="BackupWebStorage" value="local" />
+	
+	<preference name="HideKeyboardFormAccessoryBar" value="true" />
+    <preference name="KeyboardShrinksView" value="false" />
 
     <!-- Plugins can also be added here. -->
    <!--  <gap:plugin name="org.transistorsoft.cordova.background-geolocation" version="0.2.0" />
