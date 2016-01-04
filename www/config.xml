@@ -51,6 +51,7 @@
 	
 	<preference name="HideKeyboardFormAccessoryBar" value="true" />
     <preference name="KeyboardShrinksView" value="false" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
 
     <!-- Plugins can also be added here. -->
    <!--  <gap:plugin name="org.transistorsoft.cordova.background-geolocation" version="0.2.0" />
