@@ -370,7 +370,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
 		//currentDate = new Date();
 		//var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
-		var uri = "https://restitution.altotoc.fr/pdf?sid="+encodeURI(quiz_quotidien)+","+encodeURI(quiz_hebdo)+"&curs="+encodeURI(mydate)+"&period="+encodeURI(myPeriod)+"&uid="+encodeURI($scope.quiz.deviceID)+"&qid="+encodeURI(myquestionList);
+		//var uri = "https://restitution.altotoc.fr/pdf?sid="+encodeURI(quiz_quotidien)+","+encodeURI(quiz_hebdo)+"&curs="+encodeURI(mydate)+"&period="+encodeURI(myPeriod)+"&uid="+encodeURI($scope.quiz.deviceID)+"&qid="+encodeURI(myquestionList);
+		var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			
 		fileTransfer.download(
 			    uri,
