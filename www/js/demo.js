@@ -380,6 +380,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			    fileURL,
 			    function(entry) {
 			        console.log("download complete: " + entry.toURL());
+			        console.log("download complete: " + entry.toNativeURL());
+			        
 			        //envoi mail
 			       alert("download complete: " + entry.toURL());
 			        cordova.plugins.email.isAvailable(function(result){ 
