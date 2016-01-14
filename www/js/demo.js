@@ -373,8 +373,8 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//currentDate = new Date();
 		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;	
 		if (window.device.platform=="Android") {
-			//var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
-			//var fileURL = cordova.file.dataDirectory+"montest2.pdf";
+			var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
+			var fileURL = cordova.file.externalDataDirectory+"montest3.pdf";
 		}
 		fileTransfer.download(
 			    uri,
@@ -665,11 +665,11 @@ app.directive("groupe", function() {
 	    }
 	  };
 	});
-
+/*
 app.config(['$compileProvider', function ($compileProvider) {
 	 // $compileProvider.debugInfoEnabled(false);
 	  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
-	}]);
+	}]);*/
 
 //CORDOVA
 angular.module('Cordova', [])
