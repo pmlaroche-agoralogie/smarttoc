@@ -538,8 +538,8 @@ input:checked+label:after{opacity:1}*/
 /*RADIO*/
 .radio1 {display:inline-block;}
 .radio_left{text-align:left;}
-.radio_left input{margin-bottom: 25px;display: inline-block;font-size: 25px;vertical-align: middle;}
-.radio_left label{margin-bottom: 25px;font-size: 20px;padding-left: 15px;width: 90%;display:inline-block;vertical-align: middle;}
+.radio_left input{display:inline-block;vertical-align:middle;margin-bottom: 25px;}
+.radio_left label{margin-bottom: 25px;font-size: 20px;padding-left: 15px;display:inline-block;vertical-align:middle}
 
 /*genre*/
 .question.genre input{display:none}
