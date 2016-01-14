@@ -365,27 +365,23 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			
 			
 		var fileTransfer = new FileTransfer();
-		var fileURL = cordova.file.dataDirectory+"montest.pdf";
-		//test android seulement :
+
 		var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
-		//var uri = "http://restitution.altotoc.fr/pdf?curs=2015-01-01&sid=236551&qid="+questionList; //modif php pour repondre qqchose par defaut si pas de param
-		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
-		//currentDate = new Date();
 		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;	
+		
 		if (window.device.platform=="Android") {
-			var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
-			var fileURL = cordova.file.externalDataDirectory+"montest3.pdf";
+			uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
+			fileURL = cordova.file.externalDataDirectory+"mesdonnees.pdf";
 		}
+		
 		fileTransfer.download(
 			    uri,
 			    fileURL,
 			    function(entry) {
 			        console.log("download complete: " + entry.toURL());
-			        console.log("download complete: " + entry.toNativeURL());
+			       // alert("download complete: " + entry.toURL());
 			        
 			        //envoi mail
-			       alert("download complete: " + entry.toURL());
-			       alert("download complete: " + entry.toNativeURL());
 			        cordova.plugins.email.isAvailable(function(result){ 
 			        	if (result) //mail dispo
 			        	{
@@ -406,9 +402,9 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			        });
 			    },
 			    function(error) {
-			    	alert("download error source " + error.source);
-			    	alert("download error target " + error.target);
-			    	alert("upload error code" + error.code);
+			    	//alert("download error source " + error.source);
+			    	//alert("download error target " + error.target);
+			    	//alert("upload error code" + error.code);
 			        //console.log("download error source " + error.source);
 			        //console.log("download error target " + error.target);
 			        //console.log("upload error code" + error.code);
