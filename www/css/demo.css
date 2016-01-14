@@ -305,7 +305,7 @@ div.titre_journal div.fille{background:url('../img/fille1.png') top left no-repe
 }
 
 .bulle p {
-    margin: 0;text-align:left;}
+    margin: 0;text-align:justify;}
 
 .fille1{background: url('../img/fille1.png') top left no-repeat transparent;width:30%;padding-bottom:30%;background-size:contain;
 	float:left;}
