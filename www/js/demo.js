@@ -384,6 +384,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			        
 			        //envoi mail
 			       alert("download complete: " + entry.toURL());
+			       alert("download complete: " + entry.toNativeURL());
 			        cordova.plugins.email.isAvailable(function(result){ 
 			        	if (result) //mail dispo
 			        	{
