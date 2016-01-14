@@ -373,10 +373,11 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;	
 		alert(JSON.stringify(navigator.device));
 		alert(JSON.stringify(window.device));
+		alert(window.device.platform);
 		
-		/*if (window.Device.android) {
+		if (window.device.platform=="Android") {
 			var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
-		}*/
+		}
 		//var uri = "https://restitution.altotoc.fr/pdf?sid="+encodeURIComponent(quiz_quotidien)+","+encodeURIComponent(quiz_hebdo)+"&curs="+encodeURIComponent(mydate)+"&period="+encodeURIComponent(myPeriod)+"&uid="+encodeURIComponent($scope.quiz.deviceID)+"&qid="+encodeURIComponent(myquestionList);
 	
 		fileTransfer.download(
