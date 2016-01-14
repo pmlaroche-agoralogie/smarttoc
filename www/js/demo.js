@@ -43,7 +43,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/apropos',    	{templateUrl: 'templates/apropos.html', reloadOnSearch: false});
 });
 
-app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval){
+app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval,$compileProvider){
 	
 	
 	
