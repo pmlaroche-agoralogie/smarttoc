@@ -361,7 +361,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//console.log(myquestionList);
 		if(isMobile)
 		{
-			
+			$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
 			
 		var fileTransfer = new FileTransfer();
 		var fileURL = cordova.file.dataDirectory+"montest.pdf";
