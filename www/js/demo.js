@@ -362,15 +362,6 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		if(isMobile)
 		{
 			
-			var options = new FileUploadOptions();
-
-			options.chunkedMode = false;
-
-			options.headers = {
-
-			Connection: "close"
-
-			};
 			
 		var fileTransfer = new FileTransfer();
 		var fileURL = cordova.file.dataDirectory+"montest.pdf";
@@ -380,6 +371,9 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//var uri = "http://restitution.altotoc.fr/pdf?sid=916553&curs=2015-01-01"; //modif php pour repondre qqchose par defaut si pas de param
 		//currentDate = new Date();
 		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;	
+		alert(JSON.stringify(navigator.device));
+		alert(JSON.stringify(window.device));
+		
 		/*if (window.Device.android) {
 			var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 		}*/
