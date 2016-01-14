@@ -22,6 +22,7 @@ var app = angular.module('MobileAngularUiExamples', [
   'starter.services',
   
   
+  
 ]);
 
 
@@ -43,7 +44,7 @@ app.config(function($routeProvider) {
   $routeProvider.when('/apropos',    	{templateUrl: 'templates/apropos.html', reloadOnSearch: false});
 });
 
-app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval,$compileProvider){
+app.controller('MainController', function(cordovaReady,$rootScope, $scope,$location,$route,$sanitize,$sce, $interval){
 	
 	
 	
@@ -361,7 +362,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//console.log(myquestionList);
 		if(isMobile)
 		{
-			$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
+			
 			
 		var fileTransfer = new FileTransfer();
 		var fileURL = cordova.file.dataDirectory+"montest.pdf";
@@ -664,6 +665,11 @@ app.directive("groupe", function() {
 	    }
 	  };
 	});
+
+app.config(['$compileProvider', function ($compileProvider) {
+	 // $compileProvider.debugInfoEnabled(false);
+	  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
+	}]);
 
 //CORDOVA
 angular.module('Cordova', [])
