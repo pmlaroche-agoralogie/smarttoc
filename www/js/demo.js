@@ -373,7 +373,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//currentDate = new Date();
 		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;	
 		if (window.device.platform=="Android") {
-			var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
+			//var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			//var fileURL = cordova.file.dataDirectory+"montest2.pdf";
 		}
 		fileTransfer.download(
