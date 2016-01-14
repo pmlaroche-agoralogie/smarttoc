@@ -375,7 +375,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			var uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			var fileURL = cordova.file.dataDirectory+"montest2.pdf";
 		}
-		
+		alert(fileURL);
 		fileTransfer.download(
 			    uri,
 			    fileURL,
