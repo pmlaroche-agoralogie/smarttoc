@@ -390,8 +390,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 			        	{
 			        		cordova.plugins.email.open({
 			        			subject: 'rapport données',
-			        		    //attachments: entry.toURL() //=> res/drawable/icon (Android)
-			        			attachments: fileURL //=> res/drawable/icon (Android)
+			        		    attachments: entry.toURL() //=> res/drawable/icon (Android)
 			        		});
 			        	}
 			        	else
