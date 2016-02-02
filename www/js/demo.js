@@ -319,7 +319,6 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		if (window.device.platform=="Android") {
 			uri = "http://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period=m&uid="+$scope.quiz.deviceID;
 		}
-		else
 			
 		window.open(uri, '_blank', 'location=no,closebuttoncaption=Fermer');
 		
