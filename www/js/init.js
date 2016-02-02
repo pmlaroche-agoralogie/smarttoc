@@ -20,9 +20,10 @@ quiz_hebdo = 313524;
 
 // TODO
 //plage de désactivation
+//alert pour debug
 
-window.onerror = function (errorMsg, url, lineNumber) {
+/*window.onerror = function (errorMsg, url, lineNumber) {
 	console.log('ERROR: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
     alert('ERROR: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
     
-}
+}*/
