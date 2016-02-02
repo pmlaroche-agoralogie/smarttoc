@@ -138,7 +138,11 @@ function createHorairesSuccess(callback,$interval,$scope)
 	//xhr_object.timeout = 4000; // Set timeout to 4 seconds (4000 milliseconds)
 	if (debug || debug_loadDB)
 		alertDebug("https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
-	xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false);  
+	uri="https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID; 
+	if (window.device.platform=="Android") {
+		uri="http://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID; 
+	}
+	xhr_object.open("GET", uri, false); 
 	//catch exception no connection
 	try {
 		xhr_object.send(null);
@@ -226,7 +230,12 @@ function createNewHoraires($scope)
 				xhr_object = new XMLHttpRequest(); 
 				if (debug || debug_loadDB)
 					alertDebug("https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID);
-				xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false);  
+				//xhr_object.open("GET", "https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID, false); 
+				uri="https://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID; 
+				if (window.device.platform=="Android") {
+					uri="http://restitution.altotoc.fr/horaires_smarttocv1.php?uid="+$scope.quiz.deviceID; 
+				}
+				xhr_object.open("GET", uri, false);
 				//catch exception no connection
 				try {
 					xhr_object.send(null);
@@ -1054,7 +1063,12 @@ function sendReponses($scope) {
 
                         	xhr_object = new XMLHttpRequest(); 
                         	//xhr_object.open("GET", "http://mcp.ocd-dbs-france.org/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false);   
-                        	xhr_object.open("GET", "https://restitution.altotoc.fr/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false); 
+                        	//xhr_object.open("GET", "https://restitution.altotoc.fr/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses), false); 
+                        	uri="https://restitution.altotoc.fr/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses); 
+                        	if (window.device.platform=="Android") {
+                        		uri="http://restitution.altotoc.fr/mobile/mobilerpc.php?answer="+JSON.stringify(aReponses); 
+                        	}
+                        	xhr_object.open("GET", uri, false);
          
                         	//xhr_object.send(null); 
                         	//exception connection
