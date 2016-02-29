@@ -20,5 +20,5 @@
 '313524';'';'511';'1402';'Comment est votre TOC par rapport à la semaine passée ?';'!';'#tpl:radio2#frq:x#';'{"A1":"Moins bien","A2":"Pareil","A3":"Mieux"}'
 '313524';'';'509';'1403';'Cette semaine, est-ce que votre qualité de vie vous paraît :';'N';'#tpl:sl12#frq:x#';'[]'
 '313524';'';'515';'1404';'<p>  Cette semaine, combien de temps avez-vous passé à vos loisirs ?</p> ';'N';'#tpl:sl4#frq:x#';'[]'
-'313524';'';'516';'1405';'Avez-vous pris du plaisir dans vos activités cette semaine ?';'N';'#tpl:sl13#frq:x#';'[]'
+'313524';'';'516';'1405';'Avez-vous pris du plaisir dans vos activités cette semaine ?';'N';'#tpl:sl5#frq:x#';'[]'
 '313524';'';'521';'1409';'systemuid';'S';'#tpl:uid#frq:x#';'[]'
