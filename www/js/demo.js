@@ -316,7 +316,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		//window.open("https://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period=m&uid="+$scope.quiz.deviceID, '_blank', 'location=no,closebuttoncaption=Fermer');
 		uri = "https://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period=m&uid="+$scope.quiz.deviceID;
 		
-		if (window.device.platform=="Android") {
+		if (window.device!=undefined && window.device.platform=="Android") {
 			uri = "http://restitution.altotoc.fr/?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+currentDate.getFullYear()+"-"+('0' + (parseInt(currentDate.getMonth())+1)).slice(-2)+"-"+('0' + currentDate.getDate()).slice(-2)+"&period=m&uid="+$scope.quiz.deviceID;
 		}
 			
@@ -378,7 +378,7 @@ app.controller('MainController', function(cordovaReady,$rootScope, $scope,$locat
 		var fileURL = "cdvfile://localhost/persistent/"+"mesdonnees.pdf"; 
 		var uri = "https://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;	
 		
-		if (window.device.platform=="Android") {
+		if (window.device!=undefined && window.device.platform=="Android") {
 			uri = "http://restitution.altotoc.fr/pdf?sid="+quiz_quotidien+","+quiz_hebdo+"&curs="+mydate+"&period="+myPeriod+"&uid="+$scope.quiz.deviceID+"&qid="+myquestionList;
 			fileURL = cordova.file.externalDataDirectory+"mesdonnees.pdf";
 		}
